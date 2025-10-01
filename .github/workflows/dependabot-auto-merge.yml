@@ -19,7 +19,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Guard: only direct dependencies
+      - name: Guard - only direct dependencies
         if: ${{ steps.meta.outputs['dependency-type'] != 'direct' }}
         run: echo "Not a direct dependency update. Skipping." && exit 0
 
