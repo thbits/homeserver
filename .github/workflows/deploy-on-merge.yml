@@ -1,0 +1,36 @@
+name: Deploy on merge
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, docker]
+    environment: production
+    env:
+      DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
+      SSL_EMAIL: ${{ secrets.SSL_EMAIL }}
+      TIMEZONE: ${{ vars.TIMEZONE }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate docker compose
+        run: docker compose config -q
+
+      - name: Pull latest images
+        run: docker compose pull
+
+      - name: Deploy services
+        run: docker compose up -d --remove-orphans
+
+      - name: Cleanup old images
+        run: docker image prune -f
