@@ -1,0 +1,39 @@
+name: Auto-merge Dependabot (minor/patch)
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, labeled]
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch metadata
+        id: meta
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Label PR if minor/patch
+        if: contains(fromJson('["version-update:semver-minor","version-update:semver-patch"]'), steps.meta.outputs.update-type)
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: automerge
+
+      - name: Enable auto-merge
+        if: contains(fromJson('["version-update:semver-minor","version-update:semver-patch"]'), steps.meta.outputs.update-type)
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          merge-method: squash
+
+      - name: Auto-merge when ready
+        if: contains(fromJson('["version-update:semver-minor","version-update:semver-patch"]'), steps.meta.outputs.update-type)
+        uses: peter-evans/auto-merge@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          merge-method: squash
+          labels: automerge

@@ -1,0 +1,58 @@
+services:
+  traefik:
+    image: traefik:v3.5.3
+    container_name: traefik
+    restart: unless-stopped
+    command:
+      # Enable this for webui (insecure)
+      #- --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true
+      - --certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}
+      - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json
+    ports:
+      - "80:80"
+      - "443:443"
+      # Enable this for webui (insecure)
+      #- "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /home/servarr/pirateduck/traefik/letsencrypt:/letsencrypt
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:1.113.3
+    container_name: n8n
+    environment:
+      - GENERIC_TIMEZONE=${TIMEZONE}
+      - TZ=${TIMEZONE}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_RUNNERS_ENABLED=true
+      - USER_UID=1000
+      - USER_GID=1000
+      - N8N_HOST=n8n.${DOMAIN_NAME}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - WEBHOOK_URL=https://n8n.${DOMAIN_NAME}/
+      - N8N_EDITOR_BASE_URL=https://n8n.${DOMAIN_NAME}/
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.n8n.rule=Host(`n8n.${DOMAIN_NAME}`)
+      - traefik.http.routers.n8n.entrypoints=websecure
+      - traefik.http.routers.n8n.tls=true
+      - traefik.http.routers.n8n.tls.certresolver=mytlschallenge
+      - traefik.http.middlewares.sec.headers.SSLRedirect=true
+      - traefik.http.middlewares.sec.headers.STSSeconds=31536000
+      - traefik.http.middlewares.sec.headers.browserXSSFilter=true
+      - traefik.http.middlewares.sec.headers.contentTypeNosniff=true
+      - traefik.http.middlewares.sec.headers.forceSTSHeader=true
+      - traefik.http.middlewares.sec.headers.SSLHost=${DOMAIN_NAME}
+      - traefik.http.middlewares.sec.headers.STSIncludeSubdomains=true
+      - traefik.http.middlewares.sec.headers.STSPreload=true
+      - traefik.http.routers.n8n.middlewares=sec@docker
+    volumes:
+      - /home/servarr/pirateduck/n8n_data:/home/node/.n8n

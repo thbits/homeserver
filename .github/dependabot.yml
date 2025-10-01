@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "06:00"
+    commit-message:
+      prefix: "deps(docker)"
+    open-pull-requests-limit: 10
+    allow:
+      - dependency-type: "direct"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]

@@ -1,0 +1,27 @@
+name: Runner smoke test
+on: workflow_dispatch
+
+jobs:
+  smoke:
+    runs-on: [self-hosted, docker]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show runner
+        run: |
+          echo "Runner: $HOSTNAME"
+          id
+
+      - name: Docker sanity
+        run: |
+          docker version
+          docker compose version
+          docker ps
+
+      - name: Run a test container
+        run: |
+          docker run --rm alpine:3.20 sh -c "echo OK && uname -a && ip addr | sed -n '1,5p'"
+
+      - name: Validate compose (if present)
+        if: ${{ hashFiles('docker-compose.yml') != '' }}
+        run: docker compose config -q
