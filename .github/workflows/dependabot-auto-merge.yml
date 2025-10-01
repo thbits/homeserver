@@ -19,22 +19,18 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Guard - only direct dependencies
-        if: ${{ steps.meta.outputs['dependency-type'] != 'direct' }}
-        run: echo "Not a direct dependency update. Skipping." && exit 0
+      - name: Guard - only minor/patch
+        if: ${{ !contains(fromJson('["version-update:semver-minor","version-update:semver-patch"]'), steps.meta.outputs['update-type']) }}
+        run: echo "Not minor/patch. Skipping." && exit 0
 
-      - name: Auto-approve minor/patch
-        if: ${{ contains(fromJson('["version-update:semver-minor","version-update:semver-patch"]'), steps.meta.outputs['update-type']) }}
-        uses: hmarr/auto-approve-action@v4
+      - name: Enable auto-merge
+        uses: peter-evans/enable-pull-request-automerge@v3
         with:
-          pull-request-number: ${{ github.event.pull_request.number }}
-          review-message: "Auto-approve Dependabot minor/patch"
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_AUTOMERGE }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          merge-method: squash
 
-      - name: Merge when checks pass
-        if: ${{ contains(fromJson('["version-update:semver-minor","version-update:semver-patch"]'), steps.meta.outputs['update-type']) }}
+      - name: Auto-merge when ready
         uses: peter-evans/auto-merge@v4
         with:
-          token: ${{ secrets.PAT_AUTOMERGE }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           merge-method: squash
