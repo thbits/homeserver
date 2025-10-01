@@ -8,23 +8,18 @@ jobs:
       DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
     steps:
       - uses: actions/checkout@v4
-
       - name: Show runner
         run: |
           echo "Runner: $HOSTNAME"
           echo "Domain: $DOMAIN_NAME"
           id
-
       - name: Docker sanity
         run: |
           docker version
           docker compose version
           docker ps
-
       - name: Run a test container
-        run: |
-          docker run --rm alpine:3.20 sh -c "echo OK && uname -a && ip addr | sed -n '1,5p'"
-
+        run: docker run --rm alpine:3.20 sh -c "echo OK && uname -a"
       - name: Validate compose (if present)
         if: ${{ hashFiles('docker-compose.yml') != '' }}
         run: docker compose config -q
