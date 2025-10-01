@@ -15,7 +15,6 @@ concurrency:
 jobs:
   deploy:
     runs-on: [self-hosted, docker]
-    environment: production
     env:
       DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
       SSL_EMAIL: ${{ secrets.SSL_EMAIL }}
