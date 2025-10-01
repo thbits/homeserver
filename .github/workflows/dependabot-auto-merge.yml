@@ -1,36 +1,23 @@
-name: Auto-merge Dependabot (minor/patch)
-
-on:
-  pull_request_target:
-    types: [opened, synchronize, reopened, labeled]
+name: Dependabot auto-merge
+on: pull_request
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  automerge:
-    if: github.actor == 'dependabot[bot]'
+  dependabot:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'thbits/homeserver'
     steps:
-      - name: Fetch Dependabot metadata
-        id: meta
-        uses: dependabot/fetch-metadata@v2
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@d7267f607e9d3fb96fc2fbe83e0af444713e90b7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Guard - only minor/patch
-        if: ${{ !contains(fromJson('["version-update:semver-minor","version-update:semver-patch"]'), steps.meta.outputs['update-type']) }}
-        run: echo "Not minor/patch. Skipping." && exit 0
-
-      - name: Enable auto-merge
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: squash
-
-      - name: Auto-merge when ready
-        uses: peter-evans/auto-merge@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: squash
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Enable auto-merge for Dependabot PRs
+        if: contains(steps.metadata.outputs.dependency-names, 'my-dependency') && steps.metadata.outputs.update-type == 'version-update:semver-patch'
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
