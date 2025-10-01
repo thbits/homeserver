@@ -4,12 +4,15 @@ on: workflow_dispatch
 jobs:
   smoke:
     runs-on: [self-hosted, docker]
+    env:
+      DOMAIN_NAME=${{ vars.DOMAIN_NAME }}
     steps:
       - uses: actions/checkout@v4
 
       - name: Show runner
         run: |
           echo "Runner: $HOSTNAME"
+          echo "Domain: $DOMAIN_NAME"
           id
 
       - name: Docker sanity
