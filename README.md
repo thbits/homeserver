@@ -1,7 +1,7 @@
-## Docker installation
+# Docker installation
 https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 
-## Github runner configuration
+# Github runner configuration
 Repo -> Settings -> Actions -> Runners -> New self-hosted runner
 Then follow the simple instructions
 Install the runner service
@@ -15,7 +15,7 @@ systemctl enable actions.runner.<TAB><TAB>
 systemctl start actions.runner.<TAB><TAB>
 ```
 
-## Global Variables
+# Global Variables
 Set this laso as github action variables secrets
 ```
 DATADIR=<PATH_TO_DATA_DIR>
@@ -24,7 +24,7 @@ SSL_EMAIL=<EMAIL_FOR_LETSENCRYPT> # GA Secret
 TIMEZONE=Asia/Jerusalem # GA Variable
 ```
 
-## Authelia Config
+# Authelia Config
 Set environment variables for the following variables
 ```
 JWT_SECRET=
@@ -37,4 +37,14 @@ Note: set the above also as Github Actions secrets
 Populate it with the following command
 ```bash
 docker run --rm authelia/authelia:latest authelia crypto rand --length 64
+```
+
+### Set Authelia users
+Copy the example file and edit it
+```bash
+cp authelia/config/users.yaml.example authelia/config/users.yaml
+```
+Configure hashed password using this command
+```bash
+docker run --rm -it authelia/authelia:4.39.11 authelia crypto hash generate argon2
 ```

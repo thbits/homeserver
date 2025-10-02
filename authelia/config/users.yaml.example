@@ -2,6 +2,6 @@ users:
   <EMAIL>:
     displayname: <User_Display_Name>
     # Set encrypted password with the following command
-    # docker run --rm -it authelia/authelia:4.39.11 authelia crypto hash generate argon2
+    # docker run --rm -it authelia/authelia authelia crypto hash generate argon2
     password: ""
     groups: [admins]
