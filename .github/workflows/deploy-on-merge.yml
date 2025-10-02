@@ -21,7 +21,7 @@ jobs:
       TIMEZONE: ${{ vars.TIMEZONE }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-      SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+      STORAGE_ENCRYPTION_KEY: ${{ secrets.STORAGE_ENCRYPTION_KEY }}
     steps:
       - uses: actions/checkout@v4
 
