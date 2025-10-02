@@ -3,7 +3,7 @@ on: workflow_dispatch
 
 jobs:
   smoke:
-    runs-on: [self-hosted, docker]
+    runs-on: self-hosted
     env:
       DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
     steps:
