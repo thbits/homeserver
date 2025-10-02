@@ -1,1 +1,5 @@
 .env
+
+# Authelia
+authelia/config/users.yaml
+authelia/config/db.sqlite3

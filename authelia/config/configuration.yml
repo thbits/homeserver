@@ -1,0 +1,47 @@
+theme: auto
+
+server:
+  address: "tcp://0.0.0.0:9091"
+  endpoints:
+    authz:
+      forward-auth:
+        implementation: 'ForwardAuth'
+        authn_strategies:
+          - name: 'HeaderProxyAuthorization'
+            schemes:
+              - 'Basic'
+          - name: 'CookieSession'
+
+session:
+  name: authelia_session
+  secret: '{{ mustEnv "SESSION_SECRET" }}'
+  expiration: 1h
+  inactivity: 15m
+  cookies:
+    - domain: '{{ mustEnv "DOMAIN_NAME" }}'
+      authelia_url: 'https://auth.{{ mustEnv "DOMAIN_NAME" }}'
+
+storage:
+  local:
+    path: /config/db.sqlite3
+  encryption_key: '{{ mustEnv "STORAGE_ENCRYPTION_KEY" }}'
+
+identity_validation:
+  reset_password:
+    jwt_secret: '{{ mustEnv "JWT_SECRET" }}'
+
+authentication_backend:
+  file:
+    path: /config/users.yaml
+    password:
+      algorithm: argon2
+
+access_control:
+  default_policy: deny
+  rules:
+    - domain: 'n8n.{{ mustEnv "DOMAIN_NAME" }}'
+      policy: one_factor
+
+notifier:
+  filesystem:
+    filename: /config/notification.txt

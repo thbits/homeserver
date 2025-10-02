@@ -15,13 +15,48 @@ services:
       - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true
       - --certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}
       - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json
+      - --ping=true
+      - --ping.entrypoint=traefikping
+      - --entrypoints.traefikping.address=:8081
     ports:
       - "80:80"
       - "443:443"
       # - "8080:8080"  # dashboard if enabled
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8081/ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /home/servarr/pirateduck/traefik/letsencrypt:/letsencrypt
+
+  authelia:
+    image: authelia/authelia:4.39.11
+    container_name: authelia
+    user: "1000:1000"
+    restart: unless-stopped
+    environment:
+      - TZ=${TIMEZONE}
+      - X_AUTHELIA_CONFIG_FILTERS=template
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - JWT_SECRET=${JWT_SECRET}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - STORAGE_ENCRYPTION_KEY=${STORAGE_ENCRYPTION_KEY}
+    volumes:
+      - /home/servarr/pirateduck/homeserver/authelia/config:/config
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.authelia.rule=Host(`auth.${DOMAIN_NAME}`)
+      - traefik.http.routers.authelia.entrypoints=websecure
+      - traefik.http.routers.authelia.tls=true
+      - traefik.http.routers.authelia.tls.certresolver=mytlschallenge
+      - traefik.http.services.authelia.loadbalancer.server.port=9091
+      # ForwardAuth middleware for reuse on apps:
+      - traefik.http.middlewares.authelia-forwardauth.forwardauth.address=http://authelia:9091/api/authz/forward-auth
+      - traefik.http.middlewares.authelia-forwardauth.forwardauth.trustForwardHeader=true
+      - traefik.http.middlewares.authelia-forwardauth.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email
 
   n8n:
     image: docker.n8n.io/n8nio/n8n:1.113.3
@@ -46,16 +81,9 @@ services:
       - traefik.http.routers.n8n.entrypoints=websecure
       - traefik.http.routers.n8n.tls=true
       - traefik.http.routers.n8n.tls.certresolver=mytlschallenge
-      - traefik.http.middlewares.n8n.headers.SSLRedirect=true
-      - traefik.http.middlewares.n8n.headers.STSSeconds=31536000
-      - traefik.http.middlewares.n8n.headers.browserXSSFilter=true
-      - traefik.http.middlewares.n8n.headers.contentTypeNosniff=true
-      - traefik.http.middlewares.n8n.headers.forceSTSHeader=true
-      - traefik.http.middlewares.n8n.headers.SSLHost=${DOMAIN_NAME}
-      - traefik.http.middlewares.n8n.headers.STSIncludeSubdomains=true
-      - traefik.http.middlewares.n8n.headers.STSPreload=true
-      - traefik.http.routers.n8n.middlewares=n8n@docker
+      - traefik.http.routers.n8n.middlewares=authelia-forwardauth@docker
     volumes:
       - /home/servarr/pirateduck/n8n_data:/home/node/.n8n
     depends_on:
-      - traefik
+      traefik:
+        condition: service_healthy
