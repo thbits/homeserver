@@ -19,6 +19,9 @@ jobs:
       DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
       SSL_EMAIL: ${{ secrets.SSL_EMAIL }}
       TIMEZONE: ${{ vars.TIMEZONE }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+      SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
     steps:
       - uses: actions/checkout@v4
 
