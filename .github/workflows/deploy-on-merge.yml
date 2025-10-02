@@ -16,6 +16,7 @@ jobs:
   deploy:
     runs-on: self-hosted
     env:
+      DATADIR: ${{ vars.DATADIR }}
       DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
       SSL_EMAIL: ${{ secrets.SSL_EMAIL }}
       TIMEZONE: ${{ vars.TIMEZONE }}

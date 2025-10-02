@@ -1,4 +1,3 @@
-# Prerequisites
 ## Docker installation
 https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 
@@ -6,11 +5,26 @@ https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 Repo -> Settings -> Actions -> Runners -> New self-hosted runner
 Then follow the simple instructions
 Install the runner service
-`sudo ./svc.sh install`
-Start the service
-`systemctl start actions.runner.<TAB><TAB>`
+```bash
+sudo ./svc.sh install
+```
 
-## Authelia config
+Enable and start the service
+```bash
+systemctl enable actions.runner.<TAB><TAB>
+systemctl start actions.runner.<TAB><TAB>
+```
+
+## Global Variables
+Set this laso as github action variables secrets
+```
+DATADIR=<PATH_TO_DATA_DIR>
+DOMAIN_NAME=<DOMAIN> # GA Variable
+SSL_EMAIL=<EMAIL_FOR_LETSENCRYPT> # GA Secret
+TIMEZONE=Asia/Jerusalem # GA Variable
+```
+
+## Authelia Config
 Set environment variables for the following variables
 ```
 JWT_SECRET=
