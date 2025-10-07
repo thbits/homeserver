@@ -59,7 +59,7 @@ services:
       - traefik.http.middlewares.authelia-forwardauth.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email
 
   n8n:
-    image: docker.n8n.io/n8nio/n8n:1.113.3
+    image: docker.n8n.io/n8nio/n8n:1.114.3
     container_name: n8n
     restart: unless-stopped
     environment:
