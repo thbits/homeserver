@@ -43,7 +43,7 @@ jobs:
           while IFS= read -r dir; do
             [ -z "$dir" ] && continue
             echo "Validating $dir/docker-compose.yml"
-            (cd "$dir" && docker compose --env-file /dev/null config -q)
+            (cd "$dir" && docker compose config -q)
           done <<< "${{ steps.find-compose.outputs.dirs }}"
 
       - name: Pull latest images
@@ -51,7 +51,7 @@ jobs:
           while IFS= read -r dir; do
             [ -z "$dir" ] && continue
             echo "Pulling images for $dir"
-            (cd "$dir" && docker compose --env-file /dev/null pull)
+            (cd "$dir" && docker compose pull)
           done <<< "${{ steps.find-compose.outputs.dirs }}"
 
       - name: Deploy services
@@ -59,7 +59,7 @@ jobs:
           while IFS= read -r dir; do
             [ -z "$dir" ] && continue
             echo "Deploying services in $dir"
-            (cd "$dir" && docker compose --env-file /dev/null up -d --remove-orphans)
+            (cd "$dir" && docker compose up -d --remove-orphans)
           done <<< "${{ steps.find-compose.outputs.dirs }}"
 
       - name: Cleanup old images

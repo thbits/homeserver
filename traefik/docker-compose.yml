@@ -31,9 +31,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${DATADIR}/traefik/letsencrypt:/letsencrypt
-    env_file:
-      - ../.env
-      - .env
     networks:
       - traefik_network
 

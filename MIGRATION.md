@@ -64,24 +64,30 @@ cp n8n/.env.example n8n/.env
 
 The deployment order is important because services depend on each other:
 
-1. **Traefik** (must be first - creates the network and provides routing)
+1. **Export environment variables**
+   ```bash
+   cd /path/to/homeserver
+   export $(cat .env | xargs)
+   ```
+
+2. **Traefik** (must be first - creates the network and provides routing)
    ```bash
    cd traefik
-   docker compose --env-file ../.env up -d
+   docker compose up -d
    cd ..
    ```
 
-2. **Authelia** (provides authentication middleware)
+3. **Authelia** (provides authentication middleware)
    ```bash
    cd authelia
-   docker compose --env-file ../.env up -d
+   docker compose up -d
    cd ..
    ```
 
-3. **n8n** (depends on Traefik being healthy)
+4. **n8n** (depends on Traefik being healthy)
    ```bash
    cd n8n
-   docker compose --env-file ../.env up -d
+   docker compose up -d
    cd ..
    ```
 

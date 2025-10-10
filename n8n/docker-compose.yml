@@ -25,9 +25,6 @@ services:
       - traefik.http.routers.n8n.middlewares=authelia-forwardauth@docker
     volumes:
       - ${DATADIR}/n8n_data:/home/node/.n8n
-    env_file:
-      - ../.env
-      - .env
     networks:
       - traefik_network
 
