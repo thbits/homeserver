@@ -1,6 +1,6 @@
 services:
   authelia:
-    image: authelia/authelia:4.39.11
+    image: authelia/authelia:4.39.12
     container_name: authelia
     user: "1000:1000"
     restart: unless-stopped
