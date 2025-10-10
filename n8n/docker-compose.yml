@@ -30,11 +30,7 @@ services:
       - .env
     networks:
       - traefik_network
-    depends_on:
-      traefik:
-        condition: service_healthy
 
 networks:
   traefik_network:
     external: true
-

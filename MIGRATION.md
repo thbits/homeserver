@@ -67,21 +67,21 @@ The deployment order is important because services depend on each other:
 1. **Traefik** (must be first - creates the network and provides routing)
    ```bash
    cd traefik
-   docker compose up -d
+   docker compose --env-file ../.env up -d
    cd ..
    ```
 
 2. **Authelia** (provides authentication middleware)
    ```bash
    cd authelia
-   docker compose up -d
+   docker compose --env-file ../.env up -d
    cd ..
    ```
 
 3. **n8n** (depends on Traefik being healthy)
    ```bash
    cd n8n
-   docker compose up -d
+   docker compose --env-file ../.env up -d
    cd ..
    ```
 
@@ -189,7 +189,9 @@ Two workflows have been updated:
 ### Environment variables not loading
 - Check that both `.env` files exist (root and service-specific)
 - Verify the `.env` files are not in `.gitignore` (only `.env.example` should be tracked)
-- Run `docker compose config` in each service directory to verify variable substitution
+- **Always use `--env-file ../.env`** when running docker compose commands from service directories
+- Run `docker compose --env-file ../.env config` in each service directory to verify variable substitution
+- If variables like `${DATADIR}` show as blank, the `--env-file` flag is missing
 
 ### Renovate not creating PRs
 - Ensure `.github/renovate.json` is valid JSON

@@ -1,16 +1,13 @@
 services:
   authelia:
-    image: authelia/authelia:4.39.12
+    image: authelia/authelia:4.39.11
     container_name: authelia
     user: "1000:1000"
     restart: unless-stopped
     environment:
-      - TZ=${TIMEZONE}
       - X_AUTHELIA_CONFIG_FILTERS=template
-      - DOMAIN_NAME=${DOMAIN_NAME}
-      - JWT_SECRET=${JWT_SECRET}
-      - SESSION_SECRET=${SESSION_SECRET}
-      - STORAGE_ENCRYPTION_KEY=${STORAGE_ENCRYPTION_KEY}
+      - PUID=1000
+      - GUID=1000
     volumes:
       - ${DATADIR}/homeserver/authelia/config:/config
     labels:
@@ -33,4 +30,3 @@ services:
 networks:
   traefik_network:
     external: true
-

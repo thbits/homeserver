@@ -29,7 +29,9 @@ jobs:
       - name: Find all docker-compose files
         id: find-compose
         run: |
-          compose_dirs=$(find . -name "docker-compose.yml" -not -path "./.git/*" | xargs -I {} dirname {} | sort)
+          # Find all compose files and sort with traefik first
+          compose_dirs=$(find . -name "docker-compose.yml" -not -path "./.git/*" | xargs -I {} dirname {} | sort | awk '{if ($0 ~ /traefik/) print $0}')
+          compose_dirs="$compose_dirs"$'\n'$(find . -name "docker-compose.yml" -not -path "./.git/*" | xargs -I {} dirname {} | sort | awk '{if ($0 !~ /traefik/) print $0}')
           echo "dirs<<EOF" >> $GITHUB_OUTPUT
           echo "$compose_dirs" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -38,21 +40,21 @@ jobs:
         run: |
           for dir in ${{ steps.find-compose.outputs.dirs }}; do
             echo "Validating $dir/docker-compose.yml"
-            (cd "$dir" && docker compose config -q)
+            (cd "$dir" && docker compose --env-file ../.env config -q)
           done
 
       - name: Pull latest images
         run: |
           for dir in ${{ steps.find-compose.outputs.dirs }}; do
             echo "Pulling images for $dir"
-            (cd "$dir" && docker compose pull)
+            (cd "$dir" && docker compose --env-file ../.env pull)
           done
 
       - name: Deploy services
         run: |
           for dir in ${{ steps.find-compose.outputs.dirs }}; do
             echo "Deploying services in $dir"
-            (cd "$dir" && docker compose up -d --remove-orphans)
+            (cd "$dir" && docker compose --env-file ../.env up -d --remove-orphans)
           done
 
       - name: Cleanup old images

@@ -114,23 +114,25 @@ docker run --rm -it authelia/authelia:4.39.11 authelia crypto hash generate argo
 ### Deploy All Services
 ```bash
 # Deploy in order: traefik -> authelia -> n8n
-cd traefik && docker compose up -d && cd ..
-cd authelia && docker compose up -d && cd ..
-cd n8n && docker compose up -d && cd ..
+cd traefik && docker compose --env-file ../.env up -d && cd ..
+cd authelia && docker compose --env-file ../.env up -d && cd ..
+cd n8n && docker compose --env-file ../.env up -d && cd ..
 ```
 
 ### Deploy Individual Service
 ```bash
 cd <service-directory>
-docker compose up -d
+docker compose --env-file ../.env up -d
 ```
 
 ### Update Services
 ```bash
 cd <service-directory>
-docker compose pull
-docker compose up -d
+docker compose --env-file ../.env pull
+docker compose --env-file ../.env up -d
 ```
+
+**Note:** The `--env-file ../.env` flag is required to load common variables (DATADIR, DOMAIN_NAME, etc.) for use in the docker-compose.yml file itself.
 
 ## Automated Updates
 
