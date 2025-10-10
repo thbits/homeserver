@@ -1,7 +1,10 @@
 users:
-  <EMAIL>:
+  <USERNAME>:
     displayname: <User_Display_Name>
     # Set encrypted password with the following command
     # docker run --rm -it authelia/authelia authelia crypto hash generate argon2
+    # You may leave password empty if smtp is configured, the user will set it.
     password: ""
-    groups: [admins]
+    email: <EMAIL>
+    groups:
+      - admins

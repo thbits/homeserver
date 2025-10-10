@@ -23,6 +23,8 @@ jobs:
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
       STORAGE_ENCRYPTION_KEY: ${{ secrets.STORAGE_ENCRYPTION_KEY }}
+      SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
     steps:
       - uses: actions/checkout@v5
 

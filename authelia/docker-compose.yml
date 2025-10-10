@@ -13,6 +13,8 @@ services:
       - JWT_SECRET=${JWT_SECRET}
       - SESSION_SECRET=${SESSION_SECRET}
       - STORAGE_ENCRYPTION_KEY=${STORAGE_ENCRYPTION_KEY}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
     volumes:
       - ${DATADIR}/homeserver/authelia/config:/config
     labels:

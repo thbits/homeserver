@@ -59,6 +59,10 @@ TIMEZONE=Asia/Jerusalem
 JWT_SECRET=<generated-secret>
 SESSION_SECRET=<generated-secret>
 STORAGE_ENCRYPTION_KEY=<generated-secret>
+
+# SMTP configuration (for email notifications)
+SMTP_USERNAME=your-email@gmail.com
+SMTP_PASSWORD=<gmail-app-password>
 ```
 
 #### Generate Authelia Secrets
@@ -68,6 +72,16 @@ docker run --rm authelia/authelia:latest authelia crypto rand --length 64
 ```
 
 Run this command three times to generate the three secrets, then add them to `.env`.
+
+#### Generate Gmail App Password
+
+To use Gmail for email notifications, you need to generate an app password:
+
+1. Go to [Google App Passwords](https://myaccount.google.com/apppasswords)
+2. Enable 2-factor authentication if you haven't already
+3. Select "Mail" and your device
+4. Click "Generate" to get a 16-character password
+5. Add this password to your `.env` file as `SMTP_PASSWORD`
 
 #### GitHub Actions Configuration
 
@@ -87,6 +101,8 @@ Set these as GitHub Actions variables/secrets (Settings → Secrets and variable
 | `JWT_SECRET` | Authelia | Generate with: `docker run --rm authelia/authelia:latest authelia crypto rand --length 64` |
 | `SESSION_SECRET` | Authelia | Generate with: `docker run --rm authelia/authelia:latest authelia crypto rand --length 64` |
 | `STORAGE_ENCRYPTION_KEY` | Authelia | Generate with: `docker run --rm authelia/authelia:latest authelia crypto rand --length 64` |
+| `SMTP_USERNAME` | Authelia | Your Gmail address (e.g., your-email@gmail.com) |
+| `SMTP_PASSWORD` | Authelia | Gmail app password (generate at https://myaccount.google.com/apppasswords) |
 
 ### 2. Authelia Users
 
