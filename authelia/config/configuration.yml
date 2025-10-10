@@ -15,11 +15,13 @@ server:
 session:
   name: authelia_session
   secret: '{{ mustEnv "SESSION_SECRET" }}'
-  expiration: 1h
-  inactivity: 15m
+  expiration: 8h
+  inactivity: 30m
+  remember_me: 30d
   cookies:
     - domain: '{{ mustEnv "DOMAIN_NAME" }}'
       authelia_url: 'https://auth.{{ mustEnv "DOMAIN_NAME" }}'
+      same_site: lax
 
 storage:
   local:
@@ -36,11 +38,30 @@ authentication_backend:
     password:
       algorithm: argon2
 
+regulation:
+  max_retries: 5
+  find_time: 2m
+  ban_time: 10m
+
 access_control:
   default_policy: deny
   rules:
-    - domain: 'n8n.{{ mustEnv "DOMAIN_NAME" }}'
+    # Protect all subdomains with authentication
+    - domain: '*.{{ mustEnv "DOMAIN_NAME" }}'
       policy: one_factor
+    
+    # Example: Override specific domain with different policy
+    # Uncomment and modify as needed:
+    # - domain: 'admin.{{ mustEnv "DOMAIN_NAME" }}'
+    #   policy: two_factor  # Require 2FA for admin panel
+    #
+    # - domain: 'public.{{ mustEnv "DOMAIN_NAME" }}'
+    #   policy: bypass  # No authentication needed
+    #
+    # - domain: 'sensitive.{{ mustEnv "DOMAIN_NAME" }}'
+    #   policy: two_factor
+    #   subject:
+    #     - "group:admins"  # Only admins can access
 
 notifier:
   # Uncomment this if you want to use the filesystem notifier
