@@ -1,8 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
+  "extends": [
+    "config:recommended"
+  ],
   "docker-compose": {
-    "fileMatch": ["(^|/)docker-compose\\.ya?ml$"],
+    "managerFilePatterns": [
+      "/(^|/)docker-compose\\.ya?ml$/"
+    ],
     "major": {
       "automerge": false
     },
@@ -13,7 +17,9 @@
       "automerge": true
     }
   },
-  "schedule": ["before 7am on Sunday"],
+  "schedule": [
+    "before 7am on Sunday"
+  ],
   "timezone": "Asia/Jerusalem",
   "automergeType": "pr",
   "automergeStrategy": "squash",
