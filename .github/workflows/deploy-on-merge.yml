@@ -24,7 +24,7 @@ jobs:
       SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
       STORAGE_ENCRYPTION_KEY: ${{ secrets.STORAGE_ENCRYPTION_KEY }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Find all docker-compose files
         id: find-compose

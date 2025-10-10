@@ -7,7 +7,7 @@ jobs:
     env:
       DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Show runner
         run: |
           echo "Runner: $HOSTNAME"
