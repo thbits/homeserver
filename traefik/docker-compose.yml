@@ -1,0 +1,44 @@
+services:
+  traefik:
+    image: traefik:v3.5.3
+    container_name: traefik
+    restart: unless-stopped
+    command:
+      # dashboard (optional)
+      # - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true
+      - --certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}
+      - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json
+      - --ping=true
+      - --ping.entrypoint=traefikping
+      - --entrypoints.traefikping.address=:8081
+    ports:
+      - "80:80"
+      - "443:443"
+      # - "8080:8080"  # dashboard if enabled
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8081/ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${DATADIR}/traefik/letsencrypt:/letsencrypt
+    env_file:
+      - ../.env
+      - .env
+    networks:
+      - traefik_network
+
+networks:
+  traefik_network:
+    name: traefik_network
+    driver: bridge
+

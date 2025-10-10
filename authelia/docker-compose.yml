@@ -1,0 +1,32 @@
+services:
+  authelia:
+    image: authelia/authelia:4.39.11
+    container_name: authelia
+    user: "1000:1000"
+    restart: unless-stopped
+    environment:
+      - X_AUTHELIA_CONFIG_FILTERS=template
+      - PUID=1000
+      - GUID=1000
+    volumes:
+      - ${DATADIR}/homeserver/authelia/config:/config
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.authelia.rule=Host(`auth.${DOMAIN_NAME}`)
+      - traefik.http.routers.authelia.entrypoints=websecure
+      - traefik.http.routers.authelia.tls=true
+      - traefik.http.routers.authelia.tls.certresolver=mytlschallenge
+      - traefik.http.services.authelia.loadbalancer.server.port=9091
+      # ForwardAuth middleware for reuse on apps:
+      - traefik.http.middlewares.authelia-forwardauth.forwardauth.address=http://authelia:9091/api/authz/forward-auth
+      - traefik.http.middlewares.authelia-forwardauth.forwardauth.trustForwardHeader=true
+      - traefik.http.middlewares.authelia-forwardauth.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email
+    env_file:
+      - ../.env
+      - .env
+    networks:
+      - traefik_network
+
+networks:
+  traefik_network:
+    external: true
