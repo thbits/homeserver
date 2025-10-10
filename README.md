@@ -6,20 +6,14 @@ A modular homeserver setup using Docker Compose with Traefik reverse proxy, Auth
 
 ```
 homeserver/
-├── .env                    # Common environment variables
+├── .env                    # All environment variables (common + service-specific)
 ├── traefik/
-│   ├── docker-compose.yml  # Traefik reverse proxy
-│   ├── .env.example
-│   └── .env                # Traefik-specific variables
+│   └── docker-compose.yml  # Traefik reverse proxy
 ├── authelia/
 │   ├── docker-compose.yml  # Authentication service
-│   ├── config/
-│   ├── .env.example
-│   └── .env                # Authelia secrets
+│   └── config/
 └── n8n/
-    ├── docker-compose.yml  # n8n automation
-    ├── .env.example
-    └── .env                # n8n-specific variables
+    └── docker-compose.yml  # n8n automation
 ```
 
 ## Prerequisites
@@ -44,7 +38,7 @@ systemctl start actions.runner.<TAB><TAB>
 
 ## Configuration
 
-### 1. Common Environment Variables
+### 1. Environment Variables
 
 Copy the root `.env.example` to `.env` and configure:
 
@@ -52,52 +46,49 @@ Copy the root `.env.example` to `.env` and configure:
 cp .env.example .env
 ```
 
-Edit `.env` with your values:
-```
+Edit `.env` with ALL your values (common + service-specific):
+
+```bash
+# Common variables
 DATADIR=/path/to/data/directory
 DOMAIN_NAME=example.com
 SSL_EMAIL=your-email@example.com
 TIMEZONE=Asia/Jerusalem
-```
 
-**Note:** Set these as GitHub Actions variables/secrets:
-- Variables: `DATADIR`, `DOMAIN_NAME`, `TIMEZONE`
-- Secrets: `SSL_EMAIL`
-
-### 2. Service-Specific Environment Variables
-
-#### Traefik
-```bash
-cp traefik/.env.example traefik/.env
-```
-Currently no traefik-specific variables needed.
-
-#### Authelia
-```bash
-cp authelia/.env.example authelia/.env
-```
-
-Generate secrets using:
-```bash
-docker run --rm authelia/authelia:latest authelia crypto rand --length 64
-```
-
-Add the three secrets to `authelia/.env`:
-```
+# Authelia secrets (generate using command below)
 JWT_SECRET=<generated-secret>
 SESSION_SECRET=<generated-secret>
 STORAGE_ENCRYPTION_KEY=<generated-secret>
 ```
 
-**Note:** Set these as GitHub Actions secrets: `JWT_SECRET`, `SESSION_SECRET`, `STORAGE_ENCRYPTION_KEY`
+#### Generate Authelia Secrets
 
-#### n8n
 ```bash
-cp n8n/.env.example n8n/.env
+docker run --rm authelia/authelia:latest authelia crypto rand --length 64
 ```
-Currently no n8n-specific variables needed.
 
-### 3. Authelia Users
+Run this command three times to generate the three secrets, then add them to `.env`.
+
+#### GitHub Actions Configuration
+
+Set these as GitHub Actions variables/secrets (Settings → Secrets and variables → Actions):
+
+**Variables (public):**
+| Variable | Service | Notes |
+|----------|---------|-------|
+| `DATADIR` | All | Path to data directory on server |
+| `DOMAIN_NAME` | All | Your domain name |
+| `TIMEZONE` | All | Timezone (e.g., Asia/Jerusalem) |
+
+**Secrets (encrypted):**
+| Secret | Service | Notes |
+|--------|---------|-------|
+| `SSL_EMAIL` | Traefik | Email for Let's Encrypt notifications |
+| `JWT_SECRET` | Authelia | Generate with: `docker run --rm authelia/authelia:latest authelia crypto rand --length 64` |
+| `SESSION_SECRET` | Authelia | Generate with: `docker run --rm authelia/authelia:latest authelia crypto rand --length 64` |
+| `STORAGE_ENCRYPTION_KEY` | Authelia | Generate with: `docker run --rm authelia/authelia:latest authelia crypto rand --length 64` |
+
+### 2. Authelia Users
 
 Copy the example file and edit it:
 ```bash
@@ -111,41 +102,26 @@ docker run --rm -it authelia/authelia:4.39.11 authelia crypto hash generate argo
 
 ## Deployment
 
-### Deploy All Services
-```bash
-# Make sure all environment variables are exported
-export $(cat .env | xargs)
+### Local Deployment
 
-# Deploy in order: traefik -> authelia -> n8n
-cd traefik && docker compose up -d && cd ..
-cd authelia && docker compose up -d && cd ..
-cd n8n && docker compose up -d && cd ..
+**Important:** Always export environment variables first before running any docker compose commands:
+
+```bash
+export $(cat .env | xargs)
 ```
 
-### Deploy Individual Service
+### Deploy Services
+**From root directory**
 ```bash
-# Make sure all environment variables are exported
 export $(cat .env | xargs)
-
-cd <service-directory>
-docker compose up -d
-```
-
-### Update Services
-```bash
-# Make sure all environment variables are exported
-export $(cat .env | xargs)
-
-cd <service-directory>
-docker compose pull
-docker compose up -d
+docker compose -f <service-directory>/docker-compose.yml up -d
 ```
 
 **Note:** The `export $(cat .env | xargs)` command loads environment variables from the root `.env` file into your shell, making them available to docker-compose for variable substitution.
 
 ## Automated Updates
 
-This project uses **Renovate** (replacing Dependabot) for automated dependency updates.
+This project uses **Renovate** (for automated dependency updates.
 
 - **Schedule:** Sundays at 6:00 AM (Asia/Jerusalem timezone)
 - **Auto-merge:** Minor and patch version updates are automatically merged

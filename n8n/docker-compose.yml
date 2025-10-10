@@ -26,8 +26,8 @@ services:
     volumes:
       - ${DATADIR}/n8n_data:/home/node/.n8n
     networks:
-      - traefik_network
+      - internal
 
 networks:
-  traefik_network:
+  internal:
     external: true

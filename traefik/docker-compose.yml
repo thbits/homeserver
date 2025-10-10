@@ -32,10 +32,21 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${DATADIR}/traefik/letsencrypt:/letsencrypt
     networks:
-      - traefik_network
+      - traefik_external
+      - internal
 
 networks:
-  traefik_network:
-    name: traefik_network
+  traefik_external:
+    name: traefik_external
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+  internal:
+    name: internal
+    driver: bridge
+    internal: false
+    ipam:
+      config:
+        - subnet: 172.20.1.0/24
 
