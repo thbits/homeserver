@@ -26,14 +26,34 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate docker compose
-        run: docker compose config -q
+      - name: Find all docker-compose files
+        id: find-compose
+        run: |
+          compose_dirs=$(find . -name "docker-compose.yml" -not -path "./.git/*" | xargs -I {} dirname {} | sort)
+          echo "dirs<<EOF" >> $GITHUB_OUTPUT
+          echo "$compose_dirs" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Validate all docker-compose files
+        run: |
+          for dir in ${{ steps.find-compose.outputs.dirs }}; do
+            echo "Validating $dir/docker-compose.yml"
+            (cd "$dir" && docker compose config -q)
+          done
 
       - name: Pull latest images
-        run: docker compose pull
+        run: |
+          for dir in ${{ steps.find-compose.outputs.dirs }}; do
+            echo "Pulling images for $dir"
+            (cd "$dir" && docker compose pull)
+          done
 
       - name: Deploy services
-        run: docker compose up -d --remove-orphans
+        run: |
+          for dir in ${{ steps.find-compose.outputs.dirs }}; do
+            echo "Deploying services in $dir"
+            (cd "$dir" && docker compose up -d --remove-orphans)
+          done
 
       - name: Cleanup old images
         run: docker image prune -f

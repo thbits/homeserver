@@ -1,4 +1,7 @@
 .env
+traefik/.env
+authelia/.env
+n8n/.env
 
 # Authelia
 authelia/config/users.yaml
