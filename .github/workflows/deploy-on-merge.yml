@@ -29,33 +29,38 @@ jobs:
       - name: Find all docker-compose files
         id: find-compose
         run: |
-          # Find all compose files and sort with traefik first
-          compose_dirs=$(find . -name "docker-compose.yml" -not -path "./.git/*" | xargs -I {} dirname {} | sort | awk '{if ($0 ~ /traefik/) print $0}')
-          compose_dirs="$compose_dirs"$'\n'$(find . -name "docker-compose.yml" -not -path "./.git/*" | xargs -I {} dirname {} | sort | awk '{if ($0 !~ /traefik/) print $0}')
+          # Find traefik first, then others
+          traefik=$(find . -name "docker-compose.yml" -path "*/traefik/*" -not -path "./.git/*" | xargs -I {} dirname {})
+          others=$(find . -name "docker-compose.yml" -not -path "*/traefik/*" -not -path "./.git/*" | xargs -I {} dirname {} | sort)
+          # Combine with traefik first
+          dirs="$traefik"$'\n'"$others"
           echo "dirs<<EOF" >> $GITHUB_OUTPUT
-          echo "$compose_dirs" >> $GITHUB_OUTPUT
+          echo "$dirs" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Validate all docker-compose files
         run: |
-          for dir in ${{ steps.find-compose.outputs.dirs }}; do
+          while IFS= read -r dir; do
+            [ -z "$dir" ] && continue
             echo "Validating $dir/docker-compose.yml"
-            (cd "$dir" && docker compose --env-file ../.env config -q)
-          done
+            (cd "$dir" && docker compose config -q)
+          done <<< "${{ steps.find-compose.outputs.dirs }}"
 
       - name: Pull latest images
         run: |
-          for dir in ${{ steps.find-compose.outputs.dirs }}; do
+          while IFS= read -r dir; do
+            [ -z "$dir" ] && continue
             echo "Pulling images for $dir"
-            (cd "$dir" && docker compose --env-file ../.env pull)
-          done
+            (cd "$dir" && docker compose pull)
+          done <<< "${{ steps.find-compose.outputs.dirs }}"
 
       - name: Deploy services
         run: |
-          for dir in ${{ steps.find-compose.outputs.dirs }}; do
+          while IFS= read -r dir; do
+            [ -z "$dir" ] && continue
             echo "Deploying services in $dir"
-            (cd "$dir" && docker compose --env-file ../.env up -d --remove-orphans)
-          done
+            (cd "$dir" && docker compose up -d --remove-orphans)
+          done <<< "${{ steps.find-compose.outputs.dirs }}"
 
       - name: Cleanup old images
         run: docker image prune -f
