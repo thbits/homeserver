@@ -13,7 +13,7 @@
       "automerge": true
     }
   },
-  "schedule": ["before 7am on Sunday"],
+  "schedule": ["at any time"],
   "timezone": "Asia/Jerusalem",
   "automergeType": "pr",
   "automergeStrategy": "squash",
