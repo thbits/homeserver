@@ -17,8 +17,12 @@ jobs:
     runs-on: self-hosted
     env:
       DATADIR: ${{ vars.DATADIR }}
-      DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
+      CONFIGDIR: ${{ vars.CONFIGDIR }}
+      DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+      PUID: ${{ secrets.PUID }}
+      PGID: ${{ secrets.PGID }}
       SSL_EMAIL: ${{ secrets.SSL_EMAIL }}
+      CF_DNS_API_TOKEN: ${{ secrets.CF_DNS_API_TOKEN }}
       TIMEZONE: ${{ vars.TIMEZONE }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       SESSION_SECRET: ${{ secrets.SESSION_SECRET }}

@@ -12,16 +12,24 @@ services:
       - --entrypoints.web.http.redirections.entrypoint.to=websecure
       - --entrypoints.web.http.redirections.entrypoint.scheme=https
       - --entrypoints.websecure.address=:443
-      - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true
-      - --certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}
-      - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json
+        #- --certificatesresolvers.mytlschallenge.acme.tlschallenge=true
+        #- --certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}
+        #- --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.myclouddns.acme.dnschallenge=true
+      - --certificatesresolvers.myclouddns.acme.dnschallenge.provider=cloudflare
+      - --certificatesresolvers.myclouddns.acme.email=${SSL_EMAIL}
+      - --certificatesresolvers.myclouddns.acme.storage=/letsencrypt/acme.json
       - --ping=true
       - --ping.entrypoint=traefikping
       - --entrypoints.traefikping.address=:8081
+      # Staging cert, undo after successful cert issue
+      - --certificatesresolvers.myclouddns.acme.caServer=https://acme-staging.api.letsencrypt.org/directory
     ports:
       - "80:80"
       - "443:443"
       # - "8080:8080"  # dashboard if enabled
+    environment:
+      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8081/ping"]
       interval: 10s
