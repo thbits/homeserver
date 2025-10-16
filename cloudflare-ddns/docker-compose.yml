@@ -1,0 +1,14 @@
+services:
+  cloudflare-ddns:
+    image: timothyjmiller/cloudflare-ddns:latest
+    container_name: cloudflare-ddns
+    security_opt:
+      - no-new-privileges:true
+    network_mode: 'host'
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - CF_DDNS_API_TOKEN=${CF_DNS_API_TOKEN}
+    volumes:
+      - ${DATADIR}/cloudflare-ddns/config.json:/config.json
+    restart: unless-stopped
