@@ -4,7 +4,7 @@
       "authentication": {
         "api_token": "${CF_DDNS_API_TOKEN}"
       },
-      "zone_id": "ENTER_ZONE_ID_HERE",
+      "zone_id": "${CF_DDNS_ZONE_ID}",
       "subdomains": [
         {
           "name": "@",

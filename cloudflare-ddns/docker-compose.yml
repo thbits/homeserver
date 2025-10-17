@@ -9,6 +9,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - CF_DDNS_API_TOKEN=${CF_DNS_API_TOKEN}
+      - CF_DDNS_ZONE_ID=${CF_DNS_ZONE_ID}
     volumes:
-      - ${DATADIR}/cloudflare-ddns/config.json:/config.json
+      - ${CONFIGDIR}/cloudflare-ddns/config.json:/config.json
     restart: unless-stopped
