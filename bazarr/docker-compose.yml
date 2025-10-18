@@ -1,0 +1,38 @@
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:v1.5.2-ls314
+    container_name: bazarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - UMASK=002
+    volumes:
+      - ${DATADIR}/bazarr/config:/config
+      - ${DATADIR}/library/media:/data/media
+    ports:
+      - 6767:6767
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.bazarr.rule=Host(`bazarr.${DOMAIN_NAME}`)
+      - traefik.http.routers.bazarr.entrypoints=websecure
+      - traefik.http.routers.bazarr.tls=true
+      - traefik.http.routers.bazarr.tls.certresolver=myclouddns
+      - traefik.http.services.bazarr.loadbalancer.server.port=6767
+      - traefik.http.routers.bazarr.middlewares=authelia-forwardauth@docker
+      # - homepage.group=Servarr
+      # - homepage.name=Bazarr
+      # - homepage.icon=bazarr.png
+      # - homepage.href=http://${LOCAL_FQDN}:${BAZARR_EXT_PORT}/
+      # - homepage.instance.public.href=https://bazarr.${FQDN}
+      # - homepage.description=Manages and downloads subtitles
+      # - homepage.widget.type=bazarr
+      # - homepage.widget.url=http://bazarr:6767
+      # - homepage.widget.key=${BAZARR_API_KEY}
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
