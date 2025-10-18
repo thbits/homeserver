@@ -31,7 +31,7 @@ sonarr:
     # Custom Quality Definitions - Prefer larger, high-quality files
     quality_definition:
       type: series
-      # preferred_ratio: 0.4  # Prefer larger files (80% toward maximum)
+      preferred_ratio: 0.12
 
     # Automatically remove old custom formats
     delete_old_custom_formats: true
@@ -73,7 +73,7 @@ radarr:
     # 4K: 8GB min, prefer ~20GB
     quality_definition:
       type: movie
-      # preferred_ratio: 0.75  # Prefer larger files (75% toward maximum)
+      preferred_ratio: 0.09  # Prefer larger files (75% toward maximum)
 
     # Automatically remove old custom formats
     delete_old_custom_formats: true
