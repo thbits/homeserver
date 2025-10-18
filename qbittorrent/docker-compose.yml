@@ -12,7 +12,7 @@ services:
       - ${DATADIR}/qbittorrent/config:/config
       - ${DATADIR}/library/torrents:/data/torrents
     ports:
-      # - 8181:8181
+      - 8181:8181
       - 6881:6881
       - 6881:6881/udp
     labels:
