@@ -73,6 +73,10 @@ STORAGE_ENCRYPTION_KEY=<generated-secret>
 # SMTP configuration (for email notifications)
 SMTP_USERNAME=your-email@gmail.com
 SMTP_PASSWORD=<gmail-app-password>
+
+# Servarr API Keys (found in Settings → General → Security in each app)
+SONARR_API_KEY=<your-sonarr-api-key>
+RADARR_API_KEY=<your-radarr-api-key>
 ```
 
 #### Generate Authelia Secrets
@@ -131,6 +135,8 @@ Set these as GitHub Actions variables/secrets (Settings → Secrets and variable
 | `STORAGE_ENCRYPTION_KEY` | Authelia | Generate with: `docker run --rm authelia/authelia:latest authelia crypto rand --length 64` |
 | `SMTP_USERNAME` | Authelia | Your Gmail address (e.g., your-email@gmail.com) |
 | `SMTP_PASSWORD` | Authelia | Gmail app password (generate at https://myaccount.google.com/apppasswords) |
+| `SONARR_API_KEY` | Recyclarr, Unpackerr | Sonarr API key (found in Sonarr → Settings → General → Security) |
+| `RADARR_API_KEY` | Recyclarr, Unpackerr | Radarr API key (found in Radarr → Settings → General → Security) |
 
 ### 2. Authelia Users
 
@@ -234,12 +240,13 @@ On first access to protected services, you'll be redirected to Authelia for auth
 
 ## Automated Updates
 
-This project uses **Renovate** (for automated dependency updates.
+This project uses **Renovate** for automated dependency updates.
 
-- **Schedule:** Sundays at 6:00 AM (Asia/Jerusalem timezone)
+- **Schedule:** Sundays between 3:00 AM - 7:00 AM (Asia/Jerusalem timezone)
 - **Auto-merge:** Minor and patch version updates are automatically merged
 - **Manual review:** Major version updates require manual approval
 - **Discovery:** Automatically finds all `docker-compose.yml` files in the repository
+- **Security:** Docker images are pinned with digests for immutable references
 
 Renovate configuration is in `.github/renovate.json`
 
