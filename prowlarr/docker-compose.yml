@@ -1,0 +1,35 @@
+services:
+  # Prowlarr
+  prowlarr:
+    container_name: prowlarr
+    image: lscr.io/linuxserver/prowlarr:2.0.5.5160-ls129
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      # - UMASK=002
+      - TZ=${TIMEZONE}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.prowlarr.rule=Host(`prowlarr.${DOMAIN_NAME}`)
+      - traefik.http.routers.prowlarr.entrypoints=websecure
+      - traefik.http.routers.prowlarr.tls=true
+      - traefik.http.routers.prowlarr.tls.certresolver=myclouddns
+      - traefik.http.routers.prowlarr.middlewares=authelia-forwardauth@docker
+    #   - homepage.group=Servarr
+    #   - homepage.name=Prowlarr
+    #   - homepage.icon=prowlarr.png
+    #   - homepage.href=http://${LOCAL_FQDN}:${PROWLARR_EXT_PORT}/
+    #   - homepage.instance.public.href=https://prowlarr.${FQDN}
+    #   - homepage.description=Indexer manager
+    #   - homepage.widget.type=prowlarr
+    #   - homepage.widget.url=http://prowlarr:9696
+    #   - homepage.widget.key=${PROWLARR_API_KEY}
+    volumes:
+      - ${DATADIR}/prowlarr/config:/config
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true

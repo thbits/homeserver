@@ -1,0 +1,37 @@
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:5.26.2.10099-ls280
+    container_name: radarr
+    volumes:
+      - ${DATADIR}/radarr/config:/config
+      - ${DATADIR}/library:/data
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    ports:
+      - 7878:7878
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.radarr.rule=Host(`radarr.${DOMAIN_NAME}`)
+      - traefik.http.routers.radarr.entrypoints=websecure
+      - traefik.http.routers.radarr.tls=true
+      - traefik.http.routers.radarr.tls.certresolver=myclouddns
+      - traefik.http.routers.radarr.middlewares=authelia-forwardauth@docker
+      # - homepage.group=Servarr
+      # - homepage.name=Radarr
+      # - homepage.icon=radarr.png
+      # - homepage.href=http://${LOCAL_FQDN}:${RADARR_EXT_PORT}/
+      # - homepage.instance.public.href=https://radarr.${FQDN}
+      # - homepage.description=Manages and downloads movies
+      # - homepage.widget.type=radarr
+      # - homepage.widget.url=http://radarr:7878
+      # - homepage.widget.key=${RADARR_API_KEY}
+      # - homepage.widget.enableQueue=true
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true

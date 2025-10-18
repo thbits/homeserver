@@ -1,0 +1,23 @@
+services:
+  unpackerr:
+    image: golift/unpackerr:0.14.5
+    container_name: unpackerr
+    volumes:
+      - ${DATADIR}/unpackerr/logs:/logs
+      - ${DATADIR}/library/torrents:/torrents
+    restart: unless-stopped
+    environment:
+      - TZ=${TIMEZONE}
+      - UN_LOG_FILE=/logs/unpackerr.log
+      - UN_SONARR_0_URL=http://sonarr:8989
+      - UN_SONARR_0_API_KEY=${SONARR_API_KEY}
+      - UN_SONARR_0_PATHS_0=/data/torrents/tv
+      - UN_RADARR_0_URL=http://radarr:7878
+      - UN_RADARR_0_API_KEY=${RADARR_API_KEY}
+      - UN_RADARR_0_PATHS_0=/data/torrents/movies
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true

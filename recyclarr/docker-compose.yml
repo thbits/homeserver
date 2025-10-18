@@ -1,0 +1,19 @@
+services:
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr:7.4.1
+    container_name: recyclarr
+    user: 1000:1000
+    volumes:
+      - ${DATADIR}/recyclarr/config:/config
+      - ${CONFIGDIR}/recyclarr/recyclarr.yml:/config/recyclarr.yml
+    environment:
+      - TZ=${TIMEZONE}
+      - SONARR_API_KEY=${SONARR_API_KEY}
+      - RADARR_API_KEY=${RADARR_API_KEY}
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true

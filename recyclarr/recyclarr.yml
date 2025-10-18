@@ -1,0 +1,87 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json
+
+###################################################################################################
+# Recyclarr Configuration - Modern Template-Based Approach
+# Documentation: https://recyclarr.dev/
+# Templates: https://github.com/recyclarr/config-templates
+###################################################################################################
+
+sonarr:
+  sonarr_1:
+    base_url: http://sonarr:8989
+    api_key: !env_var SONARR_API_KEY
+
+    # Use pre-built templates instead of manually listing trash_ids
+    include:
+      # 1080p WEB Quality Profile
+      # Creates "WEB-1080p" quality profile optimized for streaming services
+      - template: sonarr-v4-quality-profile-web-1080p
+      - template: sonarr-v4-custom-formats-web-1080p
+      
+      # 2160p (4K) WEB Quality Profile
+      # Creates "WEB-2160p" quality profile for 4K content
+      - template: sonarr-v4-quality-profile-web-2160p
+      - template: sonarr-v4-custom-formats-web-2160p
+      
+      # Anime Quality Profile
+      # Creates "Anime" quality profile with anime-specific scoring
+      - template: sonarr-v4-quality-profile-anime
+      - template: sonarr-v4-custom-formats-anime
+
+    # Custom Quality Definitions - Prefer larger, high-quality files
+    quality_definition:
+      type: series
+      # preferred_ratio: 0.4  # Prefer larger files (80% toward maximum)
+
+    # Automatically remove old custom formats
+    delete_old_custom_formats: true
+
+    # Media naming - DISABLED to preserve your custom naming formats
+    # If you want Recyclarr to manage naming, uncomment and configure below:
+    # media_naming:
+    #   season: default
+    #   episodes:
+    #     rename: true
+    #     standard: default
+    #     daily: default
+    #     anime: default
+
+radarr:
+  radarr_1:
+    base_url: http://radarr:7878
+    api_key: !env_var RADARR_API_KEY
+
+    # Use pre-built templates for Radarr
+    include:
+      # HD (1080p) Bluray + WEB Quality Profile
+      # Creates "HD-Bluray-Web" quality profile for 1080p content
+      - template: radarr-quality-profile-hd-bluray-web
+      - template: radarr-custom-formats-hd-bluray-web
+      
+      # UHD (4K) Bluray + WEB Quality Profile
+      # Creates "UHD-Bluray-Web" quality profile for 4K content
+      - template: radarr-quality-profile-uhd-bluray-web
+      - template: radarr-custom-formats-uhd-bluray-web
+      
+      # Anime Quality Profile
+      # Creates "Anime" quality profile with anime-specific scoring
+      - template: radarr-quality-profile-anime
+      - template: radarr-custom-formats-anime
+
+    # Custom Quality Definitions - Prefer larger, high-quality files
+    # 1080p: 5GB min, prefer ~18GB (20 Mbps for 2hr movie)
+    # 4K: 8GB min, prefer ~20GB
+    quality_definition:
+      type: movie
+      # preferred_ratio: 0.75  # Prefer larger files (75% toward maximum)
+
+    # Automatically remove old custom formats
+    delete_old_custom_formats: true
+
+    # Media naming - DISABLED to preserve your custom naming formats
+    # If you want Recyclarr to manage naming, uncomment and configure below:
+    # media_naming:
+    #   folder: default
+    #   movie:
+    #     rename: true
+    #     standard: default

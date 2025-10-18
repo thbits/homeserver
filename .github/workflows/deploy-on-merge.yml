@@ -30,6 +30,8 @@ jobs:
       STORAGE_ENCRYPTION_KEY: ${{ secrets.STORAGE_ENCRYPTION_KEY }}
       SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
       SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      SONARR_API_KEY: ${{ secrets.SONARR_API_KEY }}
+      RADARR_API_KEY: ${{ secrets.RADARR_API_KEY }}
     steps:
       - uses: actions/checkout@v5
 
