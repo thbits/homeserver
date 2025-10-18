@@ -19,6 +19,7 @@ jobs:
       DATADIR: ${{ vars.DATADIR }}
       CONFIGDIR: ${{ vars.CONFIGDIR }}
       DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+      LOCAL_IP: ${{ secrets.LOCAL_IP }}
       PUID: ${{ secrets.PUID }}
       PGID: ${{ secrets.PGID }}
       SSL_EMAIL: ${{ secrets.SSL_EMAIL }}

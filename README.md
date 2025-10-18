@@ -125,6 +125,7 @@ Set these as GitHub Actions variables/secrets (Settings → Secrets and variable
 | Secret | Service | Notes |
 |--------|---------|-------|
 | `DOMAIN_NAME` | All | Your domain name |
+| `LOCAL_IP` | All | Your local server IP |
 | `PUID` | All | User ID (typically 1000) |
 | `PGID` | All | Group ID (typically 1000) |
 | `SSL_EMAIL` | Traefik | Email for Let's Encrypt notifications |
