@@ -1,0 +1,42 @@
+services:
+  qbittorrent:
+    image: ghcr.io/hotio/qbittorrent:release-5.1.2
+    container_name: qbittorrent
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - WEBUI_PORTS=8181/tcp,8181/udp
+      - UMASK=002
+    volumes:
+      - ${DATADIR}/qbittorrent/config:/config
+      - ${DATADIR}/library/torrents:/data/torrents
+    ports:
+      # - 8181:8181
+      - 6881:6881
+      - 6881:6881/udp
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.${DOMAIN_NAME}`)
+      - traefik.http.routers.qbittorrent.entrypoints=websecure
+      - traefik.http.routers.qbittorrent.tls=true
+      - traefik.http.routers.qbittorrent.tls.certresolver=myclouddns
+      - traefik.http.services.qbittorrent.loadbalancer.server.port=8181
+      - traefik.http.routers.qbittorrent.middlewares=authelia-forwardauth@docker
+      # - homepage.group=Other
+      # - homepage.name=qBittorrent
+      # - homepage.icon=qbittorrent.png
+      # - homepage.href=http://${LOCAL_FQDN}:${QBIT_WEBUI_PORT}/
+      # - homepage.instance.public.href=https://qbittorrent.${FQDN}
+      # - homepage.description=qBittorrent web client
+      # - homepage.widget.type=qbittorrent
+      # - homepage.widget.url=http://qbittorrent:${QBIT_WEBUI_PORT}
+      # - homepage.widget.username=${QBIT_USER}
+      # - homepage.widget.password=${QBIT_PASS}
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
