@@ -25,7 +25,7 @@
       "matchDatasources": ["docker"],
       "commitMessagePrefix": "deps(compose):",
       "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true,
+      "automerge": false,
       "automergeType": "pr",
       "automergeStrategy": "squash"
     }
