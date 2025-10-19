@@ -12,6 +12,26 @@
   "prConcurrentLimit": 10,
   "packageRules": [
     {
+      "description": "Jellyfin: Only auto-merge patch updates",
+      "matchManagers": ["docker-compose"],
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["jellyfin/jellyfin"],
+      "commitMessagePrefix": "deps(jellyfin):",
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "squash"
+    },
+    {
+      "description": "Jellyfin: Do not auto-merge minor and major updates",
+      "matchManagers": ["docker-compose"],
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["jellyfin/jellyfin"],
+      "commitMessagePrefix": "deps(jellyfin):",
+      "matchUpdateTypes": ["minor", "major"],
+      "automerge": false
+    },
+    {
       "description": "Docker Compose image updates",
       "matchManagers": ["docker-compose"],
       "matchDatasources": ["docker"],
