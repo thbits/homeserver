@@ -1,0 +1,6 @@
+---
+# CrowdSec log acquisition configuration for Traefik
+filenames:
+  - /var/log/traefik/access.log
+labels:
+  type: traefik

@@ -17,7 +17,7 @@ services:
       - traefik.http.routers.sonarr.entrypoints=websecure
       - traefik.http.routers.sonarr.tls=true
       - traefik.http.routers.sonarr.tls.certresolver=myclouddns
-      - traefik.http.routers.sonarr.middlewares=authelia-forwardauth@docker
+      - traefik.http.routers.sonarr.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
       # - homepage.group=Servarr
       # - homepage.name=Sonarr
       # - homepage.icon=sonarr.png

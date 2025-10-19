@@ -17,7 +17,7 @@ services:
       - traefik.http.routers.radarr.entrypoints=websecure
       - traefik.http.routers.radarr.tls=true
       - traefik.http.routers.radarr.tls.certresolver=myclouddns
-      - traefik.http.routers.radarr.middlewares=authelia-forwardauth@docker
+      - traefik.http.routers.radarr.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
       # - homepage.group=Servarr
       # - homepage.name=Radarr
       # - homepage.icon=radarr.png

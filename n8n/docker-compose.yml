@@ -23,7 +23,7 @@ services:
       - traefik.http.routers.n8n.entrypoints=websecure
       - traefik.http.routers.n8n.tls=true
       - traefik.http.routers.n8n.tls.certresolver=myclouddns
-      - traefik.http.routers.n8n.middlewares=authelia-forwardauth@docker
+      - traefik.http.routers.n8n.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
     volumes:
       - ${DATADIR}/n8n:/home/node/.n8n
     networks:

@@ -19,7 +19,7 @@ services:
       - traefik.http.routers.bazarr.tls=true
       - traefik.http.routers.bazarr.tls.certresolver=myclouddns
       - traefik.http.services.bazarr.loadbalancer.server.port=6767
-      - traefik.http.routers.bazarr.middlewares=authelia-forwardauth@docker
+      - traefik.http.routers.bazarr.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
       # - homepage.group=Servarr
       # - homepage.name=Bazarr
       # - homepage.icon=bazarr.png

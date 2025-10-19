@@ -35,7 +35,7 @@ services:
       - traefik.http.middlewares.pihole-redirect.redirectregex.regex=^https?://([^/]+)/?$$
       - traefik.http.middlewares.pihole-redirect.redirectregex.replacement=https://$$1/admin/
       - traefik.http.middlewares.pihole-redirect.redirectregex.permanent=true
-      - traefik.http.routers.pihole.middlewares=pihole-redirect,authelia-forwardauth@docker
+      - traefik.http.routers.pihole.middlewares=crowdsec-bouncer@docker,pihole-redirect,authelia-forwardauth@docker
     #      - homepage.group=Other
     #      - homepage.name=Pi-Hole
     #      - homepage.icon=pi-hole.png

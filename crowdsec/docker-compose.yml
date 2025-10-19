@@ -1,0 +1,50 @@
+services:
+  crowdsec:
+    image: crowdsecurity/crowdsec:v1.6.9
+    container_name: crowdsec
+    restart: unless-stopped
+    environment:
+      - COLLECTIONS=crowdsecurity/traefik crowdsecurity/http-cve
+      - GID=${PGID}
+      - TZ=${TIMEZONE}
+      - DISABLE_ONLINE_API=false
+    healthcheck:
+      test: ["CMD", "cscli", "version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      - ${DATADIR}/crowdsec/config:/etc/crowdsec
+      - ${CONFIGDIR}/crowdsec/config/acquis.yaml:/etc/crowdsec/acquis.yaml:ro
+      - ${DATADIR}/crowdsec/data:/var/lib/crowdsec/data
+      - ${DATADIR}/traefik/logs:/var/log/traefik:ro
+    networks:
+      - internal
+
+  dashboard:
+    image: metabase/metabase:v0.56.10.3
+    container_name: crowdsec-dashboard
+    restart: unless-stopped
+    depends_on:
+      - crowdsec
+    environment:
+      - MB_DB_FILE=/data/metabase.db
+      - MGID=${PGID}
+    volumes:
+      - ${DATADIR}/crowdsec/dashboard:/data
+      - ${DATADIR}/crowdsec/data:/crowdsec-db:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.crowdsec-dashboard.rule=Host(`crowdsec.${DOMAIN_NAME}`)
+      - traefik.http.routers.crowdsec-dashboard.entrypoints=websecure
+      - traefik.http.routers.crowdsec-dashboard.tls=true
+      - traefik.http.routers.crowdsec-dashboard.tls.certresolver=myclouddns
+      - traefik.http.services.crowdsec-dashboard.loadbalancer.server.port=3000
+      - traefik.http.routers.crowdsec-dashboard.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true

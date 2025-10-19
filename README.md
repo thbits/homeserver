@@ -77,6 +77,10 @@ SMTP_PASSWORD=<gmail-app-password>
 # Servarr API Keys (found in Settings → General → Security in each app)
 SONARR_API_KEY=<your-sonarr-api-key>
 RADARR_API_KEY=<your-radarr-api-key>
+
+# CrowdSec (generate bouncer key after first deployment)
+CROWDSEC_BOUNCER_KEY=<generate-after-deployment>
+CROWDSEC_ENROLL_KEY=<optional-for-console>
 ```
 
 #### Generate Authelia Secrets
@@ -138,6 +142,8 @@ Set these as GitHub Actions variables/secrets (Settings → Secrets and variable
 | `SMTP_PASSWORD` | Authelia | Gmail app password (generate at https://myaccount.google.com/apppasswords) |
 | `SONARR_API_KEY` | Recyclarr, Unpackerr | Sonarr API key (found in Sonarr → Settings → General → Security) |
 | `RADARR_API_KEY` | Recyclarr, Unpackerr | Radarr API key (found in Radarr → Settings → General → Security) |
+| `CROWDSEC_BOUNCER_KEY` | Traefik, CrowdSec | Generate with: `docker exec crowdsec cscli bouncers add traefik-bouncer` (after first CrowdSec deployment) |
+| `CROWDSEC_ENROLL_KEY` | CrowdSec | Optional - For CrowdSec Console enrollment (get from https://app.crowdsec.net/) |
 
 ### 2. Authelia Users
 
@@ -172,20 +178,72 @@ Key fields to configure:
 
 **Note:** The `${CF_DDNS_API_TOKEN}` will be automatically substituted from your environment variables.
 
-## Available Services
+### 4. CrowdSec Configuration
 
-The homeserver includes the following services, each with its own `docker-compose.yml`:
+CrowdSec protects your homeserver by analyzing Traefik access logs and blocking malicious IPs using the Traefik bouncer plugin.
 
-| Service | Description | Access URL | Protected by Authelia |
-|---------|-------------|------------|----------------------|
-| **Traefik** | Reverse proxy with automatic SSL | N/A | No |
-| **Authelia** | Authentication and authorization | `auth.${DOMAIN_NAME}` | No |
-| **Cloudflare DDNS** | Dynamic DNS updater | N/A | No |
-| **Pi-hole** | Network-wide ad blocker | `pihole.${DOMAIN_NAME}` | Yes |
-| **WG-Easy** | WireGuard VPN manager | `wg-easy.${DOMAIN_NAME}` | Yes |
-| **n8n** | Workflow automation | `n8n.${DOMAIN_NAME}` | Yes |
+#### Initial Setup
 
-All services are connected via the `internal` Docker network and automatically receive SSL certificates through Traefik's Cloudflare DNS challenge.
+1. Deploy CrowdSec (along with Traefik):
+```bash
+export $(cat .env | xargs)
+docker compose -f traefik/docker-compose.yml up -d
+docker compose -f crowdsec/docker-compose.yml up -d
+```
+
+2. Generate a bouncer API key:
+```bash
+docker exec crowdsec cscli bouncers add traefik-bouncer
+```
+
+This command will output an API key. Copy it and add it to your `.env` file as `CROWDSEC_BOUNCER_KEY`.
+
+3. Restart Traefik to apply the bouncer key:
+```bash
+docker compose -f traefik/docker-compose.yml restart
+```
+
+4. (Optional) Enroll in the CrowdSec Console for centralized management:
+```bash
+docker exec crowdsec cscli console enroll <your-enroll-key>
+```
+
+Get your enrollment key from: https://app.crowdsec.net/
+
+#### CrowdSec Dashboard (Metabase)
+
+A self-hosted Metabase dashboard is available at `https://crowdsec.${DOMAIN_NAME}` for visualizing CrowdSec metrics, alerts, and decisions.
+
+**Initial Setup (First Time Only):**
+
+1. Access the dashboard at `https://crowdsec.${DOMAIN_NAME}`
+2. Complete the Metabase setup wizard:
+   - Set your preferred language
+   - Create an admin account
+   - Skip "Add your data" (we'll add it manually)
+
+3. Add CrowdSec database connection:
+   - Click "Settings" (gear icon) → "Admin settings" → "Databases" → "Add database"
+   - **Database type**: SQLite
+   - **Display name**: CrowdSec
+   - **Filename**: `/crowdsec-db/crowdsec.db`
+   - Click "Save"
+
+
+
+#### Applying CrowdSec Protection to Services
+
+**For services with Authelia:**
+```yaml
+- traefik.http.routers.<service>.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
+```
+
+**For services without Authelia:**
+```yaml
+- traefik.http.routers.<service>.middlewares=crowdsec-bouncer@docker
+```
+
+To add CrowdSec to new services in the future, simply add the appropriate middleware label to the service's Traefik configuration.
 
 ### Required Ports
 
@@ -250,16 +308,3 @@ This project uses **Renovate** for automated dependency updates.
 - **Security:** Docker images are pinned with digests for immutable references
 
 Renovate configuration is in `.github/renovate.json`
-
-## CI/CD
-
-The project includes GitHub Actions workflows:
-
-- **renovate-auto-merge.yml** - Automatically merges minor/patch updates from Renovate
-- **deploy-on-merge.yml** - Deploys all services when changes are merged to main
-  - Automatically discovers and deploys all docker-compose files (Traefik first, then others)
-  - Runs on self-hosted runner
-  - Requires all environment variables to be set in GitHub Actions
-- **runner-smoke.yml** - Manual workflow to test the self-hosted runner
-  - Validates Docker and docker-compose installation
-  - Can be triggered manually from GitHub Actions tab
