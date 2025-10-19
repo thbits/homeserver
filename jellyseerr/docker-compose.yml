@@ -10,7 +10,8 @@ services:
       - traefik.http.routers.jellyseerr.entrypoints=websecure
       - traefik.http.routers.jellyseerr.tls=true
       - traefik.http.routers.jellyseerr.tls.certresolver=myclouddns
-      - traefik.http.routers.jellyseerr.middlewares=authelia-forwardauth@docker
+      # NOTE: No authelia-forwardauth middleware - authentication handled by Jellyfin plugin
+      # - traefik.http.routers.jellyseerr.middlewares=authelia-forwardauth@docker
     #   - homepage.group=Media
     #   - homepage.name=Jellyseerr
     #   - homepage.icon=jellyseerr.png

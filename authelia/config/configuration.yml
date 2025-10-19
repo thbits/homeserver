@@ -11,6 +11,8 @@ server:
             schemes:
               - 'Basic'
           - name: 'CookieSession'
+      auth-request:
+        implementation: 'AuthRequest'
 
 session:
   name: authelia_session
@@ -46,7 +48,14 @@ regulation:
 access_control:
   default_policy: deny
   rules:
-    # Protect all subdomains with authentication
+    # Jellyfin: Uses plugin for authentication, bypass forward-auth
+    - domain: 'jellyfin.{{ mustEnv "DOMAIN_NAME" }}'
+      policy: bypass
+
+    - domain: 'jellyseerr.{{ mustEnv "DOMAIN_NAME" }}'
+      policy: bypass
+    
+    # Protect all other subdomains with authentication
     - domain: '*.{{ mustEnv "DOMAIN_NAME" }}'
       policy: one_factor
     
