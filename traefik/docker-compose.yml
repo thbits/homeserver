@@ -3,31 +3,6 @@ services:
     image: traefik:v3.5.3
     container_name: traefik
     restart: unless-stopped
-    command:
-      # dashboard (optional)
-      # - --api.insecure=true
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
-      - --entrypoints.web.http.redirections.entrypoint.to=websecure
-      - --entrypoints.web.http.redirections.entrypoint.scheme=https
-      - --entrypoints.websecure.address=:443
-      - --certificatesresolvers.myclouddns.acme.dnschallenge=true
-      - --certificatesresolvers.myclouddns.acme.dnschallenge.provider=cloudflare
-      - --certificatesresolvers.myclouddns.acme.email=${SSL_EMAIL}
-      - --certificatesresolvers.myclouddns.acme.storage=/letsencrypt/acme.json
-      - --log.level=INFO
-      - --ping=true
-      - --ping.entrypoint=traefikping
-      - --entrypoints.traefikping.address=:8081
-      # Staging cert, undo after successful cert issue
-      # - --certificatesresolvers.myclouddns.acme.caServer=https://acme-staging.api.letsencrypt.org/directory
-      # Access logs for CrowdSec
-      - --accesslog=true
-      - --accesslog.filepath=/logs/access.log
-      # CrowdSec bouncer plugin
-      - --experimental.plugins.bouncer.modulename=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
-      - --experimental.plugins.bouncer.version=v1.3.5
     ports:
       - "80:80"
       - "443:443"
@@ -35,6 +10,7 @@ services:
     environment:
       - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
       - CROWDSEC_BOUNCER_KEY=${CROWDSEC_BOUNCER_KEY}
+      - TRAEFIK_CERTIFICATESRESOLVERS_MYCLOUDDNS_ACME_EMAIL=${SSL_EMAIL}
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8081/ping"]
       interval: 10s
@@ -49,6 +25,7 @@ services:
       - traefik.http.middlewares.crowdsec-bouncer.plugin.bouncer.CrowdsecLapiHost=crowdsec:8080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${CONFIGDIR}/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
       - ${DATADIR}/traefik/letsencrypt:/letsencrypt
       - ${DATADIR}/traefik/logs:/logs
     networks:

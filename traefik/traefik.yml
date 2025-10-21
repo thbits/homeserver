@@ -1,0 +1,66 @@
+# Global configuration
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+
+# API and dashboard configuration
+# api:
+#   insecure: true
+#   dashboard: true
+
+# Log configuration
+log:
+  level: INFO
+
+# Access logs for CrowdSec
+accessLog:
+  filePath: /logs/access.log
+
+# Ping configuration for healthcheck
+ping:
+  entryPoint: traefikping
+
+# Entrypoints configuration
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  
+  websecure:
+    address: :443
+  
+  traefikping:
+    address: :8081
+
+# Docker provider configuration
+providers:
+  docker:
+    endpoint: unix:///var/run/docker.sock
+    exposedByDefault: false
+    watch: true
+
+# Certificate resolvers configuration
+certificatesResolvers:
+  myclouddns:
+    acme:
+      # Email is set via command-line argument in docker-compose.yml
+      storage: /letsencrypt/acme.json
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - 1.1.1.1:53
+          - 8.8.8.8:53
+      # Uncomment for staging/testing
+      # caServer: https://acme-staging.api.letsencrypt.org/directory
+
+# Experimental features for plugins
+experimental:
+  plugins:
+    bouncer:
+      moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+      version: v1.3.5
+
