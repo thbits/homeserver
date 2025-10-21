@@ -4,9 +4,9 @@ global:
   sendAnonymousUsage: false
 
 # API and dashboard configuration
-# api:
-#   insecure: true
-#   dashboard: true
+api:
+  dashboard: true
+  # insecure: false  # Don't use insecure mode, expose via Traefik instead
 
 # Log configuration
 log:

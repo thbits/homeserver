@@ -6,7 +6,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      # - "8080:8080"  # dashboard if enabled
     environment:
       - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
       - CROWDSEC_BOUNCER_KEY=${CROWDSEC_BOUNCER_KEY}
@@ -18,11 +17,24 @@ services:
       retries: 5
       start_period: 10s
     labels:
-      # CrowdSec bouncer middleware
       - traefik.enable=true
+      # CrowdSec bouncer middleware
       - traefik.http.middlewares.crowdsec-bouncer.plugin.bouncer.enabled=true
       - traefik.http.middlewares.crowdsec-bouncer.plugin.bouncer.CrowdsecLapiKey=${CROWDSEC_BOUNCER_KEY}
       - traefik.http.middlewares.crowdsec-bouncer.plugin.bouncer.CrowdsecLapiHost=crowdsec:8080
+      # Traefik dashboard
+      - traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN_NAME}`)
+      - traefik.http.routers.traefik.entrypoints=websecure
+      - traefik.http.routers.traefik.tls=true
+      - traefik.http.routers.traefik.tls.certresolver=myclouddns
+      - traefik.http.routers.traefik.service=api@internal
+      - traefik.http.routers.traefik.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
+      # Homepage
+      - homepage.group=Other
+      - homepage.name=Traefik
+      - homepage.icon=traefik.png
+      - homepage.href=http://traefik.${DOMAIN_NAME}/
+      - homepage.description=Reverse proxy and load balancer
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${CONFIGDIR}/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
