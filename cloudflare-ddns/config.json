@@ -8,13 +8,13 @@
       "subdomains": [
         {
           "name": "@",
-          "proxied": false
+          "proxied": true
         }
       ]
     }
   ],
   "a": true,
-  "aaaa": true,
+  "aaaa": false,
   "purgeUnknownRecords": false,
   "ttl": 300
 }
