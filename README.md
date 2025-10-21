@@ -88,6 +88,10 @@ JELLYSEER_API_KEY=<your-jellyseerr-api-key>
 QBIT_USER=<your-qbittorrent-username>
 QBIT_PASS=<your-qbittorrent-password>
 
+# WireGuard (WG-Easy) credentials for Homepage widget
+WIREGUARD_USERNAME=<your-wireguard-username>
+WIREGUARD_PASSWORD=<your-wireguard-password>
+
 # Pi-hole API Key (found in Settings → API / Web interface)
 PIHOLE_API_KEY=<your-pihole-api-key>
 
@@ -165,6 +169,8 @@ Set these as GitHub Actions variables/secrets (Settings → Secrets and variable
 | `JELLYSEER_API_KEY` | Homepage | Jellyseerr API key (found in Settings → General) |
 | `QBIT_USER` | Homepage | qBittorrent username |
 | `QBIT_PASS` | Homepage | qBittorrent password |
+| `WIREGUARD_USERNAME` | Homepage | WireGuard (WG-Easy) username |
+| `WIREGUARD_PASSWORD` | Homepage | WireGuard (WG-Easy) password |
 | `PIHOLE_API_KEY` | Homepage | Pi-hole API key (found in Settings → API / Web interface) |
 | `CROWDSEC_BOUNCER_KEY` | Traefik, CrowdSec | Generate with: `docker exec crowdsec cscli bouncers add traefik-bouncer` (after first CrowdSec deployment) |
 | `CROWDSEC_ENROLL_KEY` | CrowdSec | Optional - For CrowdSec Console enrollment (get from https://app.crowdsec.net/) |

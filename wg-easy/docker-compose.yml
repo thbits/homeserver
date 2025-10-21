@@ -24,6 +24,11 @@ services:
       - homepage.icon=wireguard.png
       - homepage.href=http://wg-easy.${DOMAIN_NAME}/
       - homepage.description=Fast and secure VPN protocol
+      - homepage.widget.type=wgeasy
+      - homepage.widget.url=http://wg-easy:51821
+      - homepage.widget.version=2
+      - homepage.widget.username=${WIREGUARD_USERNAME}
+      - homepage.widget.password=${WIREGUARD_PASSWORD}
     volumes:
       - ${DATADIR}/wg-easy:/etc/wireguard
       - /lib/modules:/lib/modules:ro

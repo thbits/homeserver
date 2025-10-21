@@ -39,6 +39,8 @@ jobs:
       JELLYSEER_API_KEY: ${{ secrets.JELLYSEER_API_KEY }}
       QBIT_USER: ${{ secrets.QBIT_USER }}
       QBIT_PASS: ${{ secrets.QBIT_PASS }}
+      WIREGUARD_USERNAME: ${{ secrets.WIREGUARD_USERNAME }}
+      WIREGUARD_PASSWORD: ${{ secrets.WIREGUARD_PASSWORD }}
       PIHOLE_API_KEY: ${{ secrets.PIHOLE_API_KEY }}
       CROWDSEC_BOUNCER_KEY: ${{ secrets.CROWDSEC_BOUNCER_KEY }}
       JOAL_SECRET_TOKEN: ${{ secrets.JOAL_SECRET_TOKEN }}
