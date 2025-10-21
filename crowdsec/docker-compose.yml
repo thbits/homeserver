@@ -4,7 +4,7 @@ services:
     container_name: crowdsec
     restart: unless-stopped
     environment:
-      - COLLECTIONS=crowdsecurity/traefik crowdsecurity/http-cve
+      - COLLECTIONS=crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/base-http-scenarios crowdsecurity/whitelist-good-actors crowdsecurity/http-dos
       - GID=${PGID}
       - TZ=${TIMEZONE}
       - DISABLE_ONLINE_API=false
