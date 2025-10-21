@@ -1,0 +1,28 @@
+services:
+  joal:
+    # build:
+    image: anthonyraymond/joal:2.1.36
+    container_name: joal
+    volumes:
+      - ${DATADIR}/joal/data:/data
+    command: ["--joal-conf=/data", "--spring.main.web-environment=true", "--server.port=8584", "--joal.ui.path.prefix=${JOAL_SECRET_OBFUSCATION_PATH}", "--joal.ui.secret-token=${JOAL_SECRET_TOKEN}"]
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.joal.rule=Host(`joal.${DOMAIN_NAME}`)
+      - traefik.http.routers.joal.entrypoints=websecure
+      - traefik.http.routers.joal.tls=true
+      - traefik.http.routers.joal.tls.certresolver=myclouddns
+      - traefik.http.services.joal.loadbalancer.server.port=8584
+      - traefik.http.routers.joal.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
+    #   - homepage.group=Other
+    #   - homepage.name=Joal
+    #   - homepage.icon=joal.png
+    #   - homepage.href=http://${LOCAL_FQDN}:${JOAL_WEBUI_EXT_PORT}/${JOAL_SECRET_OBFUSCATION_PATH}/ui
+    #   - homepage.description=Ratio Master
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true

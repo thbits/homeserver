@@ -81,6 +81,10 @@ RADARR_API_KEY=<your-radarr-api-key>
 # CrowdSec (generate bouncer key after first deployment)
 CROWDSEC_BOUNCER_KEY=<generate-after-deployment>
 CROWDSEC_ENROLL_KEY=<optional-for-console>
+
+# JOAL (Jack of All Trades torrent ratio faker)
+JOAL_SECRET_TOKEN=<random-secret-string>
+JOAL_SECRET_OBFUSCATION_PATH=<random-path-string>
 ```
 
 #### Generate Authelia Secrets
@@ -144,6 +148,8 @@ Set these as GitHub Actions variables/secrets (Settings → Secrets and variable
 | `RADARR_API_KEY` | Recyclarr, Unpackerr | Radarr API key (found in Radarr → Settings → General → Security) |
 | `CROWDSEC_BOUNCER_KEY` | Traefik, CrowdSec | Generate with: `docker exec crowdsec cscli bouncers add traefik-bouncer` (after first CrowdSec deployment) |
 | `CROWDSEC_ENROLL_KEY` | CrowdSec | Optional - For CrowdSec Console enrollment (get from https://app.crowdsec.net/) |
+| `JOAL_SECRET_TOKEN` | JOAL | Random secret string for UI authentication |
+| `JOAL_SECRET_OBFUSCATION_PATH` | JOAL | Random path string to obfuscate UI URL (e.g., `my-secret-path-123`) |
 
 ### 2. Authelia Users
 
@@ -244,6 +250,16 @@ A self-hosted Metabase dashboard is available at `https://crowdsec.${DOMAIN_NAME
 ```
 
 To add CrowdSec to new services in the future, simply add the appropriate middleware label to the service's Traefik configuration.
+
+### 5. JOAL Configuration
+
+#### Initial Setup
+
+1. Set the two required secrets in your `.env` file:
+   - `JOAL_SECRET_TOKEN`: A random secret string for authentication (e.g., use `openssl rand -hex 32`)
+   - `JOAL_SECRET_OBFUSCATION_PATH`: A random path to hide the UI URL (e.g., `my-secret-path-123`)
+
+2. Access the web UI at: `http://${LOCAL_IP}:8584/${JOAL_SECRET_OBFUSCATION_PATH}/ui`
 
 ### Required Ports
 
