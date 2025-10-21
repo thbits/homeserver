@@ -1,0 +1,41 @@
+services:
+  tdarr:
+    container_name: tdarr
+    image: ghcr.io/haveagitgat/tdarr:2.45.01
+    ports:
+      - 8265:8265 # webUI port
+      # - 8266:8266 # server port
+      # - 8267:8267 # Internal node port
+    environment:
+      - TZ=${TIMEZONE}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK_SET=002
+      # - serverIP=${LOCAL_IP}
+      # - serverPort=8266
+      # - webUIPort=${TDARR_WEBUI_PORT}
+      - internalNode=true
+      - nodeID=InternalNode
+    # labels:
+    #   - homepage.group=Servarr
+    #   - homepage.name=Tdarr
+    #   - homepage.icon=tdarr.png
+    #   - homepage.href=http://${LOCAL_FQDN}:${TDARR_WEBUI_PORT}/
+    #   - homepage.description=Transcoding application for automating media library transcode/remux management
+    #   - homepage.widget.type=tdarr
+    #   - homepage.widget.url=http://tdarr:8265
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - ${DATADIR}/tdarr/server:/app/server
+      - ${DATADIR}/tdarr/configs:/app/configs
+      - ${DATADIR}/tdarr/logs:/app/logs
+      - ${DATADIR}/tdarr/transcode:/transcode
+      - ${DATADIR}/library/media:/data/media
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
