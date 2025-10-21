@@ -1,0 +1,43 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/en/configs/widgets
+
+- resources:
+    label: System
+    cpu: true
+    memory: true
+    expanded: true
+    uptime: true
+    # disk: /
+    cputemp: true
+
+- resources:
+    label: Storage
+    disk: 
+      - /
+      - /app/config
+    expanded: true
+
+- search:
+    provider: duckduckgo
+    target: _blank
+
+- datetime:
+    text_size: 2xl
+    format:
+      timeStyle: short
+      dateStyle: short
+      hour12: false
+      language: en-GB
+
+- openmeteo:
+    label: Alfei Menashe # optional
+    latitude: 32.1699
+    longitude: 35.0074
+    timezone: Asia/Jerusalem # optional
+    units: metric # or imperial
+    cache: 5 # Time in minutes to cache API responses, to stay within limits
+
+# - greeting:
+#     text_size: x1
+#     text: PirateDuck

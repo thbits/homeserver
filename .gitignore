@@ -3,3 +3,6 @@
 # Authelia
 authelia/config/users.yaml
 authelia/config/db.sqlite3
+
+# Homepage logs (shouldn't be here but app creates them)
+homepage/config/logs/

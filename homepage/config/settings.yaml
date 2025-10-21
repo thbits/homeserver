@@ -1,0 +1,28 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/en/configs/settings
+
+# providers:
+#   openweathermap: openweathermapapikey
+#   weatherapi: weatherapiapikey
+
+language: en-GB
+
+layout:
+  Calendar:
+  Media:
+  Servarr:
+    # icon: home-assistant.png
+  Other:
+  # Auto-Discovered2:
+  # Configured3:
+  #   style: row
+  #   columns: 3
+
+headerStyle: clean
+
+quicklaunch:
+  searchDescriptions: true
+
+# favicon: https://www.google.com/favicon.ico
+# favicon: https://www.duckdns.org/img/favicon.ico

@@ -1,0 +1,49 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/en/configs/services
+
+- Calendar:
+    - ‎:
+        widget:
+            type: calendar
+            firstDayInWeek: Sunday
+            showTime: true
+            integrations:
+                - type: sonarr
+                  service_group: Servarr
+                  service_name: Sonarr
+                - type: radarr
+                  service_group: Servarr
+                  service_name: Radarr
+
+- Other:
+    # - Grafana:
+    #     icon: grafana.png
+    #     href: http://pirateduck.local:3000/d/EHN2RGc4k/docker-containers
+    #     description: Data visualization
+    #     container: grafana
+    # - Prometheus:
+    #     icon: prometheus.png
+    #     href: http://pirateduck.local:9090/
+    #     description: Monitoring and data collection
+    #     container: prometheus
+    # - Notifiarr:
+    #     icon: notifiarr.png
+    #     href: http://pirateduck.local:5454/
+    #     description: Service monitoring and Discord alerts node
+    #     container: notifiarr
+    - Notifiarr.com:
+        icon: notifiarr.png
+        href: https://notifiarr.com/
+        description: Service monitoring and Discord alerts website
+        ping: https://notifiarr.com/
+
+# - My Second Group:
+#     - My Second Service:
+#         href: http://localhost/
+#         description: Homepage is the best
+
+# - My Third Group:
+#     - My Third Service:
+#         href: http://localhost/
+#         description: Homepage is 😎
