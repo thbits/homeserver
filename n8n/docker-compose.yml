@@ -24,6 +24,11 @@ services:
       - traefik.http.routers.n8n.tls=true
       - traefik.http.routers.n8n.tls.certresolver=myclouddns
       - traefik.http.routers.n8n.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - homepage.group=Other
+      - homepage.name=n8n
+      - homepage.icon=n8n.png
+      - homepage.href=http://n8n.${DOMAIN_NAME}/
+      - homepage.description=Workflow automation tool
     volumes:
       - ${DATADIR}/n8n:/home/node/.n8n
     networks:

@@ -1,0 +1,28 @@
+services:
+  homepage:
+    container_name: homepage
+    image: ghcr.io/gethomepage/homepage:v1.4.5
+    ports:
+      - 5000:3000
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homepage.rule=Host(`home.${DOMAIN_NAME}`)
+      - traefik.http.routers.homepage.entrypoints=websecure
+      - traefik.http.routers.homepage.tls=true
+      - traefik.http.routers.homepage.tls.certresolver=myclouddns
+      - traefik.http.services.homepage.loadbalancer.server.port=3000
+      - traefik.http.routers.homepage.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
+    environment:
+      - UMASK=002
+      - TZ=${TIMEZONE}
+      - HOMEPAGE_ALLOWED_HOSTS=${LOCAL_IP}:5000,home.${DOMAIN_NAME}
+    volumes:
+      - ${DATADIR}/homepage/config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro # (optional) For docker integrations
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true

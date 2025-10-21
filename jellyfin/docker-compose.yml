@@ -21,14 +21,14 @@ services:
       - traefik.http.services.jellyfin.loadbalancer.server.port=8096
       - traefik.http.routers.jellyfin.middlewares=crowdsec-bouncer@docker
       # NOTE: No authelia-forwardauth middleware - authentication handled by Jellyfin plugin
-      # - homepage.group=Media
-      # - homepage.name=Jellifin
-      # - homepage.icon=jellyfin.png
-      # - homepage.href=http://${LOCAL_FQDN}:${JELLYFIN_EXT_PORT}/
-      # - homepage.description=Stream and manage your media
-      # - homepage.widget.type=jellyfin
-      # - homepage.widget.url=http://jellyfin:8096
-      # - homepage.widget.key=${JELLYFIN_API_KEY}
+      - homepage.group=Media
+      - homepage.name=Jellyfin
+      - homepage.icon=jellyfin.png
+      - homepage.href=http://jellyfin.${DOMAIN_NAME}/
+      - homepage.description=Stream and manage your media
+      - homepage.widget.type=jellyfin
+      - homepage.widget.url=http://jellyfin:8096
+      - homepage.widget.key=${JELLYFIN_API_KEY}
     devices:
       - '/dev/dri/:/dev/dri/'
     # Optional - alternative address used for autodiscovery

@@ -7,12 +7,6 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
       - LOG_LEVEL=info
-    # labels:
-    #   - homepage.group=Other
-    #   - homepage.name=FlareSolverr
-    #   - homepage.icon=https://raw.githubusercontent.com/FlareSolverr/FlareSolverr/master/resources/flaresolverr_logo.png
-    #   - homepage.href=http://${LOCAL_FQDN}:${FLARESOLVERR_EXT_PORT}/
-    #   - homepage.description=Proxy server to bypass Cloudflare and DDoS-GUARD protection
     restart: unless-stopped
     networks:
       - internal

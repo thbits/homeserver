@@ -23,16 +23,16 @@ services:
       - traefik.http.routers.qbittorrent.tls.certresolver=myclouddns
       - traefik.http.services.qbittorrent.loadbalancer.server.port=8181
       - traefik.http.routers.qbittorrent.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
-      # - homepage.group=Other
-      # - homepage.name=qBittorrent
-      # - homepage.icon=qbittorrent.png
-      # - homepage.href=http://${LOCAL_FQDN}:${QBIT_WEBUI_PORT}/
-      # - homepage.instance.public.href=https://qbittorrent.${FQDN}
-      # - homepage.description=qBittorrent web client
-      # - homepage.widget.type=qbittorrent
-      # - homepage.widget.url=http://qbittorrent:${QBIT_WEBUI_PORT}
-      # - homepage.widget.username=${QBIT_USER}
-      # - homepage.widget.password=${QBIT_PASS}
+      - homepage.group=Other
+      - homepage.name=qBittorrent
+      - homepage.icon=qbittorrent.png
+      - homepage.href=http://qbittorrent.${DOMAIN_NAME}/
+      - homepage.description=qBittorrent web client
+      - homepage.widget.type=qbittorrent
+      - homepage.widget.url=http://qbittorrent:8181
+      - homepage.widget.username=${QBIT_USER}
+      - homepage.widget.password=${QBIT_PASS}
+      - homepage.widget.enableLeechProgress=true
     restart: unless-stopped
     networks:
       - internal

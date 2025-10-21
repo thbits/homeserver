@@ -20,15 +20,14 @@ services:
       - traefik.http.routers.bazarr.tls.certresolver=myclouddns
       - traefik.http.services.bazarr.loadbalancer.server.port=6767
       - traefik.http.routers.bazarr.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
-      # - homepage.group=Servarr
-      # - homepage.name=Bazarr
-      # - homepage.icon=bazarr.png
-      # - homepage.href=http://${LOCAL_FQDN}:${BAZARR_EXT_PORT}/
-      # - homepage.instance.public.href=https://bazarr.${FQDN}
-      # - homepage.description=Manages and downloads subtitles
-      # - homepage.widget.type=bazarr
-      # - homepage.widget.url=http://bazarr:6767
-      # - homepage.widget.key=${BAZARR_API_KEY}
+      - homepage.group=Servarr
+      - homepage.name=Bazarr
+      - homepage.icon=bazarr.png
+      - homepage.href=http://bazarr.${DOMAIN_NAME}/
+      - homepage.description=Manages and downloads subtitles
+      - homepage.widget.type=bazarr
+      - homepage.widget.url=http://bazarr:6767
+      - homepage.widget.key=${BAZARR_API_KEY}
     restart: unless-stopped
     networks:
       - internal

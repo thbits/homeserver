@@ -18,16 +18,15 @@ services:
       - traefik.http.routers.sonarr.tls=true
       - traefik.http.routers.sonarr.tls.certresolver=myclouddns
       - traefik.http.routers.sonarr.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
-      # - homepage.group=Servarr
-      # - homepage.name=Sonarr
-      # - homepage.icon=sonarr.png
-      # - homepage.href=http://${LOCAL_FQDN}:${SONARR_EXT_PORT}/
-      # - homepage.instance.public.href=https://sonarr.${FQDN}
-      # - homepage.description=Manages and downloads TV shows
-      # - homepage.widget.type=sonarr
-      # - homepage.widget.url=http://sonarr:8989
-      # - homepage.widget.key=${SONARR_API_KEY}
-      # - homepage.widget.enableQueue=true
+      - homepage.group=Servarr
+      - homepage.name=Sonarr
+      - homepage.icon=sonarr.png
+      - homepage.href=http://sonarr.${DOMAIN_NAME}/
+      - homepage.description=Manages and downloads TV shows
+      - homepage.widget.type=sonarr
+      - homepage.widget.url=http://sonarr:8989
+      - homepage.widget.key=${SONARR_API_KEY}
+      - homepage.widget.enableQueue=true
     restart: unless-stopped
     networks:
       - internal

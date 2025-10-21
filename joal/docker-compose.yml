@@ -14,11 +14,11 @@ services:
       - traefik.http.routers.joal.tls.certresolver=myclouddns
       - traefik.http.services.joal.loadbalancer.server.port=8584
       - traefik.http.routers.joal.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
-    #   - homepage.group=Other
-    #   - homepage.name=Joal
-    #   - homepage.icon=joal.png
-    #   - homepage.href=http://${LOCAL_FQDN}:${JOAL_WEBUI_EXT_PORT}/${JOAL_SECRET_OBFUSCATION_PATH}/ui
-    #   - homepage.description=Ratio Master
+      - homepage.group=Other
+      - homepage.name=Joal
+      - homepage.icon=joal.png
+      - homepage.href=http://joal.${DOMAIN_NAME}/${JOAL_SECRET_OBFUSCATION_PATH}/ui
+      - homepage.description=Ratio Master
     restart: unless-stopped
     networks:
       - internal

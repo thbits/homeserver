@@ -36,15 +36,15 @@ services:
       - traefik.http.middlewares.pihole-redirect.redirectregex.replacement=https://$$1/admin/
       - traefik.http.middlewares.pihole-redirect.redirectregex.permanent=true
       - traefik.http.routers.pihole.middlewares=crowdsec-bouncer@docker,pihole-redirect,authelia-forwardauth@docker
-    #      - homepage.group=Other
-    #      - homepage.name=Pi-Hole
-    #      - homepage.icon=pi-hole.png
-    #      - homepage.href=http://${LOCAL_IP}:${PIHOLE_EXT_PORT}/admin/
-    #      - homepage.description=Network-wide Ad Blocking
-    #      - homepage.widget.type=pihole
-    #      - homepage.widget.url=http://pihole:80
-    #      - homepage.widget.key=${PIHOLE_API_KEY}
-    #      - homepage.widget.version=6
+      - homepage.group=Other
+      - homepage.name=Pi-hole
+      - homepage.icon=pi-hole.png
+      - homepage.href=http://pihole.${DOMAIN_NAME}/admin/
+      - homepage.description=Network-wide Ad Blocking
+      - homepage.widget.type=pihole
+      - homepage.widget.url=http://pihole:80
+      - homepage.widget.key=${PIHOLE_API_KEY}
+      - homepage.widget.version=6
     restart: unless-stopped
     networks:
       - internal

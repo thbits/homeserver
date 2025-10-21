@@ -12,14 +12,14 @@ services:
       - traefik.http.routers.jellyseerr.tls.certresolver=myclouddns
       - traefik.http.routers.jellyseerr.middlewares=crowdsec-bouncer@docker
       # NOTE: No authelia-forwardauth middleware - authentication handled by Jellyfin plugin
-    #   - homepage.group=Media
-    #   - homepage.name=Jellyseerr
-    #   - homepage.icon=jellyseerr.png
-    #   - homepage.href=http://${LOCAL_FQDN}:5055/
-    #   - homepage.description=Media request application
-    #   - homepage.widget.type=jellyseerr
-    #   - homepage.widget.url=http://jellyseerr:5055
-    #   - homepage.widget.key=${JELLYSEER_API_KEY}
+      - homepage.group=Media
+      - homepage.name=Jellyseerr
+      - homepage.icon=jellyseerr.png
+      - homepage.href=http://jellyseerr.${DOMAIN_NAME}/
+      - homepage.description=Media request application
+      - homepage.widget.type=jellyseerr
+      - homepage.widget.url=http://jellyseerr:5055
+      - homepage.widget.key=${JELLYSEER_API_KEY}
     environment:
       - PUID=${PUID}
       - PGID=${PGID}

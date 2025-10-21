@@ -18,16 +18,15 @@ services:
       - traefik.http.routers.radarr.tls=true
       - traefik.http.routers.radarr.tls.certresolver=myclouddns
       - traefik.http.routers.radarr.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
-      # - homepage.group=Servarr
-      # - homepage.name=Radarr
-      # - homepage.icon=radarr.png
-      # - homepage.href=http://${LOCAL_FQDN}:${RADARR_EXT_PORT}/
-      # - homepage.instance.public.href=https://radarr.${FQDN}
-      # - homepage.description=Manages and downloads movies
-      # - homepage.widget.type=radarr
-      # - homepage.widget.url=http://radarr:7878
-      # - homepage.widget.key=${RADARR_API_KEY}
-      # - homepage.widget.enableQueue=true
+      - homepage.group=Servarr
+      - homepage.name=Radarr
+      - homepage.icon=radarr.png
+      - homepage.href=http://radarr.${DOMAIN_NAME}/
+      - homepage.description=Manages and downloads movies
+      - homepage.widget.type=radarr
+      - homepage.widget.url=http://radarr:7878
+      - homepage.widget.key=${RADARR_API_KEY}
+      - homepage.widget.enableQueue=true
     restart: unless-stopped
     networks:
       - internal

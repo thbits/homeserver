@@ -77,6 +77,19 @@ SMTP_PASSWORD=<gmail-app-password>
 # Servarr API Keys (found in Settings → General → Security in each app)
 SONARR_API_KEY=<your-sonarr-api-key>
 RADARR_API_KEY=<your-radarr-api-key>
+PROWLARR_API_KEY=<your-prowlarr-api-key>
+BAZARR_API_KEY=<your-bazarr-api-key>
+
+# Media Server API Keys
+JELLYFIN_API_KEY=<your-jellyfin-api-key>
+JELLYSEER_API_KEY=<your-jellyseerr-api-key>
+
+# qBittorrent credentials
+QBIT_USER=<your-qbittorrent-username>
+QBIT_PASS=<your-qbittorrent-password>
+
+# Pi-hole API Key (found in Settings → API / Web interface)
+PIHOLE_API_KEY=<your-pihole-api-key>
 
 # CrowdSec (generate bouncer key after first deployment)
 CROWDSEC_BOUNCER_KEY=<generate-after-deployment>
@@ -144,8 +157,15 @@ Set these as GitHub Actions variables/secrets (Settings → Secrets and variable
 | `STORAGE_ENCRYPTION_KEY` | Authelia | Generate with: `docker run --rm authelia/authelia:latest authelia crypto rand --length 64` |
 | `SMTP_USERNAME` | Authelia | Your Gmail address (e.g., your-email@gmail.com) |
 | `SMTP_PASSWORD` | Authelia | Gmail app password (generate at https://myaccount.google.com/apppasswords) |
-| `SONARR_API_KEY` | Recyclarr, Unpackerr | Sonarr API key (found in Sonarr → Settings → General → Security) |
-| `RADARR_API_KEY` | Recyclarr, Unpackerr | Radarr API key (found in Radarr → Settings → General → Security) |
+| `SONARR_API_KEY` | Recyclarr, Unpackerr, Homepage | Sonarr API key (found in Sonarr → Settings → General → Security) |
+| `RADARR_API_KEY` | Recyclarr, Unpackerr, Homepage | Radarr API key (found in Radarr → Settings → General → Security) |
+| `PROWLARR_API_KEY` | Homepage | Prowlarr API key (found in Prowlarr → Settings → General → Security) |
+| `BAZARR_API_KEY` | Homepage | Bazarr API key (found in Bazarr → Settings → General → Security) |
+| `JELLYFIN_API_KEY` | Homepage | Jellyfin API key (create in Dashboard → API Keys) |
+| `JELLYSEER_API_KEY` | Homepage | Jellyseerr API key (found in Settings → General) |
+| `QBIT_USER` | Homepage | qBittorrent username |
+| `QBIT_PASS` | Homepage | qBittorrent password |
+| `PIHOLE_API_KEY` | Homepage | Pi-hole API key (found in Settings → API / Web interface) |
 | `CROWDSEC_BOUNCER_KEY` | Traefik, CrowdSec | Generate with: `docker exec crowdsec cscli bouncers add traefik-bouncer` (after first CrowdSec deployment) |
 | `CROWDSEC_ENROLL_KEY` | CrowdSec | Optional - For CrowdSec Console enrollment (get from https://app.crowdsec.net/) |
 | `JOAL_SECRET_TOKEN` | JOAL | Random secret string for UI authentication |
