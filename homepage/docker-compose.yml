@@ -17,9 +17,10 @@ services:
       - TZ=${TIMEZONE}
       - HOMEPAGE_ALLOWED_HOSTS=${LOCAL_IP}:5000,home.${DOMAIN_NAME}
     volumes:
-      - ${DATADIR}/homepage/logs:/app/logs
       - ${CONFIGDIR}/homepage/config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro # (optional) For docker integrations
+    tmpfs:
+      - /app/logs
     restart: unless-stopped
     networks:
       - internal

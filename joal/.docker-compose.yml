@@ -1,6 +1,5 @@
 services:
   joal:
-    # build:
     image: anthonyraymond/joal:2.1.36
     container_name: joal
     volumes:
