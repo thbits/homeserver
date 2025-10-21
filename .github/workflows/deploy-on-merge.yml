@@ -34,6 +34,8 @@ jobs:
       SONARR_API_KEY: ${{ secrets.SONARR_API_KEY }}
       RADARR_API_KEY: ${{ secrets.RADARR_API_KEY }}
       CROWDSEC_BOUNCER_KEY: ${{ secrets.CROWDSEC_BOUNCER_KEY }}
+      JOAL_SECRET_TOKEN: ${{ secrets.JOAL_SECRET_TOKEN }}
+      JOAL_SECRET_OBFUSCATION_PATH: ${{ secrets.JOAL_SECRET_OBFUSCATION_PATH }}
     steps:
       - uses: actions/checkout@v5
 
