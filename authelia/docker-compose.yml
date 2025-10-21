@@ -21,6 +21,7 @@ services:
       - traefik.http.routers.authelia.entrypoints=websecure
       - traefik.http.routers.authelia.tls=true
       - traefik.http.routers.authelia.tls.certresolver=myclouddns
+      - traefik.http.routers.authelia.middlewares=crowdsec-bouncer@docker,geoblock@file
       - traefik.http.services.authelia.loadbalancer.server.port=9091
       # ForwardAuth middleware for reuse on apps:
       - traefik.http.middlewares.authelia-forwardauth.forwardauth.address=http://authelia:9091/api/authz/forward-auth

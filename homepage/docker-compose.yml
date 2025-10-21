@@ -11,7 +11,7 @@ services:
       - traefik.http.routers.homepage.tls=true
       - traefik.http.routers.homepage.tls.certresolver=myclouddns
       - traefik.http.services.homepage.loadbalancer.server.port=3000
-      - traefik.http.routers.homepage.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - traefik.http.routers.homepage.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker,geoblock@file
     environment:
       - UMASK=002
       - TZ=${TIMEZONE}

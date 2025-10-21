@@ -28,7 +28,7 @@ services:
       - traefik.http.routers.traefik.tls=true
       - traefik.http.routers.traefik.tls.certresolver=myclouddns
       - traefik.http.routers.traefik.service=api@internal
-      - traefik.http.routers.traefik.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - traefik.http.routers.traefik.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker,geoblock@file
       # Homepage
       - homepage.group=Other
       - homepage.name=Traefik
@@ -38,6 +38,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${CONFIGDIR}/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ${CONFIGDIR}/traefik/dynamic-configuration.yml:/etc/traefik/dynamic-configuration.yml:ro
       - ${DATADIR}/traefik/letsencrypt:/letsencrypt
       - ${DATADIR}/traefik/logs:/logs
     networks:

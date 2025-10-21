@@ -41,7 +41,7 @@ services:
       - traefik.http.routers.crowdsec-dashboard.tls=true
       - traefik.http.routers.crowdsec-dashboard.tls.certresolver=myclouddns
       - traefik.http.services.crowdsec-dashboard.loadbalancer.server.port=3000
-      - traefik.http.routers.crowdsec-dashboard.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - traefik.http.routers.crowdsec-dashboard.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker,geoblock@file
       - homepage.group=Other
       - homepage.name=CrowdSec
       - homepage.icon=crowdsec.png

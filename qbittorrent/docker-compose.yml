@@ -22,7 +22,7 @@ services:
       - traefik.http.routers.qbittorrent.tls=true
       - traefik.http.routers.qbittorrent.tls.certresolver=myclouddns
       - traefik.http.services.qbittorrent.loadbalancer.server.port=8181
-      - traefik.http.routers.qbittorrent.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - traefik.http.routers.qbittorrent.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker,geoblock@file
       - homepage.group=Other
       - homepage.name=qBittorrent
       - homepage.icon=qbittorrent.png

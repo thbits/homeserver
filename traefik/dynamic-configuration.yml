@@ -1,0 +1,39 @@
+http:
+  middlewares:
+    geoblock:
+      plugin:
+        geoblock:
+          silentStartUp: false
+          allowLocalRequests: true
+          logLocalRequests: false
+          logAllowedRequests: true
+          logApiRequests: true
+          api: "https://get.geojs.io/v1/ip/country/{ip}"
+          apiTimeoutMs: 750
+          cacheSize: 25
+          forceMonthlyUpdate: true
+          allowUnknownCountries: true
+          unknownCountryApiResponse: "nil"
+          blackListMode: true
+          addCountryHeader: true
+          logFilePath: "/logs/geoblock.log"
+          countries:
+            - CN  # China
+            - RU  # Russia
+            - KP  # North Korea
+            - IR  # Iran
+            - SY  # Syria
+            - LB  # Lebanon
+            - YE  # Yemen
+            - PS  # Palestine
+            - VN  # Vietnam
+            - IN  # India
+            - BR  # Brazil
+            - ID  # Indonesia
+            - TH  # Thailand
+            - PK  # Pakistan
+            - BD  # Bangladesh
+            - UA  # Ukraine
+            - RO  # Romania
+            - BY  # Belarus
+            - TR  # Turkey

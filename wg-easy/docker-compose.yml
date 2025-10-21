@@ -18,7 +18,7 @@ services:
       - traefik.http.routers.wg-easy.tls=true
       - traefik.http.routers.wg-easy.tls.certresolver=myclouddns
       - traefik.http.services.wg-easy.loadbalancer.server.port=51821
-      - traefik.http.routers.wg-easy.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - traefik.http.routers.wg-easy.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker,geoblock@file
       - homepage.group=Other
       - homepage.name=WG-Easy
       - homepage.icon=wireguard.png
