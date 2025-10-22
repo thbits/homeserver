@@ -38,13 +38,13 @@ sonarr:
 
     # Media naming - DISABLED to preserve your custom naming formats
     # If you want Recyclarr to manage naming, uncomment and configure below:
-    # media_naming:
-    #   season: default
-    #   episodes:
-    #     rename: true
-    #     standard: default
-    #     daily: default
-    #     anime: default
+    media_naming:
+      season: default
+      episodes:
+        rename: true
+        standard: default
+        daily: default
+        anime: default
 
 radarr:
   radarr_1:
@@ -80,8 +80,8 @@ radarr:
 
     # Media naming - DISABLED to preserve your custom naming formats
     # If you want Recyclarr to manage naming, uncomment and configure below:
-    # media_naming:
-    #   folder: default
-    #   movie:
-    #     rename: true
-    #     standard: default
+    media_naming:
+      folder: default
+      movie:
+        rename: true
+        standard: default
