@@ -17,6 +17,7 @@ http:
           blackListMode: true
           addCountryHeader: true
           logFilePath: "/logs/geoblock.log"
+          XForwardedForReverseProxy: true
           countries:
             - CN  # China
             - RU  # Russia
