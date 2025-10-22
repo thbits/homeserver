@@ -1,0 +1,28 @@
+services:
+  huntarr:
+    image: ghcr.io/plexguide/huntarr:8.2.10
+    container_name: huntarr
+    restart: unless-stopped
+    volumes:
+      - ${DATADIR}/huntarr/config:/config
+    environment:
+      - TZ=${TIMEZONE}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.huntarr.rule=Host(`huntarr.${DOMAIN_NAME}`)
+      - traefik.http.routers.huntarr.entrypoints=websecure
+      - traefik.http.routers.huntarr.tls=true
+      - traefik.http.routers.huntarr.tls.certresolver=myclouddns
+      - traefik.http.services.huntarr.loadbalancer.server.port=9705
+      - traefik.http.routers.huntarr.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker,geoblock@file
+      - homepage.group=Servarr
+      - homepage.name=Huntarr
+      - homepage.icon=huntarr.png
+      - homepage.href=http://huntarr.${DOMAIN_NAME}/
+      - homepage.description=Fetches missing episodes and movies
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true

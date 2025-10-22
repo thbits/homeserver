@@ -34,9 +34,6 @@ services:
       timeout: 3s
       interval: 15s
       retries: 3
-    dns:
-      - 1.1.1.1
-      - 8.8.8.8
     restart: unless-stopped
     networks:
       - internal
