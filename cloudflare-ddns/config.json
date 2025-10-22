@@ -13,6 +13,10 @@
         {
           "name": "*",
           "proxied": true
+        },
+        {
+          "name": "wg",
+          "proxied": false
         }
       ]
     }
