@@ -1,0 +1,32 @@
+##############################################################
+## This is just a basic config file to get the app to start ##
+##############################################################
+
+port: 3030
+
+triggers:
+  # sonarr:
+  #   - name: sonarr
+  # radarr:
+  #   - name: radarr
+  inotify:
+    - priority: 0
+      # filter with regular expressions
+      include:
+        - ^/media/
+      # exclude:
+      #   - '\.(srt|pdf)$'
+      paths:
+        - path: /media/
+
+targets:
+  # plex:
+  #   - url: http://plex:32400 # URL of your Plex server
+  #     token: fseigcpgytedLebNNxUB # Plex API Token
+  # autoscan:
+  #   - url: http://autoscan-adapter:5000 # URL of your autoscan adapter  
+  jellyfin:
+    - url: http://jellyfin:8096 
+      token: <JELLYFIN_API_KEY>
+
+minimum-age: 30s
