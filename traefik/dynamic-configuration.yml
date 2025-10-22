@@ -6,8 +6,8 @@ http:
           silentStartUp: false
           allowLocalRequests: true
           logLocalRequests: false
-          logAllowedRequests: true
-          logApiRequests: true
+          logAllowedRequests: false
+          logApiRequests: false
           api: "https://get.geojs.io/v1/ip/country/{ip}"
           apiTimeoutMs: 750
           cacheSize: 25

@@ -9,6 +9,10 @@
         {
           "name": "@",
           "proxied": true
+        },
+        {
+          "name": "*",
+          "proxied": true
         }
       ]
     }
