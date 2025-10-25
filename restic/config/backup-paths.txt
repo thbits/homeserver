@@ -1,0 +1,38 @@
+# Restic Backup Paths Configuration
+# 
+# Add paths you want to backup, one per line
+# Paths should match the mounted volumes in docker-compose.yml
+# Lines starting with # are comments and will be ignored
+# Empty lines are also ignored
+#
+# IMPORTANT: Paths must exist inside the container!
+# - /data is mapped to ${DATADIR} from your environment
+# - Add other mount points in docker-compose.yml if needed
+#
+# Examples:
+# /data/documents
+# /data/photos
+# /data/important-stuff
+#
+# Uncomment and modify the paths below for your needs:
+
+# Example: Backup specific directory from DATADIR
+# /data/my-important-directory
+
+# Current backup paths:
+/data/autoscan
+/data/backrest
+/data/bazarr
+/data/huntarr
+# /data/jellyfin
+/data/jellyseerr
+/data/joal
+/data/n8n
+/data/pihole
+/data/prowlarr
+/data/qbittorrent
+/data/radarr
+/data/recyclarr
+/data/restic
+/data/sonarr
+/data/wg-easy

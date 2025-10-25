@@ -1,0 +1,44 @@
+# Restic Exclude Patterns Configuration
+#
+# Add patterns for files/directories to exclude from backups
+# Lines starting with # are comments and will be ignored
+# Empty lines are also ignored
+# 
+# Pattern syntax:
+# - Use * for wildcards (e.g., *.tmp)
+# - Use ** for recursive matching (e.g., **/cache/**)
+# - Exact paths work too (e.g., /data/temp)
+#
+# Common exclusions:
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Cache directories
+**/cache/**
+**/.cache/**
+**/tmp/**
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Log files (optional - uncomment if you don't want to backup logs)
+# *.log
+# **/logs/**
+
+# Node modules (if backing up code)
+# **/node_modules/**
+
+# Python virtual environments (if backing up code)
+# **/.venv/**
+# **/venv/**
+# **/__pycache__/**
+
+# Add your custom exclusions below:
+

@@ -1,0 +1,56 @@
+#!/bin/sh
+# Restic Restore Helper Script
+# This script helps you restore files from backups
+# Usage: docker exec -it restic /scripts/restore.sh
+
+echo "==================================="
+echo "Restic Restore Helper"
+echo "==================================="
+echo ""
+
+# Show available snapshots
+echo "Available snapshots:"
+echo "-----------------------------------"
+restic snapshots
+
+echo ""
+echo "==================================="
+echo "Restore Options:"
+echo "==================================="
+echo ""
+echo "1. Restore specific snapshot to a directory:"
+echo "   restic restore <snapshot-id> --target /restore-location"
+echo ""
+echo "2. Restore specific files/directories:"
+echo "   restic restore <snapshot-id> --target /restore-location --include /path/to/file"
+echo ""
+echo "3. Restore latest snapshot:"
+echo "   restic restore latest --target /restore-location"
+echo ""
+echo "4. Browse snapshot contents (mount as filesystem):"
+echo "   mkdir -p /mnt/restic"
+echo "   restic mount /mnt/restic &"
+echo "   # Then browse /mnt/restic/<snapshot-id>/"
+echo "   # When done: umount /mnt/restic"
+echo ""
+echo "5. List files in a snapshot:"
+echo "   restic ls <snapshot-id>"
+echo ""
+echo "6. Find a specific file across all snapshots:"
+echo "   restic find filename"
+echo ""
+echo "==================================="
+echo "Examples:"
+echo "==================================="
+echo ""
+echo "# Restore latest backup to /tmp/restore:"
+echo "restic restore latest --target /tmp/restore"
+echo ""
+echo "# Restore specific directory from snapshot abc123:"
+echo "restic restore abc123 --target /tmp/restore --include /data/important"
+echo ""
+echo "# Find all versions of a file:"
+echo "restic find myfile.txt"
+echo ""
+echo "==================================="
+

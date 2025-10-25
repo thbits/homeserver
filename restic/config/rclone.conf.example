@@ -1,0 +1,25 @@
+# rclone Configuration for Google Drive
+# 
+# Setup Steps:
+#
+# 1. Add your credentials to rclone.conf:
+[gdrive]
+type = drive
+client_id = YOUR_CLIENT_ID_HERE
+client_secret = YOUR_CLIENT_SECRET_HERE
+scope = drive
+
+# 2. Generate token - Run on server:
+# docker run --rm -it -v $(pwd)/config:/config/rclone rclone/rclone:latest config reconnect "gdrive:" --config /config/rclone/rclone.conf
+# Choose: n (No)
+# Copy the rclone authorize command it shows
+
+# 3. Run the authorize command on your local machine (Mac/PC):
+# rclone authorize "drive" "LONG_STRING_FROM_STEP_2"
+# (Install rclone first: brew install rclone)
+
+# 4. Copy the token output and paste it back in the server terminal
+
+# 5. Type 'n' for Team Drive question
+
+# Done! Token will be added to this file automatically.
