@@ -71,7 +71,7 @@ services:
       - ${DATADIR}/backrest/config:/config
       - ${DATADIR}/backrest/cache:/cache
       - ${DATADIR}:/backup-data:ro
-      - ${DATADIR}/restic/config/rclone:/rclone-config:ro
+      - ${CONFIGDIR}/restic/config:/rclone-config:ro
     labels:
       - traefik.enable=true
       - traefik.http.routers.backrest.rule=Host(`backrest.${DOMAIN_NAME}`)
