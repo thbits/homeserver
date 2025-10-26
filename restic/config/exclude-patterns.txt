@@ -41,4 +41,5 @@ desktop.ini
 # **/__pycache__/**
 
 # Add your custom exclusions below:
-
+**/pihole/etc-pihole/gravity_old.db
+**/recyclarr/config/repositories/
