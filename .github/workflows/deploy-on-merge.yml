@@ -86,4 +86,4 @@ jobs:
           done <<< "${{ steps.find-compose.outputs.dirs }}"
 
       - name: Cleanup old images
-        run: docker image prune -f
+        run: docker image prune -a -f
