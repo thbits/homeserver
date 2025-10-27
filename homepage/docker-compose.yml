@@ -2,8 +2,6 @@ services:
   homepage:
     container_name: homepage
     image: ghcr.io/gethomepage/homepage:v1.5.0@sha256:e7fc26f914cf5e7dcd6c566e24ca218addb879aa76478ad4a553b1f9ae48b1d7
-    ports:
-      - 5000:3000
     labels:
       - traefik.enable=true
       - traefik.http.routers.homepage.rule=Host(`home.${DOMAIN_NAME}`)

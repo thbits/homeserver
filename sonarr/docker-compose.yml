@@ -9,14 +9,13 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE}
-    ports:
-      - 8989:8989
     labels:
       - traefik.enable=true
       - traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAIN_NAME}`)
       - traefik.http.routers.sonarr.entrypoints=websecure
       - traefik.http.routers.sonarr.tls=true
       - traefik.http.routers.sonarr.tls.certresolver=myclouddns
+      - traefik.http.services.sonarr.loadbalancer.server.port=8989
       - traefik.http.routers.sonarr.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker,geoblock@file
       - homepage.group=Servarr
       - homepage.name=Sonarr

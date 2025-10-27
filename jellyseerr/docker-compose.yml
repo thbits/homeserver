@@ -2,14 +2,13 @@ services:
   jellyseerr:
     container_name: jellyseerr
     image: ghcr.io/fallenbagel/jellyseerr:2.7.3@sha256:9cc9e9ee6cd5cf5a23feb45c37742ba34cfd6314d81d259cddb373a97ac92cdd
-    ports:
-      - "5055:5055"
     labels:
       - traefik.enable=true
       - traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.${DOMAIN_NAME}`)
       - traefik.http.routers.jellyseerr.entrypoints=websecure
       - traefik.http.routers.jellyseerr.tls=true
       - traefik.http.routers.jellyseerr.tls.certresolver=myclouddns
+      - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
       - traefik.http.routers.jellyseerr.middlewares=crowdsec-bouncer@docker,geoblock@file
       # NOTE: No authelia-forwardauth middleware - authentication handled by Jellyfin plugin
       - homepage.group=Media
