@@ -17,7 +17,6 @@
       "matchManagers": ["docker-compose"],
       "matchDatasources": ["docker"],
       "commitMessagePrefix": "deps(compose):",
-      "pinDigests": true,
       "matchUpdateTypes": ["major"],
       "minimumReleaseAge": "21 days",
       "automerge": false
@@ -27,7 +26,6 @@
       "matchManagers": ["docker-compose"],
       "matchDatasources": ["docker"],
       "commitMessagePrefix": "deps(compose):",
-      "pinDigests": true,
       "matchUpdateTypes": ["patch"],
       "automerge": true,
       "minimumReleaseAge": "7 days",
@@ -39,7 +37,6 @@
       "matchManagers": ["docker-compose"],
       "matchDatasources": ["docker"],
       "commitMessagePrefix": "deps(compose):",
-      "pinDigests": true,
       "matchUpdateTypes": ["minor"],
       "automerge": true,
       "automergeType": "pr",
