@@ -17,7 +17,7 @@ services:
     # Volumes store your data between container upgrades
     volumes:
       - ${DATADIR}/pihole/etc-pihole:/etc/pihole
-      - ${DATADIR}/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
+      # - ${DATADIR}/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
     # dns:
     #   - 1.1.1.1
     #   - 8.8.8.8
