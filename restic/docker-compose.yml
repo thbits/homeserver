@@ -1,6 +1,6 @@
 services:
   restic:
-    image: instrumentisto/restic:0.18.1
+    image: instrumentisto/restic:0.18.1@sha256:f67bfc5d6f41702a73a66e50eef4aa3829e7b674b75f575261bac740f92b5905
     container_name: restic
     restart: unless-stopped
     networks:
@@ -40,7 +40,7 @@ services:
       - "ofelia.job-exec.check-monthly.user=root"
 
   ofelia:
-    image: mcuadros/ofelia:0.3.19
+    image: mcuadros/ofelia:0.3.19@sha256:85d6aee023d1d9fe84568f5e9d0756b13153d6e25c447cc694609de1121d024b
     container_name: ofelia
     restart: unless-stopped
     depends_on:
@@ -54,7 +54,7 @@ services:
       ofelia.enabled: "true"
 
   backrest:
-    image: garethgeorge/backrest:v1.9.2
+    image: garethgeorge/backrest:v1.9.2@sha256:f8306faef0a3cbedc7daa55756f1d4c105d8c104aa773656bdad4fa8553dab5a
     container_name: backrest
     restart: unless-stopped
     environment:
