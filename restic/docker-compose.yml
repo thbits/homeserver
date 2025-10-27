@@ -1,0 +1,101 @@
+services:
+  restic:
+    image: instrumentisto/restic:0.18.1
+    container_name: restic
+    restart: unless-stopped
+    networks:
+      - restic
+    environment:
+      - TZ=${TIMEZONE}
+      - RESTIC_REPOSITORY=rclone:gdrive:Backups/nullflix  # Custom path in Google Drive
+      - RESTIC_PASSWORD=${RESTIC_PASSWORD}
+      - RCLONE_CONFIG=/config/rclone.conf
+      - RESTIC_COMPRESSION=auto
+    volumes:
+      # Mount paths you want to backup (read-only)
+      - ${DATADIR}:/data:ro
+      # Mount scripts and config
+      - ./scripts:/scripts:ro
+      - ${CONFIGDIR}/restic/config:/config
+      # Restic cache for better performance
+      - restic-cache:/root/.cache/restic
+    entrypoint: ["/bin/sh", "-c", "sleep infinity"]  # Keep container running
+    labels:
+      # Enable Ofelia
+      - "ofelia.enabled=true"
+      
+      # Daily backup at 3:00 AM
+      - "ofelia.job-exec.backup-daily.schedule=0 0 3 * * *"
+      - "ofelia.job-exec.backup-daily.command=/scripts/backup.sh"
+      - "ofelia.job-exec.backup-daily.user=root"
+      
+      # Weekly prune on Sunday at 4:00 AM
+      - "ofelia.job-exec.prune-weekly.schedule=0 0 4 * * 0"
+      - "ofelia.job-exec.prune-weekly.command=/scripts/prune.sh"
+      - "ofelia.job-exec.prune-weekly.user=root"
+      
+      # Monthly integrity check on 1st of month at 5:00 AM
+      - "ofelia.job-exec.check-monthly.schedule=0 0 5 1 * *"
+      - "ofelia.job-exec.check-monthly.command=/scripts/check.sh"
+      - "ofelia.job-exec.check-monthly.user=root"
+
+  ofelia:
+    image: mcuadros/ofelia:0.3.19
+    container_name: ofelia
+    restart: unless-stopped
+    depends_on:
+      - restic
+    networks:
+      - restic
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      ofelia.enabled: "true"
+
+  backrest:
+    image: garethgeorge/backrest:v1.9.2
+    container_name: backrest
+    restart: unless-stopped
+    environment:
+      - TZ=${TIMEZONE}
+      - BACKREST_DATA=/data
+      - BACKREST_CONFIG=/config/config.json
+      - XDG_CACHE_HOME=/cache
+      # Restic configuration (auto-detected by Backrest)
+      - RESTIC_REPOSITORY=rclone:gdrive:Backups/nullflix
+      - RESTIC_PASSWORD=${RESTIC_PASSWORD}
+      - RCLONE_CONFIG=/rclone-config/rclone.conf
+    volumes:
+      - ${DATADIR}/backrest/data:/data
+      - ${DATADIR}/backrest/config:/config
+      - ${DATADIR}/backrest/cache:/cache
+      - ${DATADIR}:/backup-data:ro
+      - ${CONFIGDIR}/restic/config:/rclone-config:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.backrest.rule=Host(`backrest.${DOMAIN_NAME}`)
+      - traefik.http.routers.backrest.entrypoints=websecure
+      - traefik.http.routers.backrest.tls=true
+      - traefik.http.routers.backrest.tls.certresolver=myclouddns
+      - traefik.http.services.backrest.loadbalancer.server.port=9898
+      - traefik.http.routers.backrest.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker,geoblock@file
+      - homepage.group=Other
+      - homepage.name=Backrest
+      - homepage.icon=restic.png
+      - homepage.href=https://backrest.${DOMAIN_NAME}/
+      - homepage.description=Restic backup web UI
+    networks:
+      - restic
+      - internal
+
+networks:
+  restic:
+    name: restic
+    driver: bridge
+  internal:
+    external: true
+
+volumes:
+  restic-cache:
+    name: restic-cache

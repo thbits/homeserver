@@ -102,6 +102,9 @@ CROWDSEC_ENROLL_KEY=<optional-for-console>
 # JOAL (Jack of All Trades torrent ratio faker)
 JOAL_SECRET_TOKEN=<random-secret-string>
 JOAL_SECRET_OBFUSCATION_PATH=<random-path-string>
+
+# Restic Backup Configuration
+RESTIC_PASSWORD=<generate-with-openssl-rand-base64-32>
 ```
 
 #### Generate Authelia Secrets
@@ -287,6 +290,42 @@ To add CrowdSec to new services in the future, simply add the appropriate middle
 
 2. Access the web UI at: `http://${LOCAL_IP}:8584/${JOAL_SECRET_OBFUSCATION_PATH}/ui`
 
+### 6. Restic Backup Configuration
+
+Automated backup solution using Restic with Google Drive (via rclone) as the backend storage.
+
+#### Features
+
+- **Automated Backups**: Daily backups at 3:00 AM
+- **Intelligent Storage**: Deduplication and compression to save space
+- **Retention Policy**: Keeps 7 daily, 4 weekly, 4 monthly
+- **Encryption**: All data encrypted with AES-256 before upload
+- **Google Drive Backend**: Cloud storage via rclone
+
+#### Initial Setup
+
+1. Generate a strong password for encryption:
+```bash
+openssl rand -base64 32
+```
+
+Add this to your `.env` file as `RESTIC_PASSWORD`.
+
+⚠️ **IMPORTANT**: Store this password safely! You cannot recover backups without it.
+
+2. Configure Google Drive authentication with rclone (see `restic/README.md` for detailed instructions)
+
+3. Configure which directories to backup in `restic/config/backup-paths.txt`
+
+4. Configure backup path in gdrive in `RESTIC_REPOSITORY` environment variable.
+
+5. Run initial backup:
+```bash
+docker exec restic /scripts/backup.sh
+```
+
+For detailed documentation, usage examples, and troubleshooting, see [restic/README.md](restic/README.md).
+
 ### Required Ports
 
 Ensure the following ports are open in your firewall:
@@ -350,3 +389,26 @@ This project uses **Renovate** for automated dependency updates.
 - **Security:** Docker images are pinned with digests for immutable references
 
 Renovate configuration is in `.github/renovate.json`
+
+## Restore backups
+
+1. Install restic and rclone.
+
+2. Authenticate rclone with `rclone.conf` file
+```bash
+docker run --rm -it -v $(pwd):/config/rclone rclone/rclone:latest config reconnect "gdrive:" --config /config/rclone/rclone.conf
+```
+
+Choose "No" and run the rclone command from output in other terminal window to get the token, then insert it.
+
+3. Set those 3 environment variables
+```bash
+export RESTIC_REPOSITORY=rclone:gdrive:<RESTIC_REPO_PATH_INSIDE_GDRIVE>
+export RCLONE_CONFIG=<PATH_TO_rclone.conf>
+export RESTIC_PASSWORD=<RESTIC_PASSWORD>
+```
+
+4. List snapshots
+`restic snapshots`
+
+5. `restic restore <SNAPSHOT_ID> --target <TARGET_DIR>`
