@@ -22,22 +22,22 @@
       "automerge": false
     },
     {
-      "description": "Auto-merge Docker Compose patch updates",
-      "matchManagers": ["docker-compose"],
-      "matchDatasources": ["docker"],
-      "commitMessagePrefix": "deps(compose):",
-      "matchUpdateTypes": ["patch"],
-      "automerge": true,
-      "minimumReleaseAge": "7 days",
-      "automergeType": "pr",
-      "automergeStrategy": "squash"
-    },
-    {
       "description": "Auto-merge Docker Compose minor updates",
       "matchManagers": ["docker-compose"],
       "matchDatasources": ["docker"],
       "commitMessagePrefix": "deps(compose):",
       "matchUpdateTypes": ["minor"],
+      "minimumReleaseAge": "7 days",
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "squash"
+    },
+    {
+      "description": "Auto-merge Docker Compose patch updates",
+      "matchManagers": ["docker-compose"],
+      "matchDatasources": ["docker"],
+      "commitMessagePrefix": "deps(compose):",
+      "matchUpdateTypes": ["patch"],
       "automerge": true,
       "automergeType": "pr",
       "automergeStrategy": "squash"
