@@ -14,7 +14,7 @@ services:
       - traefik.http.routers.huntarr.tls=true
       - traefik.http.routers.huntarr.tls.certresolver=myclouddns
       - traefik.http.services.huntarr.loadbalancer.server.port=9705
-      - traefik.http.routers.huntarr.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker,geoblock@file
+      - traefik.http.routers.huntarr.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
       - homepage.group=Servarr
       - homepage.name=Huntarr
       - homepage.icon=huntarr.png

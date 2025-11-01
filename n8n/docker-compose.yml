@@ -24,7 +24,7 @@ services:
       - traefik.http.routers.n8n.tls=true
       - traefik.http.routers.n8n.tls.certresolver=myclouddns
       - traefik.http.services.n8n.loadbalancer.server.port=5678
-      - traefik.http.routers.n8n.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker,geoblock@file
+      - traefik.http.routers.n8n.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
       - homepage.group=Other
       - homepage.name=n8n
       - homepage.icon=n8n.png

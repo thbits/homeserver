@@ -19,7 +19,7 @@ services:
       - traefik.http.routers.jellyfin.tls=true
       - traefik.http.routers.jellyfin.tls.certresolver=myclouddns
       - traefik.http.services.jellyfin.loadbalancer.server.port=8096
-      - traefik.http.routers.jellyfin.middlewares=crowdsec-bouncer@docker,geoblock@file
+      - traefik.http.routers.jellyfin.middlewares=geoblock@file,crowdsec-bouncer@docker
       # NOTE: No authelia-forwardauth middleware - authentication handled by Jellyfin plugin
       - homepage.group=Media
       - homepage.name=Jellyfin
