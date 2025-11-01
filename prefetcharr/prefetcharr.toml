@@ -1,0 +1,17 @@
+interval = 900           # Polling interval in seconds
+log_dir = "/log"         # Logging directory
+log_level = "Debug"      # `Trace`, `Debug`, `Info`, `Warn` or `Error`
+prefetch_num = 2         # Number of episodes to make available in advance
+request_seasons = true   # Always request full seasons to prefer season packs
+connection_retries = 6   # Number of retries for the initial connection probing
+
+[media_server]
+type = "Jellyfin"                       # `Jellyfin`, `Emby` or `Plex`
+url = "http://jellyfin:8096"            # Jellyfin/Emby/Plex baseurl
+api_key = "<YOUR KEY HERE>"             # Jellyfin/Emby API key or plex server token
+# users = [ "John", "12345", "Axel F" ] # Optional: Only monitor sessions for specific user IDs or names
+# libraries = [ "TV Shows", "Anime" ]   # Optional: Only monitor sessions for specific libraries
+
+[sonarr]
+url = "http://sonarr:8989"        # Sonarr baseurl
+api_key = "<YOUR KEY HERE>"       # Sonarr API key

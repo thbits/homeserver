@@ -1,0 +1,16 @@
+services:
+  prefetcharr:
+    image: phueber/prefetcharr:latest
+    container_name: prefetcharr
+    volumes:
+      # Copy prefetcharr.toml to your ${DATADIR} and set the api keys for jellyfin and sonarr 
+      - ${DATADIR}/prefetcharr/prefetcharr.toml:/config
+    environment:
+      - PREFETCHARR_CONFIG=/config
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
