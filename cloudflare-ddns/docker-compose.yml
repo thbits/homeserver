@@ -1,6 +1,6 @@
 services:
   cloudflare-ddns:
-    image: timothyjmiller/cloudflare-ddns:latest
+    image: timothyjmiller/cloudflare-ddns:latest@sha256:2187e122660d6a2d451ef7c53fd4805c133133f4f47552256352c1e2a7f49ee2
     container_name: cloudflare-ddns
     security_opt:
       - no-new-privileges:true
