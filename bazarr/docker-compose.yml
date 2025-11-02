@@ -10,8 +10,6 @@ services:
     volumes:
       - ${DATADIR}/bazarr/config:/config
       - ${DATADIR}/library/media:/data/media
-    ports:
-      - 6767:6767
     labels:
       - traefik.enable=true
       - traefik.http.routers.bazarr.rule=Host(`bazarr.${DOMAIN_NAME}`)
