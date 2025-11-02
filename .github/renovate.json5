@@ -43,6 +43,16 @@
       "automerge": true,
       "automergeType": "pr",
       "automergeStrategy": "squash"
+    },
+    {
+      "matchManagers": ["docker-compose"],
+      "matchDatasources": ["docker"],
+      "pin": false
+    },
+      "matchManagers": ["docker-compose"],
+      "matchDatasources": ["docker"],
+      "matchCurrentVersion": "latest",
+      "pin": true
     }
   ],
   "ignoreTests": true
