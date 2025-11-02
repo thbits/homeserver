@@ -49,6 +49,7 @@
       "matchDatasources": ["docker"],
       "pin": false
     },
+    {
       "matchManagers": ["docker-compose"],
       "matchDatasources": ["docker"],
       "matchCurrentVersion": "latest",
