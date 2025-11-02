@@ -1,60 +1,92 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "enabled": true,
-  "extends": [
-    "config:best-practices",
-    "default:pinDigestsDisabled"
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  enabled: true,
+  extends: [
+    'config:best-practices',
+    'default:pinDigestsDisabled',
   ],
-  "prHourlyLimit": 0,
-  "schedule": [
-    "after 3am and before 7am on Sunday"
+  prHourlyLimit: 0,
+  schedule: [
+    'after 3am and before 7am on Sunday',
   ],
-  "timezone": "Asia/Jerusalem",
-  "platformAutomerge": true,
-  "prConcurrentLimit": 10,
-  "ignoreDeps": ["lscr.io/linuxserver/jellyfin"],
-  "packageRules": [
-    {
-      "description": "Docker Compose major image updates",
-      "matchManagers": ["docker-compose"],
-      "matchDatasources": ["docker"],
-      "commitMessagePrefix": "deps(compose):",
-      "matchUpdateTypes": ["major"],
-      "minimumReleaseAge": "21 days",
-      "automerge": false
-    },
-    {
-      "description": "Auto-merge Docker Compose minor updates",
-      "matchManagers": ["docker-compose"],
-      "matchDatasources": ["docker"],
-      "commitMessagePrefix": "deps(compose):",
-      "matchUpdateTypes": ["minor"],
-      "minimumReleaseAge": "7 days",
-      "automerge": true,
-      "automergeType": "pr",
-      "automergeStrategy": "squash"
-    },
-    {
-      "description": "Auto-merge Docker Compose patch updates",
-      "matchManagers": ["docker-compose"],
-      "matchDatasources": ["docker"],
-      "commitMessagePrefix": "deps(compose):",
-      "matchUpdateTypes": ["patch"],
-      "automerge": true,
-      "automergeType": "pr",
-      "automergeStrategy": "squash"
-    },
-    {
-      "matchManagers": ["docker-compose"],
-      "matchDatasources": ["docker"],
-      "pin": false
-    },
-    {
-      "matchManagers": ["docker-compose"],
-      "matchDatasources": ["docker"],
-      "matchCurrentVersion": "latest",
-      "pin": true
-    }
+  timezone: 'Asia/Jerusalem',
+  platformAutomerge: true,
+  prConcurrentLimit: 10,
+  ignoreDeps: [
+    'lscr.io/linuxserver/jellyfin',
   ],
-  "ignoreTests": true
+  packageRules: [
+    {
+      description: 'Docker Compose major image updates',
+      matchManagers: [
+        'docker-compose',
+      ],
+      matchDatasources: [
+        'docker',
+      ],
+      commitMessagePrefix: 'deps(compose):',
+      matchUpdateTypes: [
+        'major',
+      ],
+      minimumReleaseAge: '21 days',
+      automerge: false,
+    },
+    {
+      description: 'Auto-merge Docker Compose minor updates',
+      matchManagers: [
+        'docker-compose',
+      ],
+      matchDatasources: [
+        'docker',
+      ],
+      commitMessagePrefix: 'deps(compose):',
+      matchUpdateTypes: [
+        'minor',
+      ],
+      minimumReleaseAge: '7 days',
+      automerge: true,
+      automergeType: 'pr',
+      automergeStrategy: 'squash',
+    },
+    {
+      description: 'Auto-merge Docker Compose patch updates',
+      matchManagers: [
+        'docker-compose',
+      ],
+      matchDatasources: [
+        'docker',
+      ],
+      commitMessagePrefix: 'deps(compose):',
+      matchUpdateTypes: [
+        'patch',
+      ],
+      automerge: true,
+      automergeType: 'pr',
+      automergeStrategy: 'squash',
+    },
+    {
+      matchManagers: [
+        'docker-compose',
+      ],
+      matchDatasources: [
+        'docker',
+      ],
+      pin: {
+        enabled: false,
+      },
+    },
+    {
+      matchManagers: [
+        'docker-compose',
+      ],
+      matchDatasources: [
+        'docker',
+      ],
+      matchCurrentVersion: 'latest',
+      pin: {
+        enabled: true,
+      },
+    },
+  ],
+  ignoreTests: true,
 }
