@@ -44,7 +44,7 @@ http:
         sablier:
           group: crowdsec-dashboard
           sablierUrl: http://sablier:10000
-          sessionDuration: 15s
+          sessionDuration: 1m
           dynamic:
             displayName: CrowdSec Dashboard
             refreshFrequency: 5s
