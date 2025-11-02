@@ -1,6 +1,6 @@
 services:
   crowdsec:
-    image: crowdsecurity/crowdsec:v1.7.3@sha256:4beb1633cf4f41bb6f9e64d065d151d3aa5e3aa7082d5c3061a243037db0d890
+    image: crowdsecurity/crowdsec:v1.7.3
     container_name: crowdsec
     restart: unless-stopped
     environment:

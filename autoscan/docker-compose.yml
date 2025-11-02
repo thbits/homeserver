@@ -1,7 +1,7 @@
 services:
   autoscan:
     container_name: autoscan
-    image: cloudb0x/autoscan:1.4.0@sha256:4a53ff1925c3362da3ad9c53f3930153c08a0d487ad2ee2a74e05cd8764d9902
+    image: cloudb0x/autoscan:1.4.0
     volumes:
       - ${DATADIR}/autoscan/config:/config
       - ${DATADIR}/library/media:/media

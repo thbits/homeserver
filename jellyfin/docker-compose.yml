@@ -1,6 +1,6 @@
 services:
   jellyfin:
-    image: lscr.io/linuxserver/jellyfin:10.10.7ubu2404-ls74
+    image: lscr.io/linuxserver/jellyfin:10.10.7
     container_name: jellyfin
     group_add:
       - "993"
