@@ -1,0 +1,18 @@
+services:
+  sablier:
+    image: sablierapp/sablier:1.10.1
+    container_name: sablier
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=${TIMEZONE}
+      - PROVIDER_NAME=docker
+      - STRATEGY_DYNAMIC_SHOW_DETAILES_BY_DEFAULT=true
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
+

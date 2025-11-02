@@ -38,3 +38,35 @@ http:
             - RO  # Romania
             - BY  # Belarus
             - TR  # Turkey
+    
+    sablier-crowdsec-dashboard:
+      plugin:
+        sablier:
+          group: crowdsec-dashboard
+          sablierUrl: http://sablier:10000
+          sessionDuration: 15s
+          dynamic:
+            displayName: CrowdSec Dashboard
+            refreshFrequency: 5s
+            showDetails: "true"
+            theme: ghost
+
+  services:
+    crowdsec-dashboard:
+      loadBalancer:
+        servers:
+          - url: "http://crowdsec-dashboard:3000"
+
+  routers:
+    crowdsec-dashboard:
+      rule: Host(`crowdsec.{{env "DOMAIN_NAME"}}`)
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: myclouddns
+      middlewares:
+        - geoblock@file
+        - crowdsec-bouncer@docker
+        - authelia-forwardauth@docker
+        - sablier-crowdsec-dashboard@file
+      service: crowdsec-dashboard

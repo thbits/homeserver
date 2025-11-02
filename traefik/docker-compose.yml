@@ -10,6 +10,7 @@ services:
       - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
       - CROWDSEC_BOUNCER_KEY=${CROWDSEC_BOUNCER_KEY}
       - TRAEFIK_CERTIFICATESRESOLVERS_MYCLOUDDNS_ACME_EMAIL=${SSL_EMAIL}
+      - DOMAIN_NAME=${DOMAIN_NAME}
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8081/ping"]
       interval: 10s

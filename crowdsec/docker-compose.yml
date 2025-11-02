@@ -22,33 +22,32 @@ services:
     networks:
       - internal
 
-  # dashboard:
-  #   image: metabase/metabase:v0.56.10.3
-  #   container_name: crowdsec-dashboard
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - crowdsec
-  #   environment:
-  #     - MB_DB_FILE=/data/metabase.db
-  #     - MGID=${PGID}
-  #   volumes:
-  #     - ${DATADIR}/crowdsec/dashboard:/data
-  #     - ${DATADIR}/crowdsec/data:/crowdsec-db:ro
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.crowdsec-dashboard.rule=Host(`crowdsec.${DOMAIN_NAME}`)
-  #     - traefik.http.routers.crowdsec-dashboard.entrypoints=websecure
-  #     - traefik.http.routers.crowdsec-dashboard.tls=true
-  #     - traefik.http.routers.crowdsec-dashboard.tls.certresolver=myclouddns
-  #     - traefik.http.services.crowdsec-dashboard.loadbalancer.server.port=3000
-  #     - traefik.http.routers.crowdsec-dashboard.middlewares=crowdsec-bouncer@docker,authelia-forwardauth@docker,geoblock@file
-  #     - homepage.group=Other
-  #     - homepage.name=CrowdSec
-  #     - homepage.icon=crowdsec.png
-  #     - homepage.href=http://crowdsec.${DOMAIN_NAME}/
-  #     - homepage.description=Security monitoring and threat protection
-  #   networks:
-  #     - internal
+  dashboard:
+    image: metabase/metabase:v0.56.10.3
+    container_name: crowdsec-dashboard
+    restart: unless-stopped
+    depends_on:
+      - crowdsec
+    environment:
+      - MB_DB_FILE=/data/metabase.db
+      - MGID=${PGID}
+    volumes:
+      - ${DATADIR}/crowdsec/dashboard:/data
+      - ${DATADIR}/crowdsec/data:/crowdsec-db:ro
+    healthcheck:
+      test: ["CMD", "true"]
+    labels:
+      # Sablier configuration
+      - sablier.enable=true
+      - sablier.group=crowdsec-dashboard
+      # Homepage configuration
+      - homepage.group=Other
+      - homepage.name=CrowdSec
+      - homepage.icon=crowdsec.png
+      - homepage.href=http://crowdsec.${DOMAIN_NAME}/
+      - homepage.description=Security monitoring and threat protection
+    networks:
+      - internal
 
 networks:
   internal:
