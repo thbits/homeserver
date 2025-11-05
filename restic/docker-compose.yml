@@ -29,10 +29,10 @@ services:
       - "ofelia.job-exec.backup-daily.command=/scripts/backup.sh"
       - "ofelia.job-exec.backup-daily.user=root"
       
-      # Weekly prune on Sunday at 4:00 AM
-      - "ofelia.job-exec.prune-weekly.schedule=0 0 4 * * 0"
-      - "ofelia.job-exec.prune-weekly.command=/scripts/prune.sh"
-      - "ofelia.job-exec.prune-weekly.user=root"
+      # Daily prune at 3:30 AM (30 minutes after backup)
+      - "ofelia.job-exec.prune-daily.schedule=0 30 3 * * *"
+      - "ofelia.job-exec.prune-daily.command=/scripts/prune.sh"
+      - "ofelia.job-exec.prune-daily.user=root"
       
       # Monthly integrity check on 1st of month at 5:00 AM
       - "ofelia.job-exec.check-monthly.schedule=0 0 5 1 * *"
@@ -73,18 +73,18 @@ services:
       - ${DATADIR}:/backup-data:ro
       - ${CONFIGDIR}/restic/config:/rclone-config:ro
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.backrest.rule=Host(`backrest.${DOMAIN_NAME}`)
-      - traefik.http.routers.backrest.entrypoints=websecure
-      - traefik.http.routers.backrest.tls=true
-      - traefik.http.routers.backrest.tls.certresolver=myclouddns
-      - traefik.http.services.backrest.loadbalancer.server.port=9898
-      - traefik.http.routers.backrest.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
+      # Sablier configuration
+      - sablier.enable=true
+      - sablier.group=backrest
+      ## Traefik labels managed in dynamic-configuration.yml
       - homepage.group=Other
       - homepage.name=Backrest
       - homepage.icon=restic.png
       - homepage.href=https://backrest.${DOMAIN_NAME}/
       - homepage.description=Restic backup web UI
+    healthcheck:
+      test: ["CMD", "true"]
+    profiles: ["manual"]
     networks:
       - restic
       - internal
