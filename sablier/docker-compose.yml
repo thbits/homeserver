@@ -1,6 +1,6 @@
 services:
   sablier:
-    image: sablierapp/sablier:1.10.1
+    image: sablierapp/sablier:1.10.1@sha256:4d4096b59a6e1496bd3106c1a90a7fdd161aafb73d58539b8c749c69380dedae
     container_name: sablier
     restart: unless-stopped
     volumes:

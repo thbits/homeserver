@@ -2,7 +2,7 @@ services:
   # Prowlarr
   prowlarr:
     container_name: prowlarr
-    image: lscr.io/linuxserver/prowlarr:2.1.5
+    image: lscr.io/linuxserver/prowlarr:2.1.5@sha256:643220338204525524db787ff38a607261597f49d1f550694acdb3e908e2b43e
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
