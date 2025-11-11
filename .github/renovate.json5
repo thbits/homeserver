@@ -7,7 +7,7 @@
   ],
   prHourlyLimit: 0,
   schedule: [
-    'after 3am and before 7am on Sunday',
+    'after 6am and before 4pm on Sunday',
   ],
   timezone: 'Asia/Jerusalem',
   platformAutomerge: true,
