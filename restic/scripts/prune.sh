@@ -11,8 +11,8 @@ echo "Applying retention policy..."
 restic forget \
     --tag automated \
     --keep-daily 7 \
-    --keep-weekly 4 \
-    --keep-monthly 4 \
+    --keep-weekly 6 \
+    --keep-monthly 0 \
     --keep-yearly 0 \
     --prune \
     --verbose

@@ -1,0 +1,56 @@
+services:
+  paperless-ngx-broker:
+    container_name: paperless-ngx-broker
+    image: docker.io/library/redis:8
+    restart: unless-stopped
+    volumes:
+      - ${DATADIR}/paperless-ngx/redisdata:/data
+    networks:
+      - internal
+  paperless-ngx-webserver:
+    container_name: paperless-ngx-webserver
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.19.6
+    restart: unless-stopped
+    depends_on:
+      - paperless-ngx-broker
+    ports:
+      - "8000:8000"
+    volumes:
+      - ${DATADIR}/paperless-ngx/data:/usr/src/paperless/data
+      - ${DATADIR}/paperless-ngx/media:/usr/src/paperless/media
+      - ${DATADIR}/paperless-ngx/export:/usr/src/paperless/export
+      #- ./consume:/usr/src/paperless/consume
+    environment:
+      - USERMAP_UID=${PUID}
+      - USERMAP_GID=${PGID}
+      - PAPERLESS_TIME_ZONE=${TIMEZONE}
+      - PAPERLESS_SECRET_KEY=C6gbOOib3LNvNSx2s4DEr/N5Qztpdw2Hn3m23nW7+AbYdAvPevoenGjgrZFDXuNB7nsth3U4dVrQAX/hggQGDQ==
+      - PAPERLESS_OCR_LANGUAGE=heb+eng
+      - PAPERLESS_OCR_LANGUAGES=heb eng
+      - PAPERLESS_REDIS=redis://paperless-ngx-broker:6379
+      - PAPERLESS_URL=https://paperless.${DOMAIN_NAME}
+      - PAPERLESS_OCR_MODE=force
+      - PAPERLESS_OCR_DESKEW=true
+      - PAPERLESS_TASK_WORKERS=4
+      - PAPERLESS_ENABLE_HTTP_REMOTE_USER=true
+      - PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME=HTTP_REMOTE_USER
+      - PAPERLESS_LOGOUT_REDIRECT_URL=https://auth.${DOMAIN_NAME}/logout
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.paperless-ngx-webserver.rule=Host(`paperless.${DOMAIN_NAME}`)
+      - traefik.http.routers.paperless-ngx-webserver.entrypoints=websecure
+      - traefik.http.routers.paperless-ngx-webserver.tls=true
+      - traefik.http.routers.paperless-ngx-webserver.tls.certresolver=myclouddns
+      - traefik.http.services.paperless-ngx-webserver.loadbalancer.server.port=8000
+      - traefik.http.routers.paperless-ngx-webserver.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - homepage.group=Other
+      - homepage.name=Paperless
+      - homepage.icon=paperless.png
+      - homepage.href=http://paperless.${DOMAIN_NAME}/
+      - homepage.description=Document Management System
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true

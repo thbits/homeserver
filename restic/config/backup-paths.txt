@@ -36,3 +36,4 @@
 /data/restic
 /data/sonarr
 /data/wg-easy
+/data/paperless-ngx
