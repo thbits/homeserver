@@ -17,6 +17,7 @@ services:
       - N8N_PROXY_HOPS=1
       - WEBHOOK_URL=https://n8n.${DOMAIN_NAME}/
       - N8N_EDITOR_BASE_URL=https://n8n.${DOMAIN_NAME}/
+      - NODE_FUNCTION_ALLOW_EXTERNAL=cheerio
     labels:
       - traefik.enable=true
       - traefik.http.routers.n8n.rule=Host(`n8n.${DOMAIN_NAME}`)
