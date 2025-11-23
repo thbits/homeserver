@@ -23,7 +23,7 @@ services:
       - internal
 
   dashboard:
-    image: metabase/metabase:v0.57.2.5@sha256:b2cc4a8dc6447804eb542122059c34bf635469ac6e870971b9e995852c9e9cc9
+    image: metabase/metabase:v0.57.3.2@sha256:69322e1e027be15a157b0ad860c80b69e4608ea5e3d3404003afb6be9548f6a2
     container_name: crowdsec-dashboard
     restart: unless-stopped
     depends_on:
