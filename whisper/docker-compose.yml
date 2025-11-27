@@ -1,0 +1,14 @@
+services:
+  whisper:
+    image: onerahmet/openai-whisper-asr-webservice:v1.9.1
+    container_name: whisper
+    environment:
+      ASR_MODEL: base
+      ASR_ENGINE: openai_whisper
+    networks:
+      - internal
+    restart: unless-stopped
+
+networks:
+  internal:
+    external: true
