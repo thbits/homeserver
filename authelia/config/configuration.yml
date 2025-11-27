@@ -54,6 +54,14 @@ access_control:
 
     - domain: 'jellyseerr.{{ mustEnv "DOMAIN_NAME" }}'
       policy: bypass
+
+    # n8n webhooks: Bypass authentication for webhook endpoints
+    - domain: 'n8n.{{ mustEnv "DOMAIN_NAME" }}'
+      resources:
+        - '^/webhook(/.*)?$'
+        - '^/webhook-test(/.*)?$'
+        - '^/rest/oauth2-credential/callback$'
+      policy: bypass
     
     # Protect all other subdomains with authentication
     - domain: '*.{{ mustEnv "DOMAIN_NAME" }}'

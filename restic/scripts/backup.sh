@@ -56,7 +56,6 @@ restic backup \
     $BACKUP_PATHS \
     $EXCLUDE_ARGS \
     --tag automated \
-    --tag daily \
     --host homeserver \
     --verbose
 
