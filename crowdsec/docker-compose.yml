@@ -21,7 +21,7 @@ services:
     networks:
       - internal
 
-  dashboard:
+  crowdsec-dashboard:
     image: metabase/metabase:v0.57.4.3@sha256:4e19412062ce692f5bef3d51eab45ad9886d072e43dd31b2045bfa1c3613f6c1
     container_name: crowdsec-dashboard
     restart: unless-stopped
@@ -40,6 +40,24 @@ services:
       retries: 5
         #profiles: ["manual"]
     labels:
+      - traefik.enable=true
+      - traefik.http.routers.crowdsec-dashboard.rule=Host(`crowdsec.${DOMAIN_NAME}`)
+      - traefik.http.routers.crowdsec-dashboard.entrypoints=websecure
+      - traefik.http.routers.crowdsec-dashboard.tls=true
+      - traefik.http.routers.crowdsec-dashboard.tls.certresolver=myclouddns
+      - traefik.http.services.crowdsec-dashboard.loadbalancer.server.port=3000
+      - traefik.http.routers.crowdsec-dashboard.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker,crowdsec-dashboard-sablier
+      # Sablier configuration
+      - sablier.enable=true
+      - sablier.group=crowdsec-dashboard
+      - traefik.http.middlewares.crowdsec-dashboard-sablier.plugin.sablier.group=crowdsec-dashboard
+      - traefik.http.middlewares.crowdsec-dashboard-sablier.plugin.sablier.sablierUrl=http://sablier:10000
+      - traefik.http.middlewares.crowdsec-dashboard-sablier.plugin.sablier.sessionDuration=5m
+      - traefik.http.middlewares.crowdsec-dashboard-sablier.plugin.sablier.dynamic.displayName=CrowdSec Dashboard
+      - traefik.http.middlewares.crowdsec-dashboard-sablier.plugin.sablier.dynamic.refreshFrequency=5s
+      - traefik.http.middlewares.crowdsec-dashboard-sablier.plugin.sablier.dynamic.showDetails=true
+      - traefik.http.middlewares.crowdsec-dashboard-sablier.plugin.sablier.dynamic.theme=ghost
+      - traefik.docker.allownonrunning=true
       # Sablier configuration
       - sablier.enable=true
       - sablier.group=crowdsec-dashboard

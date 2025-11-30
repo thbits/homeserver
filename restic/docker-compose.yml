@@ -73,10 +73,24 @@ services:
       - ${DATADIR}:/backup-data:ro
       - ${CONFIGDIR}/restic/config:/rclone-config:ro
     labels:
+      - traefik.enable=true
+      - traefik.http.routers.backrest.rule=Host(`backrest.${DOMAIN_NAME}`)
+      - traefik.http.routers.backrest.entrypoints=websecure
+      - traefik.http.routers.backrest.tls=true
+      - traefik.http.routers.backrest.tls.certresolver=myclouddns
+      - traefik.http.services.backrest.loadbalancer.server.port=9898
+      - traefik.http.routers.backrest.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker,backrest-sablier
       # Sablier configuration
       - sablier.enable=true
       - sablier.group=backrest
-      ## Traefik labels managed in dynamic-configuration.yml
+      - traefik.http.middlewares.backrest-sablier.plugin.sablier.group=backrest
+      - traefik.http.middlewares.backrest-sablier.plugin.sablier.sablierUrl=http://sablier:10000
+      - traefik.http.middlewares.backrest-sablier.plugin.sablier.sessionDuration=5m
+      - traefik.http.middlewares.backrest-sablier.plugin.sablier.dynamic.displayName=Backrest
+      - traefik.http.middlewares.backrest-sablier.plugin.sablier.dynamic.refreshFrequency=5s
+      - traefik.http.middlewares.backrest-sablier.plugin.sablier.dynamic.showDetails=true
+      - traefik.http.middlewares.backrest-sablier.plugin.sablier.dynamic.theme=ghost
+      - traefik.docker.allownonrunning=true
       - homepage.group=Other
       - homepage.name=Backrest
       - homepage.icon=restic.png

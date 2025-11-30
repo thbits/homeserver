@@ -86,5 +86,18 @@ jobs:
             (cd "$dir" && docker compose up -d --remove-orphans)
           done <<< "${{ steps.find-compose.outputs.dirs }}"
 
+      - name: Restart sablier
+        run: |
+          sablier_compose=$(find . -path "*/sablier/docker-compose.yml" -not -path "./.git/*" -print -quit)
+          if [ -z "$sablier_compose" ]; then
+            echo "No sablier/docker-compose.yml found, skipping"
+            exit 0
+          fi
+
+          sablier_dir=$(dirname "$sablier_compose")
+          echo "Recreating sablier stack in $sablier_dir"
+          cd "$sablier_dir"
+          docker compose up -d --force-recreate
+
       - name: Cleanup old images
         run: docker image prune -a -f
