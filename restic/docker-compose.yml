@@ -83,8 +83,11 @@ services:
       - homepage.href=https://backrest.${DOMAIN_NAME}/
       - homepage.description=Restic backup web UI
     healthcheck:
-      test: ["nc", "-vz" ,"localhost", "9898"]
-    profiles: ["manual"]
+      test: ["CMD", "nc", "-vz" ,"localhost", "9898"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    #profiles: ["manual"]
     networks:
       - restic
       - internal

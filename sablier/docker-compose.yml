@@ -9,6 +9,7 @@ services:
       - TZ=${TIMEZONE}
       - PROVIDER_NAME=docker
       - STRATEGY_DYNAMIC_SHOW_DETAILES_BY_DEFAULT=true
+      - PROVIDER_DOCKER_STRATEGY=stop
     networks:
       - internal
 

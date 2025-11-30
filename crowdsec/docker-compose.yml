@@ -10,10 +10,9 @@ services:
       - DISABLE_ONLINE_API=false
     healthcheck:
       test: ["CMD", "cscli", "version"]
-      interval: 30s
+      interval: 5s
       timeout: 10s
-      retries: 3
-      start_period: 40s
+      retries: 5
     volumes:
       - ${DATADIR}/crowdsec/config:/etc/crowdsec
       - ${CONFIGDIR}/crowdsec/config/acquis.yaml:/etc/crowdsec/acquis.yaml:ro
@@ -35,8 +34,11 @@ services:
       - ${DATADIR}/crowdsec/dashboard:/data
       - ${DATADIR}/crowdsec/data:/crowdsec-db:ro
     healthcheck:
-      test: ["CMD", "true"]
-    profiles: ["manual"]
+      test: ["CMD", "nc", "-vz", "localhost", "3000"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+        #profiles: ["manual"]
     labels:
       # Sablier configuration
       - sablier.enable=true
