@@ -43,3 +43,6 @@ desktop.ini
 # Add your custom exclusions below:
 **/pihole/etc-pihole/gravity_old.db
 **/recyclarr/config/repositories/
+**/jellyfin/config/data/metadata/
+**/jellyfin/config/data/temp/
+**/jellyfin/config/data/transcodes/
