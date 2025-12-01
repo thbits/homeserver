@@ -24,7 +24,7 @@
 /data/backrest
 /data/bazarr
 /data/huntarr
-# /data/jellyfin
+/data/jellyfin
 /data/jellyseerr
 /data/joal
 /data/n8n
