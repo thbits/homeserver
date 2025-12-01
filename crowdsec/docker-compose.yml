@@ -58,9 +58,6 @@ services:
       - traefik.http.middlewares.crowdsec-dashboard-sablier.plugin.sablier.dynamic.showDetails=true
       - traefik.http.middlewares.crowdsec-dashboard-sablier.plugin.sablier.dynamic.theme=ghost
       - traefik.docker.allownonrunning=true
-      # Sablier configuration
-      - sablier.enable=true
-      - sablier.group=crowdsec-dashboard
       # Homepage configuration
       - homepage.group=Other
       - homepage.name=CrowdSec
