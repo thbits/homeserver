@@ -24,7 +24,7 @@ services:
       - USERMAP_UID=${PUID}
       - USERMAP_GID=${PGID}
       - PAPERLESS_TIME_ZONE=${TIMEZONE}
-      - PAPERLESS_SECRET_KEY=C6gbOOib3LNvNSx2s4DEr/N5Qztpdw2Hn3m23nW7+AbYdAvPevoenGjgrZFDXuNB7nsth3U4dVrQAX/hggQGDQ==
+      - PAPERLESS_SECRET_KEY=${PAPERLESS_SECRET_KEY}
       - PAPERLESS_OCR_LANGUAGE=heb+eng
       - PAPERLESS_OCR_LANGUAGES=heb eng
       - PAPERLESS_REDIS=redis://paperless-ngx-broker:6379
