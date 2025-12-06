@@ -20,6 +20,7 @@
 # /data/my-important-directory
 
 # Current backup paths:
+/data/git/homeserver/.env
 /data/autoscan
 /data/backrest
 /data/bazarr

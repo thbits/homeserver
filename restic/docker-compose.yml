@@ -15,7 +15,7 @@ services:
       # Mount paths you want to backup (read-only)
       - ${DATADIR}:/data:ro
       # Mount scripts and config
-      - ./scripts:/scripts:ro
+      - ${CONFIGDIR}/restic/scripts:/scripts:ro
       - ${CONFIGDIR}/restic/config:/config
       # Restic cache for better performance
       - restic-cache:/root/.cache/restic
