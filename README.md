@@ -111,6 +111,8 @@ RESTIC_PASSWORD=<generate-with-openssl-rand-base64-32>
 PAPERLESS_SECRET_KEY=<generate-with-openssl-rand-base64-32>
 
 # SparkyFitness Configuration
+SPARKY_FITNESS_DB_NAME=sparkyfitness_db
+SPARKY_FITNESS_DB_USER=sparky
 SPARKY_FITNESS_DB_PASSWORD=<generate-with-openssl-rand-base64-32>
 SPARKY_FITNESS_APP_DB_USER=<app-db-username>
 SPARKY_FITNESS_APP_DB_PASSWORD=<generate-with-openssl-rand-base64-32>
@@ -191,6 +193,8 @@ Set these as GitHub Actions variables/secrets (Settings → Secrets and variable
 | `JOAL_SECRET_TOKEN` | JOAL | Random secret string for UI authentication |
 | `JOAL_SECRET_OBFUSCATION_PATH` | JOAL | Random path string to obfuscate UI URL (e.g., `my-secret-path-123`) |
 | `PAPERLESS_SECRET_KEY` | Paperless-ngx | Generate with: `openssl rand -base64 32` |
+| `SPARKY_FITNESS_DB_NAME` | SparkyFitness | PostgreSQL database name (e.g., sparkyfitness_db) |
+| `SPARKY_FITNESS_DB_USER` | SparkyFitness | PostgreSQL database user (e.g., sparky) |
 | `SPARKY_FITNESS_DB_PASSWORD` | SparkyFitness | PostgreSQL database password - Generate with: `openssl rand -base64 32` |
 | `SPARKY_FITNESS_APP_DB_USER` | SparkyFitness | Application database username |
 | `SPARKY_FITNESS_APP_DB_PASSWORD` | SparkyFitness | Application database password - Generate with: `openssl rand -base64 32` |
