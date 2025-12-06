@@ -54,6 +54,7 @@ Edit `.env` with ALL your values (common + service-specific):
 DATADIR=/path/to/data/directory
 CONFIGDIR=/path/to/config/directory
 DOMAIN_NAME=example.com
+LOCAL_IP=server.local.ip.address
 SSL_EMAIL=your-email@example.com
 TIMEZONE=Asia/Jerusalem
 
@@ -105,6 +106,16 @@ JOAL_SECRET_OBFUSCATION_PATH=<random-path-string>
 
 # Restic Backup Configuration
 RESTIC_PASSWORD=<generate-with-openssl-rand-base64-32>
+
+# Paperless-ngx Configuration
+PAPERLESS_SECRET_KEY=<generate-with-openssl-rand-base64-32>
+
+# SparkyFitness Configuration
+SPARKY_FITNESS_DB_PASSWORD=<generate-with-openssl-rand-base64-32>
+SPARKY_FITNESS_APP_DB_USER=<app-db-username>
+SPARKY_FITNESS_APP_DB_PASSWORD=<generate-with-openssl-rand-base64-32>
+SPARKY_FITNESS_API_ENCRYPTION_KEY=<generate-with-openssl-rand-base64-32>
+SPARKY_FITNESS_JWT_SECRET=<generate-with-openssl-rand-base64-32>
 ```
 
 #### Generate Authelia Secrets
@@ -179,6 +190,12 @@ Set these as GitHub Actions variables/secrets (Settings → Secrets and variable
 | `CROWDSEC_ENROLL_KEY` | CrowdSec | Optional - For CrowdSec Console enrollment (get from https://app.crowdsec.net/) |
 | `JOAL_SECRET_TOKEN` | JOAL | Random secret string for UI authentication |
 | `JOAL_SECRET_OBFUSCATION_PATH` | JOAL | Random path string to obfuscate UI URL (e.g., `my-secret-path-123`) |
+| `PAPERLESS_SECRET_KEY` | Paperless-ngx | Generate with: `openssl rand -base64 32` |
+| `SPARKY_FITNESS_DB_PASSWORD` | SparkyFitness | PostgreSQL database password - Generate with: `openssl rand -base64 32` |
+| `SPARKY_FITNESS_APP_DB_USER` | SparkyFitness | Application database username |
+| `SPARKY_FITNESS_APP_DB_PASSWORD` | SparkyFitness | Application database password - Generate with: `openssl rand -base64 32` |
+| `SPARKY_FITNESS_API_ENCRYPTION_KEY` | SparkyFitness | API encryption key - Generate with: `openssl rand -base64 32` |
+| `SPARKY_FITNESS_JWT_SECRET` | SparkyFitness | JWT authentication secret - Generate with: `openssl rand -base64 32` |
 
 ### 2. Authelia Users
 
@@ -263,7 +280,6 @@ A self-hosted Metabase dashboard is available at `https://crowdsec.${DOMAIN_NAME
    - **Display name**: CrowdSec
    - **Filename**: `/crowdsec-db/crowdsec.db`
    - Click "Save"
-
 
 
 #### Applying CrowdSec Protection to Services

@@ -1,0 +1,64 @@
+services:
+  sparkyfitness-db:
+    container_name: sparkyfitness-db
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${SPARKY_FITNESS_DB_NAME}
+      - POSTGRES_USER=${SPARKY_FITNESS_DB_USER}
+      - POSTGRES_PASSWORD=${SPARKY_FITNESS_DB_PASSWORD}
+    volumes:
+      - ${DATADIR}/sparkyfitness/postgresql:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  sparkyfitness-server:
+    container_name: sparkyfitness-server
+    image: codewithcj/sparkyfitness_server:v0.15.9.6
+    restart: unless-stopped
+    depends_on:
+      - sparkyfitness-db
+    environment:
+      - SPARKY_FITNESS_FRONTEND_URL=https://sparkyfitness.${DOMAIN_NAME}
+      - SPARKY_FITNESS_DB_USER=${SPARKY_FITNESS_DB_USER}
+      - SPARKY_FITNESS_DB_HOST=sparkyfitness-db
+      - SPARKY_FITNESS_DB_NAME=${SPARKY_FITNESS_DB_NAME}
+      - SPARKY_FITNESS_DB_PASSWORD=${SPARKY_FITNESS_DB_PASSWORD}
+      - SPARKY_FITNESS_APP_DB_USER=${SPARKY_FITNESS_APP_DB_USER}
+      - SPARKY_FITNESS_APP_DB_PASSWORD=${SPARKY_FITNESS_APP_DB_PASSWORD}
+      - SPARKY_FITNESS_DB_PORT=5432
+      - SPARKY_FITNESS_API_ENCRYPTION_KEY=${SPARKY_FITNESS_API_ENCRYPTION_KEY}
+      - JWT_SECRET=${SPARKY_FITNESS_JWT_SECRET}
+      - NODE_ENV=production
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${DATADIR}/sparkyfitness/backup:/app/SparkyFitnessServer/backup
+      - ${DATADIR}/sparkyfitness/uploads:/app/SparkyFitnessServer/uploads
+    networks:
+      - internal
+
+  sparkyfitness-frontend:
+    container_name: sparkyfitness-frontend
+    image: codewithcj/sparkyfitness:v0.15.9.6
+    restart: unless-stopped
+    depends_on:
+      - sparkyfitness-server
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sparkyfitness.rule=Host(`sparkyfitness.${DOMAIN_NAME}`)
+      - traefik.http.routers.sparkyfitness.entrypoints=websecure
+      - traefik.http.routers.sparkyfitness.tls=true
+      - traefik.http.routers.sparkyfitness.tls.certresolver=myclouddns
+      - traefik.http.routers.sparkyfitness.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - traefik.http.services.sparkyfitness.loadbalancer.server.port=80
+      - homepage.group=Other
+      - homepage.name=SparkyFitness
+      - homepage.icon=https://codewithcj.github.io/SparkyFitness/logo.png
+      - homepage.href=https://sparkyfitness.${DOMAIN_NAME}/
+      - homepage.description=Workout and fitness tracker
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
