@@ -1,7 +1,7 @@
 services:
   sparkyfitness-db:
     container_name: sparkyfitness-db
-    image: postgres:15-alpine
+    image: postgres:15-alpine@sha256:2e7b888f221193cddee9ce554d3311dc8be197a5d0c904fe30f5f568e0f99851
     restart: unless-stopped
     environment:
       - POSTGRES_DB=${SPARKY_FITNESS_DB_NAME}
@@ -14,7 +14,7 @@ services:
 
   sparkyfitness-server:
     container_name: sparkyfitness-server
-    image: codewithcj/sparkyfitness_server:v0.15.9.6
+    image: codewithcj/sparkyfitness_server:v0.15.9.6@sha256:6b5b02d351cae7d845390a5c53b36af5b38a6b534709ee8b457a0a620f49860a
     restart: unless-stopped
     depends_on:
       - sparkyfitness-db
@@ -39,7 +39,7 @@ services:
 
   sparkyfitness-frontend:
     container_name: sparkyfitness-frontend
-    image: codewithcj/sparkyfitness:v0.15.9.6
+    image: codewithcj/sparkyfitness:v0.15.9.6@sha256:8d7c78d25bf81ae543ff09c38310b36b1c635910422d4a1e9df823cda2afcc0f
     restart: unless-stopped
     depends_on:
       - sparkyfitness-server
