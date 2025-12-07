@@ -1,6 +1,6 @@
 services:
   restic:
-    image: instrumentisto/restic:0.18.1@sha256:f67bfc5d6f41702a73a66e50eef4aa3829e7b674b75f575261bac740f92b5905
+    image: instrumentisto/restic:0.18.1@sha256:b25a4783a935db3a00d7b0c2e88c357eeb7e1e4288e77ffa95cca47c2ff2cc51
     container_name: restic
     restart: unless-stopped
     networks:
