@@ -25,17 +25,17 @@ services:
       - "ofelia.enabled=true"
       
       # Daily backup at 3:00 AM
-      - "ofelia.job-exec.backup-daily.schedule=0 0 3 * * *"
+      - "ofelia.job-exec.backup-daily.schedule=0 3 * * *"
       - "ofelia.job-exec.backup-daily.command=/scripts/backup.sh"
       - "ofelia.job-exec.backup-daily.user=root"
       
       # Daily prune at 3:30 AM (30 minutes after backup)
-      - "ofelia.job-exec.prune-daily.schedule=0 30 3 * * *"
+      - "ofelia.job-exec.prune-daily.schedule=30 3 * * *"
       - "ofelia.job-exec.prune-daily.command=/scripts/prune.sh"
       - "ofelia.job-exec.prune-daily.user=root"
       
       # Monthly integrity check on 1st of month at 5:00 AM
-      - "ofelia.job-exec.check-monthly.schedule=0 0 5 1 * *"
+      - "ofelia.job-exec.check-monthly.schedule=0 5 1 * *"
       - "ofelia.job-exec.check-monthly.command=/scripts/check.sh"
       - "ofelia.job-exec.check-monthly.user=root"
 
