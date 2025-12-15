@@ -25,6 +25,7 @@
         'docker',
       ],
       commitMessagePrefix: 'deps(compose):',
+      versioning: 'semver-coerced',
       matchUpdateTypes: [
         'major',
       ],
