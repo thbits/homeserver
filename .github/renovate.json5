@@ -17,33 +17,26 @@
   ],
   packageRules: [
     {
-      description: 'Docker Compose major image updates',
-      matchManagers: [
-        'docker-compose',
-      ],
-      matchDatasources: [
-        'docker',
-      ],
-      commitMessagePrefix: 'deps(compose):',
+      description: 'Use semver-coerced versioning for all Docker Compose images',
+      matchManagers: ['docker-compose'],
+      matchDatasources: ['docker'],
       versioning: 'semver-coerced',
-      matchUpdateTypes: [
-        'major',
-      ],
+    },
+    {
+      description: 'Docker Compose major image updates',
+      matchManagers: ['docker-compose'],
+      matchDatasources: ['docker'],
+      commitMessagePrefix: 'deps(compose):',
+      matchUpdateTypes: ['major'],
       minimumReleaseAge: '21 days',
       automerge: false,
     },
     {
       description: 'Auto-merge Docker Compose minor updates',
-      matchManagers: [
-        'docker-compose',
-      ],
-      matchDatasources: [
-        'docker',
-      ],
+      matchManagers: ['docker-compose'],
+      matchDatasources: ['docker'],
       commitMessagePrefix: 'deps(compose):',
-      matchUpdateTypes: [
-        'minor',
-      ],
+      matchUpdateTypes: ['minor'],
       minimumReleaseAge: '7 days',
       automerge: true,
       automergeType: 'pr',
@@ -51,38 +44,24 @@
     },
     {
       description: 'Auto-merge Docker Compose patch updates',
-      matchManagers: [
-        'docker-compose',
-      ],
-      matchDatasources: [
-        'docker',
-      ],
+      matchManagers: ['docker-compose'],
+      matchDatasources: ['docker'],
       commitMessagePrefix: 'deps(compose):',
-      matchUpdateTypes: [
-        'patch',
-      ],
+      matchUpdateTypes: ['patch'],
       automerge: true,
       automergeType: 'pr',
       automergeStrategy: 'squash',
     },
     {
-      matchManagers: [
-        'docker-compose',
-      ],
-      matchDatasources: [
-        'docker',
-      ],
+      matchManagers: ['docker-compose'],
+      matchDatasources: ['docker'],
       pin: {
         enabled: false,
       },
     },
     {
-      matchManagers: [
-        'docker-compose',
-      ],
-      matchDatasources: [
-        'docker',
-      ],
+      matchManagers: ['docker-compose'],
+      matchDatasources: ['docker'],
       matchCurrentVersion: 'latest',
       pin: {
         enabled: true,
