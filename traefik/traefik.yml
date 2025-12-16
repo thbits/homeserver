@@ -45,6 +45,7 @@ providers:
   file:
     filename: /etc/traefik/dynamic-configuration.yml
     watch: true
+  providersThrottleDuration: 10s
 
 # Certificate resolvers configuration
 certificatesResolvers:
