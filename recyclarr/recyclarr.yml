@@ -211,7 +211,7 @@ sonarr:
         reset_unmatched_scores:
           enabled: true
         upgrade:
-          allowed: false  # DISABLED: Won't auto-upgrade once a release meets requirements
+          allowed: true  # DISABLED: Won't auto-upgrade once a release meets requirements
           until_quality: Bluray-1080p
           until_score: 10000
         min_format_score: 0
@@ -234,7 +234,7 @@ sonarr:
         reset_unmatched_scores:
           enabled: true
         upgrade:
-          allowed: false  # DISABLED: Won't auto-upgrade once a release meets requirements
+          allowed: true  # DISABLED: Won't auto-upgrade once a release meets requirements
           until_quality: Bluray-2160p
           until_score: 10000
         min_format_score: 0
@@ -274,7 +274,7 @@ sonarr:
         reset_unmatched_scores:
           enabled: true
         upgrade:
-          allowed: false  # DISABLED: Accepts either 1080p or 4K without upgrading
+          allowed: true  # DISABLED: Accepts either 1080p or 4K without upgrading
           until_quality: WEB 2160p
           until_score: 10000
         min_format_score: 0
