@@ -10,6 +10,7 @@ echo "==================================="
 echo "Applying retention policy..."
 restic forget \
     --tag automated \
+    --group-by host,tags \
     --keep-daily 7 \
     --keep-weekly 6 \
     --keep-monthly 0 \

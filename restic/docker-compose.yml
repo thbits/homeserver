@@ -29,8 +29,8 @@ services:
       - "ofelia.job-exec.backup-daily.command=/scripts/backup.sh"
       - "ofelia.job-exec.backup-daily.user=root"
       
-      # Daily prune at 3:30 AM (30 minutes after backup)
-      - "ofelia.job-exec.prune-daily.schedule=30 3 * * *"
+      # Daily prune at 4:00 AM (1 hour after backup)
+      - "ofelia.job-exec.prune-daily.schedule=0 4 * * *"
       - "ofelia.job-exec.prune-daily.command=/scripts/prune.sh"
       - "ofelia.job-exec.prune-daily.user=root"
       
