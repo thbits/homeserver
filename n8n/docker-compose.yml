@@ -18,6 +18,7 @@ services:
       - WEBHOOK_URL=https://n8n.${DOMAIN_NAME}/
       - N8N_EDITOR_BASE_URL=https://n8n.${DOMAIN_NAME}/
       - NODE_FUNCTION_ALLOW_EXTERNAL=cheerio
+      - N8N_LOG_LEVEL=info
     labels:
       - traefik.enable=true
       - traefik.http.routers.n8n.rule=Host(`n8n.${DOMAIN_NAME}`)
@@ -33,6 +34,8 @@ services:
       - homepage.description=Workflow automation tool
     volumes:
       - ${DATADIR}/n8n:/home/node/.n8n
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - internal
 
