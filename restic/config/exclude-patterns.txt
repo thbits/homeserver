@@ -46,3 +46,4 @@ desktop.ini
 **/jellyfin/config/data/metadata/
 **/jellyfin/config/data/temp/
 **/jellyfin/config/data/transcodes/
+**/jellyfin/modcache/
