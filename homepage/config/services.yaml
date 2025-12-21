@@ -12,9 +12,18 @@
                 - type: sonarr
                   service_group: Servarr
                   service_name: Sonarr
+                  baseUrl: https://sonarr.{{HOMEPAGE_VAR_DOMAIN_NAME}}
                 - type: radarr
                   service_group: Servarr
                   service_name: Radarr
+                  baseUrl: https://radarr.{{HOMEPAGE_VAR_DOMAIN_NAME}}
+
+- Servarr:
+    - Homeserver Repo:
+        icon: github.png
+        href: https://github.com/thbits/homeserver
+        description: Main repo on github
+        ping: https://github.com
 
 - Other:
     # - Grafana:
