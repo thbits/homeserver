@@ -40,7 +40,7 @@ services:
       - "ofelia.job-exec.check-monthly.user=root"
 
   ofelia:
-    image: mcuadros/ofelia:0.3.19@sha256:85d6aee023d1d9fe84568f5e9d0756b13153d6e25c447cc694609de1121d024b
+    image: mcuadros/ofelia:0.3.20@sha256:83dfc7e24b63aa8973010ad146bee3f69bec272eb20ea2c8e10c7170dcfd50a9
     container_name: ofelia
     restart: unless-stopped
     depends_on:
