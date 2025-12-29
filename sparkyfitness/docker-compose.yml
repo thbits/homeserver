@@ -1,7 +1,7 @@
 services:
   sparkyfitness-db:
     container_name: sparkyfitness-db
-    image: postgres:15-alpine@sha256:b3968e348b48f1198cc6de6611d055dbad91cd561b7990c406c3fc28d7095b21
+    image: postgres:15.15@sha256:697ff70295146d53b702b07532fe68aaed7a5f10d04ff68edbeffd5fbacd15a5
     restart: unless-stopped
     environment:
       - POSTGRES_DB=${SPARKY_FITNESS_DB_NAME}
