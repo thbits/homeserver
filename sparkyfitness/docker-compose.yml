@@ -57,7 +57,7 @@ services:
 
   sparkyfitness-frontend:
     container_name: sparkyfitness-frontend
-    image: codewithcj/sparkyfitness:v0.16.0@sha256:76f222e26c40cf14c567f0eaa792934e8ed674a357c22771749cf2edfbec06fd
+    image: codewithcj/sparkyfitness:v0.16.2@sha256:f6c8950af4ab3dfcd496ef92b47fa4b8dca8f14cf8b99c2e91f67cef14a88433
     restart: unless-stopped
     depends_on:
       - sparkyfitness-server
