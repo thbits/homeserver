@@ -1,0 +1,78 @@
+services:
+  litellm:
+    image: ghcr.io/berriai/litellm:main-v1.80.13-nightly
+    container_name: litellm
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgresql://${LITELLM_DB_USER}:${LITELLM_DB_PASSWORD}@litellm-db:5432/${LITELLM_DB_NAME}
+      - STORE_MODEL_IN_DB=True
+      - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY}
+    volumes:
+      - ${CONFIGDIR}/litellm/config/config.yaml:/app/config.yaml
+    command:
+      - "--config=/app/config.yaml"
+    labels:
+      # Traefik routing
+      - traefik.enable=true
+      - traefik.http.routers.litellm.rule=Host(`litellm.${DOMAIN_NAME}`)
+      - traefik.http.routers.litellm.entrypoints=websecure
+      - traefik.http.routers.litellm.tls=true
+      - traefik.http.routers.litellm.tls.certresolver=myclouddns
+      - traefik.http.services.litellm.loadbalancer.server.port=4000
+
+      # Middleware chain (with Authelia for SSO)
+      - traefik.http.routers.litellm.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
+
+      # Homepage integration
+      - homepage.group=Other
+      - homepage.name=LiteLLM
+      - homepage.icon=https://docs.litellm.ai/img/favicon.ico
+      - homepage.href=https://litellm.${DOMAIN_NAME}/
+      - homepage.description=LLM Proxy Gateway
+    networks:
+      - internal
+    depends_on:
+      litellm-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:4000/health/liveliness')\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  litellm-db:
+    image: postgres:16.11@sha256:056b54f00419b49289227ab12d09df508543883f407fe9935a2cec430ef8aa8d
+    container_name: litellm-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${LITELLM_DB_NAME}
+      - POSTGRES_USER=${LITELLM_DB_USER}
+      - POSTGRES_PASSWORD=${LITELLM_DB_PASSWORD}
+    volumes:
+      - ${DATADIR}/litellm/db:/var/lib/postgresql/data
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${LITELLM_DB_USER} -d ${LITELLM_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  litellm-prometheus:
+    image: prom/prometheus:v3.9.1
+    container_name: litellm-prometheus
+    restart: unless-stopped
+    volumes:
+      - ${DATADIR}/litellm/prometheus:/prometheus
+      - ${CONFIGDIR}/litellm/config/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=15d"
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true

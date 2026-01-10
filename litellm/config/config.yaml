@@ -1,0 +1,6 @@
+# Minimal config - all settings managed via Web UI (STORE_MODEL_IN_DB=True)
+# DATABASE_URL and LITELLM_MASTER_KEY are set via environment variables
+
+litellm_settings:
+  success_callback: ["prometheus"]
+  failure_callback: ["prometheus"]
