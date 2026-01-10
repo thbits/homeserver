@@ -55,6 +55,9 @@ access_control:
     - domain: 'jellyseerr.{{ mustEnv "DOMAIN_NAME" }}'
       policy: bypass
 
+    - domain: 'planka.{{ mustEnv "DOMAIN_NAME" }}'
+      policy: bypass
+
     # n8n webhooks: Bypass authentication for webhook endpoints
     - domain: 'n8n.{{ mustEnv "DOMAIN_NAME" }}'
       resources:
