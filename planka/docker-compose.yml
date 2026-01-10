@@ -1,0 +1,57 @@
+services:
+  planka-db:
+    image: postgres:16-alpine
+    container_name: planka-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=planka
+      - POSTGRES_USER=planka
+      - POSTGRES_PASSWORD=planka
+    volumes:
+      - ${DATADIR}/planka/db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U planka -d planka"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+
+  planka:
+    image: ghcr.io/plankanban/planka:2.0.0-rc.4
+    container_name: planka
+    user: "${PUID}:${PGID}"
+    restart: unless-stopped
+    depends_on:
+      planka-db:
+        condition: service_healthy
+    environment:
+      - BASE_URL=https://planka.${DOMAIN_NAME}
+      - DATABASE_URL=postgresql://planka:planka@planka-db:5432/planka
+      - SECRET_KEY=${PLANKA_SECRET_KEY}
+      - TZ=${TIMEZONE}
+      - TRUST_PROXY=true
+    volumes:
+      - ${DATADIR}/planka/favicons:/app/public/favicons
+      - ${DATADIR}/planka/user-avatars:/app/public/user-avatars
+      - ${DATADIR}/planka/background-images:/app/public/background-images
+      - ${DATADIR}/planka/attachments:/app/private/attachments
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.planka.rule=Host(`planka.${DOMAIN_NAME}`)
+      - traefik.http.routers.planka.entrypoints=websecure
+      - traefik.http.routers.planka.tls=true
+      - traefik.http.routers.planka.tls.certresolver=myclouddns
+      - traefik.http.services.planka.loadbalancer.server.port=1337
+      - traefik.http.routers.planka.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - homepage.group=Other
+      - homepage.name=Planka
+      - homepage.icon=planka.png
+      - homepage.href=http://planka.${DOMAIN_NAME}/
+      - homepage.description=Kanban project management
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
