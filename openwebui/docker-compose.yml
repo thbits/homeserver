@@ -1,0 +1,41 @@
+services:
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:v0.7.1@sha256:d9c509017a46ac0713aa5d94101fd10ea53fbaf9582627216026666257b115ee
+    container_name: openwebui
+    volumes:
+      - ${DATADIR}/openwebui/data:/app/backend/data
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      # Trusted header authentication from Authelia
+      - WEBUI_AUTH_TRUSTED_EMAIL_HEADER=Remote-Email
+      - WEBUI_AUTH_TRUSTED_NAME_HEADER=Remote-Name
+      # LiteLLM backend configuration
+      - OPENAI_API_BASE_URL=http://litellm:4000
+      - OPENAI_API_KEY=${LITELLM_MASTER_KEY}
+    labels:
+      # Traefik routing
+      - traefik.enable=true
+      - traefik.http.routers.openwebui.rule=Host(`chat.${DOMAIN_NAME}`)
+      - traefik.http.routers.openwebui.entrypoints=websecure
+      - traefik.http.routers.openwebui.tls=true
+      - traefik.http.routers.openwebui.tls.certresolver=myclouddns
+      - traefik.http.services.openwebui.loadbalancer.server.port=8080
+
+      # Middleware chain (with Authelia for SSO)
+      - traefik.http.routers.openwebui.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
+
+      # Homepage integration
+      - homepage.group=Other
+      - homepage.name=OpenWebUI
+      - homepage.icon=https://docs.openwebui.com/images/favicon.png
+      - homepage.href=http://chat.${DOMAIN_NAME}/
+      - homepage.description=AI chat interface
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
