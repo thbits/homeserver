@@ -39,6 +39,7 @@
       ],
       minimumReleaseAge: '21 days',
       automerge: false,
+      platformAutomerge: false,
     },
     {
       description: 'Auto-merge Docker Compose minor updates',
