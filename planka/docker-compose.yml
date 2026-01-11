@@ -1,6 +1,6 @@
 services:
   planka-db:
-    image: postgres:16.11@sha256:056b54f00419b49289227ab12d09df508543883f407fe9935a2cec430ef8aa8d
+    image: postgres:18.0@sha256:41fc5342eefba6cc2ccda736aaf034bbbb7c3df0fdb81516eba1ba33f360162c
     container_name: planka-db
     restart: unless-stopped
     environment:
