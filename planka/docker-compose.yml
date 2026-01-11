@@ -1,6 +1,6 @@
 services:
   planka-db:
-    image: postgres:16-alpine
+    image: postgres:16-alpine@sha256:23e88eb049fd5d54894d70100df61d38a49ed97909263f79d4ff4c30a5d5fca2
     container_name: planka-db
     restart: unless-stopped
     environment:
@@ -18,7 +18,7 @@ services:
       - internal
 
   planka:
-    image: ghcr.io/plankanban/planka:2.0.0-rc.4
+    image: ghcr.io/plankanban/planka:2.0.0-rc.4@sha256:1cb538e1a3476126e582e705b32a55adc940306d4ea09cca52dc4342803c11a7
     container_name: planka
     user: "${PUID}:${PGID}"
     restart: unless-stopped

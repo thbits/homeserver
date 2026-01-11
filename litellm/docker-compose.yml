@@ -1,6 +1,6 @@
 services:
   litellm:
-    image: ghcr.io/berriai/litellm:main-v1.80.13-nightly
+    image: ghcr.io/berriai/litellm:main-v1.80.13-nightly@sha256:7a88d7f3e281b95180808a1e1f9c66e94caae5875984ee0dda1c22cb52019580
     container_name: litellm
     restart: unless-stopped
     environment:
@@ -60,7 +60,7 @@ services:
       retries: 5
 
   litellm-prometheus:
-    image: prom/prometheus:v3.9.1
+    image: prom/prometheus:v3.9.1@sha256:1f0f50f06acaceb0f5670d2c8a658a599affe7b0d8e78b898c1035653849a702
     container_name: litellm-prometheus
     restart: unless-stopped
     volumes:
