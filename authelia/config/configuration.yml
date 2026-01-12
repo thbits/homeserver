@@ -58,6 +58,11 @@ access_control:
     - domain: 'planka.{{ mustEnv "DOMAIN_NAME" }}'
       policy: bypass
 
+    - domain: 'litellm.{{ mustEnv "DOMAIN_NAME" }}'
+      policy: bypass
+      resources:
+        - '^/v1(/.*)?$'
+
     # n8n webhooks: Bypass authentication for webhook endpoints
     - domain: 'n8n.{{ mustEnv "DOMAIN_NAME" }}'
       resources:

@@ -14,10 +14,10 @@ http:
           forceMonthlyUpdate: true
           allowUnknownCountries: true
           unknownCountryApiResponse: "nil"
-          blackListMode: true
           addCountryHeader: true
           logFilePath: "/logs/geoblock.log"
           XForwardedForReverseProxy: true
+          blackListMode: true
           countries:
             - CN  # China
             - RU  # Russia

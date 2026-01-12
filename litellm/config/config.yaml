@@ -4,3 +4,48 @@
 litellm_settings:
   success_callback: ["prometheus"]
   failure_callback: ["prometheus"]
+model_list:
+  - model_name: xiaomi/mimo-v2-flash:free (free)
+    litellm_params:
+      model: openrouter/xiaomi/mimo-v2-flash:free
+      litellm_credential_name: "General OpenRouter"
+  - model_name: x-ai/grok-code-fast-1 ($1.50)
+    litellm_params:
+      model: openrouter/x-ai/grok-code-fast-1
+      litellm_credential_name: "General OpenRouter"
+  - model_name: x-ai/grok-4.1-fast ($0.50)
+    litellm_params:
+      model: openrouter/x-ai/grok-4.1-fast
+      litellm_credential_name: "General OpenRouter"
+  - model_name: openai/gpt-5.2 ($14)
+    litellm_params:
+      model: openrouter/openai/gpt-5.2
+      litellm_credential_name: "General OpenRouter"
+  - model_name: openai/gpt-5-mini ($2)
+    litellm_params:
+      model: openrouter/openai/gpt-5-mini
+      litellm_credential_name: "General OpenRouter"
+  - model_name: openai/gpt-5.2 ($14)
+    litellm_params:
+      model: openrouter/openai/gpt-5.2
+      litellm_credential_name: "General OpenRouter"
+  - model_name: anthropic/claude-haiku-4.5 ($5)
+    litellm_params:
+      model: openrouter/anthropic/claude-haiku-4.5
+      litellm_credential_name: "General OpenRouter"
+  - model_name: claude-sonnet-4.5 ($15)
+    litellm_params:
+      model: openrouter/anthropic/claude-sonnet-4.5
+      litellm_credential_name: "General OpenRouter"
+  - model_name: anthropic/claude-opus-4.5 ($25)
+    litellm_params:
+      model: openrouter/anthropic/claude-opus-4.5
+      litellm_credential_name: "General OpenRouter"
+  - model_name: google/gemini-3-pro-preview ($12)
+    litellm_params:
+      model: openrouter/google/gemini-3-pro-preview
+      litellm_credential_name: "General OpenRouter"
+  - model_name: google/gemini-3-flash-preview ($3)
+    litellm_params:
+      model: openrouter/google/gemini-3-flash-preview
+      litellm_credential_name: "General OpenRouter"
