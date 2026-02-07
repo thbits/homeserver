@@ -16,10 +16,13 @@
   ],
   packageRules: [
     {
-      description: 'Use docker versioning for postgres to correctly identify major versions',
+      description: 'Postgres: use docker versioning and disable auto-merge for major updates',
       matchPackageNames: ['postgres'],
       matchManagers: ['docker-compose'],
       versioning: 'docker',
+      matchUpdateTypes: ['major'],
+      automerge: false,
+      platformAutomerge: false,
     },
     {
       description: 'Use semver-coerced versioning for all Docker Compose images',
