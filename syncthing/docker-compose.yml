@@ -1,0 +1,41 @@
+services:
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    hostname: homeserver-syncthing
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - UMASK=002
+    volumes:
+      - ${DATADIR}/syncthing/config:/config
+      - ${DATADIR}/syncthing/data:/data1
+    ports:
+      - 8384:8384       # Web UI
+      - 22000:22000/tcp # TCP sync protocol
+      - 22000:22000/udp # QUIC sync protocol
+      - 21027:21027/udp # Discovery (IPv4)
+      - 21028:21028/udp # Discovery (IPv6)
+    labels:
+      # Traefik configuration
+      - traefik.enable=true
+      - traefik.http.routers.syncthing.rule=Host(`syncthing.${DOMAIN_NAME}`)
+      - traefik.http.routers.syncthing.entrypoints=websecure
+      - traefik.http.routers.syncthing.tls=true
+      - traefik.http.routers.syncthing.tls.certresolver=myclouddns
+      - traefik.http.services.syncthing.loadbalancer.server.port=8384
+      - traefik.http.routers.syncthing.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
+      # Homepage dashboard
+      - homepage.group=Other
+      - homepage.name=Syncthing
+      - homepage.icon=syncthing.png
+      - homepage.href=http://syncthing.${DOMAIN_NAME}/
+      - homepage.description=Continuous file synchronization
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
