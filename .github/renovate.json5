@@ -16,6 +16,12 @@
   ],
   packageRules: [
     {
+      description: 'Use docker versioning for postgres to correctly identify major versions',
+      matchPackageNames: ['postgres'],
+      matchManagers: ['docker-compose'],
+      versioning: 'docker',
+    },
+    {
       description: 'Use semver-coerced versioning for all Docker Compose images',
       matchManagers: [
         'docker-compose',
