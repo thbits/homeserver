@@ -5,6 +5,10 @@ litellm_settings:
   success_callback: ["prometheus"]
   failure_callback: ["prometheus"]
 model_list:
+  - model_name: openai/gpt-oss-120b:free (free)
+    litellm_params:
+      model: openrouter/openai/gpt-oss-120b:free
+      litellm_credential_name: "General OpenRouter"
   - model_name: x-ai/grok-code-fast-1 ($1.50)
     litellm_params:
       model: openrouter/x-ai/grok-code-fast-1
