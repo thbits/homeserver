@@ -42,7 +42,7 @@ services:
       start_period: 40s
 
   litellm-db:
-    image: postgres:16.11@sha256:468e1f126ca5af849799cda06ac9b03d8090aae9fa5163408b3e8da44fad0702
+    image: postgres:18.0@sha256:41fc5342eefba6cc2ccda736aaf034bbbb7c3df0fdb81516eba1ba33f360162c
     container_name: litellm-db
     restart: unless-stopped
     environment:
