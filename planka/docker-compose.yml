@@ -18,7 +18,7 @@ services:
       - internal
 
   planka:
-    image: ghcr.io/plankanban/planka:2.0.0-rc.4@sha256:1cb538e1a3476126e582e705b32a55adc940306d4ea09cca52dc4342803c11a7
+    image: ghcr.io/plankanban/planka:2.0.1@sha256:0d28490e5a32c0e185431cfbdf7e861b0a62ebb58b94c69dd1fc0d7e7f261670
     container_name: planka
     user: "${PUID}:${PGID}"
     restart: unless-stopped
