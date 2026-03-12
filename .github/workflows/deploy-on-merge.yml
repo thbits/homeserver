@@ -46,11 +46,6 @@ jobs:
       JOAL_SECRET_OBFUSCATION_PATH: ${{ secrets.JOAL_SECRET_OBFUSCATION_PATH }}
       RESTIC_PASSWORD: ${{ secrets.RESTIC_PASSWORD }}
       PAPERLESS_SECRET_KEY: ${{ secrets.PAPERLESS_SECRET_KEY }}
-      PLANKA_SECRET_KEY: ${{ secrets.PLANKA_SECRET_KEY }}
-      LITELLM_DB_NAME: ${{ secrets.LITELLM_DB_NAME }}
-      LITELLM_DB_USER: ${{ secrets.LITELLM_DB_USER }}
-      LITELLM_DB_PASSWORD: ${{ secrets.LITELLM_DB_PASSWORD }}
-      LITELLM_MASTER_KEY: ${{ secrets.LITELLM_MASTER_KEY }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
