@@ -13,9 +13,9 @@
 
 - resources:
     label: Storage
-    disk: 
-      - /
-      - /app/config
+    disk:
+      - /host/root
+      - /host/data
     expanded: true
 
 - search:

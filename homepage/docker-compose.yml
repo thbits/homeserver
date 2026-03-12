@@ -18,6 +18,8 @@ services:
     volumes:
       - ${CONFIGDIR}/homepage/config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro # (optional) For docker integrations
+      - /:/host/root:ro
+      - /data:/host/data:ro
     tmpfs:
       - /app/logs
     restart: unless-stopped
