@@ -1,15 +1,15 @@
 services:
   cloudflare-ddns:
-    image: timothyjmiller/cloudflare-ddns:latest@sha256:2187e122660d6a2d451ef7c53fd4805c133133f4f47552256352c1e2a7f49ee2
+    image: favonia/cloudflare-ddns:latest
     container_name: cloudflare-ddns
     security_opt:
       - no-new-privileges:true
     network_mode: 'host'
+    read_only: true
+    cap_drop:
+      - all
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - CF_DDNS_API_TOKEN=${CF_DNS_API_TOKEN}
-      - CF_DDNS_ZONE_ID=${CF_DNS_ZONE_ID}
-    volumes:
-      - ${CONFIGDIR}/cloudflare-ddns/config.json:/config.json
+      - CLOUDFLARE_API_TOKEN=${CF_DNS_API_TOKEN}
+      - DOMAINS=nullflix.uk,*.nullflix.uk,wg.nullflix.uk
+      - IP6_PROVIDER=none
     restart: unless-stopped
