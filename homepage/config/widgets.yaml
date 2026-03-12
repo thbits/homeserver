@@ -15,7 +15,7 @@
     label: Storage
     disk:
       - /host/root
-      - /host/data
+      - /host/root/data
     expanded: true
 
 - search:
