@@ -1,0 +1,48 @@
+services:
+  seerr:
+    container_name: seerr
+    image: ghcr.io/seerr-team/seerr:v3.1.0
+    init: true
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.seerr.rule=Host(`seerr.${DOMAIN_NAME}`)
+      - traefik.http.routers.seerr.entrypoints=websecure
+      - traefik.http.routers.seerr.tls=true
+      - traefik.http.routers.seerr.tls.certresolver=myclouddns
+      - traefik.http.services.seerr.loadbalancer.server.port=5055
+      - traefik.http.routers.seerr.middlewares=geoblock@file,crowdsec-bouncer@docker
+      # NOTE: No authelia-forwardauth middleware - authentication handled by Jellyfin plugin
+      - homepage.group=Media
+      - homepage.name=Seerr
+      - homepage.icon=jellyseerr.png
+      - homepage.href=http://seerr.${DOMAIN_NAME}/
+      - homepage.description=Media request application
+      - homepage.widget.type=jellyseerr
+      - homepage.widget.url=http://seerr:5055
+      - homepage.widget.key=${SEERR_API_KEY}
+    environment:
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${DATADIR}/seerr/config:/app/config
+      - seerr_cache:/app/config/cache/images
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
+
+volumes:
+  seerr_cache:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: size=512M

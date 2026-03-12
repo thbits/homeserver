@@ -35,7 +35,7 @@ jobs:
       PROWLARR_API_KEY: ${{ secrets.PROWLARR_API_KEY }}
       BAZARR_API_KEY: ${{ secrets.BAZARR_API_KEY }}
       JELLYFIN_API_KEY: ${{ secrets.JELLYFIN_API_KEY }}
-      JELLYSEER_API_KEY: ${{ secrets.JELLYSEER_API_KEY }}
+      SEERR_API_KEY: ${{ secrets.SEERR_API_KEY }}
       QBIT_USER: ${{ secrets.QBIT_USER }}
       QBIT_PASS: ${{ secrets.QBIT_PASS }}
       WIREGUARD_USERNAME: ${{ secrets.WIREGUARD_USERNAME }}

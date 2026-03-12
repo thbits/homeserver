@@ -26,7 +26,7 @@
 /data/bazarr
 /data/huntarr
 /data/jellyfin
-/data/jellyseerr
+/data/seerr
 /data/joal
 /data/n8n
 /data/pihole

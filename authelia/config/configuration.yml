@@ -52,7 +52,7 @@ access_control:
     - domain: 'jellyfin.{{ mustEnv "DOMAIN_NAME" }}'
       policy: bypass
 
-    - domain: 'jellyseerr.{{ mustEnv "DOMAIN_NAME" }}'
+    - domain: 'seerr.{{ mustEnv "DOMAIN_NAME" }}'
       policy: bypass
 
     # n8n webhooks: Bypass authentication for webhook endpoints
