@@ -1,0 +1,28 @@
+services:
+  newtarr:
+    image: ghcr.io/elfhosted/newtarr:v1.0.0@sha256:6abafe8ee23c96e3c9e298b5f9ef8313f1d231546b794900d4da36caa22912f0
+    container_name: newtarr
+    restart: unless-stopped
+    volumes:
+      - ${DATADIR}/newtarr/config:/config
+    environment:
+      - TZ=${TIMEZONE}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.newtarr.rule=Host(`newtarr.${DOMAIN_NAME}`)
+      - traefik.http.routers.newtarr.entrypoints=websecure
+      - traefik.http.routers.newtarr.tls=true
+      - traefik.http.routers.newtarr.tls.certresolver=myclouddns
+      - traefik.http.services.newtarr.loadbalancer.server.port=9705
+      - traefik.http.routers.newtarr.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - homepage.group=Servarr
+      - homepage.name=Newtarr
+      - homepage.icon=https://avatars.githubusercontent.com/u/163625678?s=48&v=4
+      - homepage.href=http://newtarr.${DOMAIN_NAME}/
+      - homepage.description=Fetches missing episodes and movies
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true

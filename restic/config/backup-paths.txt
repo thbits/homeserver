@@ -24,7 +24,7 @@
 /data/autoscan
 /data/backrest
 /data/bazarr
-/data/huntarr
+/data/newtarr
 /data/jellyfin
 /data/seerr
 /data/joal
