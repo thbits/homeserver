@@ -14,7 +14,7 @@ services:
       # NOTE: No authelia-forwardauth middleware - authentication handled by Jellyfin plugin
       - homepage.group=Media
       - homepage.name=Seerr
-      - homepage.icon=jellyseerr.png
+      - homepage.icon=seerr.png
       - homepage.href=http://seerr.${DOMAIN_NAME}/
       - homepage.description=Media request application
       - homepage.widget.type=jellyseerr
