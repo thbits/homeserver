@@ -1,5 +1,5 @@
-# syntax=docker/dockerfile:1.7
-FROM debian:bookworm-slim
+# syntax=docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+FROM debian:bookworm-slim@sha256:f06537653ac770703bc45b4b113475bd402f451e85223f0f2837acbf89ab020a
 
 ENV DEBIAN_FRONTEND=noninteractive
 
