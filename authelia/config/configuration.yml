@@ -63,6 +63,12 @@ access_control:
         - '^/rest/oauth2-credential/callback$'
       policy: bypass
     
+    # Paperless-NGX: bypass Authelia for API calls (token-based auth)
+    - domain: 'paperless.{{ mustEnv "DOMAIN_NAME" }}'
+      resources:
+        - '^/api([/?].*)?$'
+      policy: bypass
+
     # Protect all other subdomains with authentication
     - domain: '*.{{ mustEnv "DOMAIN_NAME" }}'
       policy: one_factor
