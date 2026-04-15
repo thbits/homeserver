@@ -47,7 +47,7 @@
         description: Service monitoring and Discord alerts website
         ping: https://notifiarr.com/
     - Hermes Agent:
-        icon: http://192.168.50.111:9119/favicon.ico
+        icon: https://hermes-agent.nousresearch.com/docs/img/favicon.ico
         href: http://192.168.50.111:9119/
         description: Hermes Agent web dashboard
 
