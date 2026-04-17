@@ -47,3 +47,10 @@ desktop.ini
 **/jellyfin/config/data/temp/
 **/jellyfin/config/data/transcodes/
 **/jellyfin/modcache/
+**/jellyfin/config/data/data/trickplay/
+**/jellyfin/config/data/data/subtitles/
+**/jellyfin/config/data/data/attachments/
+**/jellyfin/config/data/data/introskipper/
+**/jellyfin/config/data/data/ScheduledTasks/
+**/jellyfin/config/data/data/SQLiteBackups/
+**/jellyfin/config/log/
