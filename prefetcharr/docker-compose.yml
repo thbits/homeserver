@@ -3,10 +3,9 @@ services:
     image: phueber/prefetcharr:latest@sha256:b596b07627e281132ed69f0b77c3c6cb8487740f429cdb04a5060abbca3ffdff
     container_name: prefetcharr
     volumes:
-      # Copy prefetcharr.toml to your ${DATADIR} and set the api keys for jellyfin and sonarr 
+      # Copy prefetcharr.toml to your ${DATADIR} and set the api keys for jellyfin and sonarr
       - ${DATADIR}/prefetcharr/prefetcharr.toml:/config
-    environment:
-      - PREFETCHARR_CONFIG=/config
+      - ${DATADIR}/prefetcharr/log:/log
     restart: unless-stopped
     networks:
       - internal
