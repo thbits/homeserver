@@ -1,0 +1,24 @@
+services:
+  subgen:
+    image: mccloud/subgen:cpu
+    container_name: subgen
+    volumes:
+      - ${DATADIR}/subgen/models:/subgen/models
+      - ${CONFIGDIR}/subgen/subgen.env:/subgen/subgen.env:ro
+    environment:
+      TZ: ${TIMEZONE}
+      LOG_LEVEL: info
+      PROCADDEDMEDIA: false
+      PROCMEDIAONPLAY: false
+      CONCURRENT_TRANSCRIPTIONS: 2
+      USE_PATH_MAPPING: false
+      MODEL_PATH: /subgen/models
+    ports:
+      - "9000:9000"
+    networks:
+      - internal
+    restart: unless-stopped
+
+networks:
+  internal:
+    external: true
