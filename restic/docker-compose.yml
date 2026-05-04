@@ -62,9 +62,6 @@ services:
       - BACKREST_DATA=/data
       - BACKREST_CONFIG=/config/config.json
       - XDG_CACHE_HOME=/cache
-      # Restic configuration (auto-detected by Backrest)
-      - RESTIC_REPOSITORY=rclone:gdrive:Backups/nullflix
-      - RESTIC_PASSWORD=${RESTIC_PASSWORD}
       - RCLONE_CONFIG=/rclone-config/rclone.conf
     volumes:
       - ${DATADIR}/backrest/data:/data
