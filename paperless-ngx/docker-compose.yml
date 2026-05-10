@@ -1,7 +1,7 @@
 services:
   paperless-ngx-broker:
     container_name: paperless-ngx-broker
-    image: docker.io/library/redis:8.6.2@sha256:832d7785830f3f4b559300e6191fc914b15642c1935252338825cf4332200148
+    image: docker.io/library/redis:8.6.3@sha256:9ec28b9626938ae5dd565f3371fafd78d432cc049da5865726cd411dfb196c8d
     restart: unless-stopped
     volumes:
       - ${DATADIR}/paperless-ngx/redisdata:/data
