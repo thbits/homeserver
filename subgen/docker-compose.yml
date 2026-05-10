@@ -1,6 +1,6 @@
 services:
   subgen:
-    image: mccloud/subgen:cpu@sha256:153984207dd5c4856c25c79f2c7bf26393340b67b9c091a0b640367106c796cc
+    image: mccloud/subgen:cpu@sha256:513fbfd77715aab7702f3e6c3f27dcc358c8e843f30873b47b04cb4185c63c01
     container_name: subgen
     volumes:
       - ${DATADIR}/subgen/models:/subgen/models
