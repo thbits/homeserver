@@ -113,6 +113,13 @@ sonarr:
         assign_scores_to:
           - name: WEB-2160p
 
+      # === Anime Dual Audio - assigned only to Anime profile ===
+      - trash_ids:
+          - 418f50b10f1907201b6cfdf881f467b7 # Anime Dual Audio
+        assign_scores_to:
+          - name: Anime
+            score: 500
+
       # === Anime Custom Formats (from template: sonarr-v4-custom-formats-anime) ===
       - trash_ids:
           # Anime CF/Scoring
@@ -349,6 +356,7 @@ radarr:
           - cc5e51a9e85a6296ceefe097a77f12f4 # BCORE
           - 16622a6911d1ab5d5b8b713d5b0036d4 # CRiT
           - 2a6039655313bf5dab1e43523b62c374 # MA
+          - d6e9318c875905d6cfb5bee961afcea9 # Original Langauge
         assign_scores_to:
           - name: HD Bluray + WEB
       - trash_ids:
@@ -365,6 +373,7 @@ radarr:
           - c9fd353f8f5f1baf56dc601c4cb29920 # PCOK
           - e36a0ba1bc902b26ee40818a1d59b8bd # PMTP
           - c2863d2a50c9acad1fb50e53ece60817 # STAN
+          - d6e9318c875905d6cfb5bee961afcea9 # Original Langauge
         assign_scores_to:
           - name: HD Bluray + WEB
 
@@ -414,6 +423,7 @@ radarr:
           - c9fd353f8f5f1baf56dc601c4cb29920 # PCOK
           - e36a0ba1bc902b26ee40818a1d59b8bd # PMTP
           - c2863d2a50c9acad1fb50e53ece60817 # STAN
+          - d6e9318c875905d6cfb5bee961afcea9 # Original Langauge
         assign_scores_to:
           - name: UHD Bluray + WEB
 
@@ -453,6 +463,7 @@ radarr:
           - c20f169ef63c5f40c2def54abaf4438e # WEB Tier 01
           - 403816d65392c79236dcb6dd591aeda4 # WEB Tier 02
           - af94e0fe497124d1f9ce732069ec8c3b # WEB Tier 03
+          - d6e9318c875905d6cfb5bee961afcea9 # Original Langauge
         assign_scores_to:
           - name: Anime
 
@@ -489,6 +500,7 @@ radarr:
           - cc5e51a9e85a6296ceefe097a77f12f4 # BCORE
           - 16622a6911d1ab5d5b8b713d5b0036d4 # CRiT
           - 2a6039655313bf5dab1e43523b62c374 # MA
+          - d6e9318c875905d6cfb5bee961afcea9 # Original Langauge
         assign_scores_to:
           - name: 1080p/4K
       - trash_ids:
@@ -505,6 +517,7 @@ radarr:
           - c9fd353f8f5f1baf56dc601c4cb29920 # PCOK
           - e36a0ba1bc902b26ee40818a1d59b8bd # PMTP
           - c2863d2a50c9acad1fb50e53ece60817 # STAN
+          - d6e9318c875905d6cfb5bee961afcea9 # Original Langauge
         assign_scores_to:
           - name: 1080p/4K
 
