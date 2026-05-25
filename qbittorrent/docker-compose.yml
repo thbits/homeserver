@@ -1,13 +1,14 @@
 services:
   qbittorrent:
-    image: ghcr.io/hotio/qbittorrent:release-5.1.2@sha256:3d61c8f205ed5edd5263ff24c4028b86486db8d330b63fe05582c7980f20aabe
+    image: lscr.io/linuxserver/qbittorrent:5.2.0
     container_name: qbittorrent
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE}
-      - WEBUI_PORTS=8181/tcp,8181/udp
+      - WEBUI_PORT=8181
       - UMASK=002
+      - DOCKER_MODS=ghcr.io/gabe565/linuxserver-mod-vuetorrent
     volumes:
       - ${DATADIR}/qbittorrent/config:/config
       - ${DATADIR}/library/torrents:/data/torrents
