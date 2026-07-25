@@ -16,17 +16,6 @@
   ],
   packageRules: [
     {
-      description: 'Use calver versioning for pihole',
-      matchPackageNames: ['pihole/pihole'],
-      versioning: 'calver',
-    },
-    {
-      description: 'Use docker versioning for postgres to correctly identify major versions',
-      matchPackageNames: ['postgres'],
-      matchManagers: ['docker-compose'],
-      versioning: 'docker',
-    },
-    {
       description: 'Disable auto-merge for postgres major updates',
       matchPackageNames: ['postgres'],
       matchManagers: ['docker-compose'],
@@ -35,14 +24,14 @@
       platformAutomerge: false,
     },
     {
-      description: 'Use semver-coerced versioning for all Docker Compose images',
+      description: 'Use docker versioning for all Docker Compose images: it handles the v-prefix, zero-padded calver months (pihole 2026.04.0), postgres major versions, and treats variant suffixes like trawl -baseline as incompatible.',
       matchManagers: [
         'docker-compose',
       ],
       matchDatasources: [
         'docker',
       ],
-      versioning: 'semver-coerced',
+      versioning: 'docker',
     },
     {
       description: 'Docker Compose major image updates',
