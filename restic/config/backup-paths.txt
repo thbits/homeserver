@@ -38,3 +38,4 @@
 /data/sonarr
 /data/wg-easy
 /data/paperless-ngx
+/data/swiparr

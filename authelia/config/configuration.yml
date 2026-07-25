@@ -69,6 +69,14 @@ access_control:
         - '^/api([/?].*)?$'
       policy: bypass
 
+    - domain: 'swiparr.{{ mustEnv "DOMAIN_NAME" }}'
+      resources:
+        - '^/api/admin(/.*)?$'
+      policy: one_factor
+
+    - domain: 'swiparr.{{ mustEnv "DOMAIN_NAME" }}'
+      policy: bypass
+
     # Protect all other subdomains with authentication
     - domain: '*.{{ mustEnv "DOMAIN_NAME" }}'
       policy: one_factor

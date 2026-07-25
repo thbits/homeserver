@@ -1,0 +1,38 @@
+services:
+  swiparr:
+    container_name: swiparr
+    image: ghcr.io/m3sserstudi0s/swiparr:v0.1.60@sha256:ffa668fa6f405f04293874b6db5b777ac6e71f280937a58798cd6982beb66e3f
+    environment:
+      - TZ=${TIMEZONE}
+      - JELLYFIN_URL=http://jellyfin:8096
+      - JELLYFIN_PUBLIC_URL=https://jellyfin.${DOMAIN_NAME}
+      - USE_SECURE_COOKIES=true
+      - DATABASE_URL=file:/app/data/swiparr.db
+    volumes:
+      - ${DATADIR}/swiparr/data:/app/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.swiparr.rule=Host(`swiparr.${DOMAIN_NAME}`)
+      - traefik.http.routers.swiparr.entrypoints=websecure
+      - traefik.http.routers.swiparr.tls=true
+      - traefik.http.routers.swiparr.tls.certresolver=myclouddns
+      - traefik.http.services.swiparr.loadbalancer.server.port=4321
+      - traefik.http.routers.swiparr.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - homepage.group=Media
+      - homepage.name=Swiparr
+      - homepage.icon=swiparr.png
+      - homepage.href=http://swiparr.${DOMAIN_NAME}/
+      - homepage.description=Swipe to pick what to watch together
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:4321/api/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
