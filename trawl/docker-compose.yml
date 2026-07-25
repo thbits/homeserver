@@ -1,0 +1,35 @@
+services:
+  trawl-redis:
+    container_name: trawl-redis
+    image: docker.io/library/redis:8.6.3@sha256:4d25e2fe601f7ffaeb4437cb6ced3518bc36edf34ebe98863c80836943d94529
+    command: redis-server --save "" --appendonly no
+    environment:
+      - TZ=${TIMEZONE}
+    restart: unless-stopped
+    networks:
+      - internal
+
+  trawl:
+    container_name: trawl
+    image: ghcr.io/germondai/trawl:v1.1.0@sha256:745903d3cb09da4e355a8c09ad7e014e84ac6219609417d66d9616c4707d501d
+    environment:
+      - TZ=${TIMEZONE}
+      - REDIS_URL=redis://trawl-redis:6379
+      - BROWSER_POOL_SIZE=2
+      - SESSION_TTL_SECONDS=3600
+    shm_size: 1gb
+    depends_on:
+      - trawl-redis
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8191/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
