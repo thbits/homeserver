@@ -1,6 +1,5 @@
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  enabled: true,
   extends: [
     'config:best-practices',
   ],
@@ -16,15 +15,7 @@
   ],
   packageRules: [
     {
-      description: 'Disable auto-merge for postgres major updates',
-      matchPackageNames: ['postgres'],
-      matchManagers: ['docker-compose'],
-      matchUpdateTypes: ['major'],
-      automerge: false,
-      platformAutomerge: false,
-    },
-    {
-      description: 'Use docker versioning for all Docker Compose images: it handles the v-prefix, zero-padded calver months (pihole 2026.04.0), postgres major versions, and treats variant suffixes like trawl -baseline as incompatible.',
+      description: 'Use docker versioning for all Docker Compose images: it handles the v-prefix, zero-padded calver months (pihole 2026.04.0), and treats variant suffixes like trawl -baseline as incompatible.',
       matchManagers: [
         'docker-compose',
       ],
@@ -81,18 +72,6 @@
       automerge: true,
       automergeType: 'pr',
       automergeStrategy: 'squash',
-    },
-    {
-      matchManagers: [
-        'docker-compose',
-      ],
-      matchDatasources: [
-        'docker',
-      ],
-      matchCurrentVersion: 'latest',
-      pin: {
-        enabled: true,
-      },
     },
   ],
   ignoreTests: true,
