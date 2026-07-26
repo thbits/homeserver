@@ -1,6 +1,6 @@
 services:
   newtarr:
-    image: ghcr.io/elfhosted/newtarr:v1.0.0@sha256:6abafe8ee23c96e3c9e298b5f9ef8313f1d231546b794900d4da36caa22912f0
+    image: ghcr.io/elfhosted/newtarr:v1.0.0@sha256:b0e617e2c74a2a175d5bb87eada50edc4fd7fa2d72008a62c1913e33d1e46398
     container_name: newtarr
     restart: unless-stopped
     volumes:
