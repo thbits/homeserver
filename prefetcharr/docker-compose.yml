@@ -1,6 +1,6 @@
 services:
   prefetcharr:
-    image: phueber/prefetcharr:latest@sha256:dceb95a3fa822e8673eccd3acd6dd73baa111c8cab48cd6f6a5a876fde9c47d6
+    image: phueber/prefetcharr:latest@sha256:4912a3b0e63afa01ead3c1dd20efa35d6ace3d0dbce4883a28a25a2219fa299e
     container_name: prefetcharr
     volumes:
       # Copy prefetcharr.toml to your ${DATADIR} and set the api keys for jellyfin and sonarr
