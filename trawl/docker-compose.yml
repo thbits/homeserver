@@ -1,7 +1,7 @@
 services:
   trawl-redis:
     container_name: trawl-redis
-    image: docker.io/library/redis:8.6.3@sha256:4d25e2fe601f7ffaeb4437cb6ced3518bc36edf34ebe98863c80836943d94529
+    image: docker.io/library/redis:8.8.0@sha256:234c902a2db49461a129e2d4aeff85b28cf20187ed274a67f6e50995fa713c7b
     command: redis-server --save "" --appendonly no
     environment:
       - TZ=${TIMEZONE}
