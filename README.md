@@ -346,6 +346,141 @@ docker exec restic /scripts/backup.sh
 
 For detailed documentation, usage examples, and troubleshooting, see [restic/README.md](restic/README.md).
 
+### 7. Unmanic Configuration
+
+Unmanic re-encodes the media library from H.264 to HEVC to reclaim disk space. Reachable at
+`https://unmanic.${DOMAIN_NAME}` (behind Authelia — Unmanic has no authentication of its own).
+
+**Unmanic's configuration is not GitOps.** It lives in SQLite plus JSON under `/config`
+(`${DATADIR}/unmanic/config`), and is edited through the web UI, not this repo. Two consequences:
+
+- `${DATADIR}/unmanic/config` is in `restic/config/backup-paths.txt`. The cache directory is
+  deliberately excluded — it holds multi-GB transcode scratch files.
+- `unmanic/library-config.json` is a committed export of the whole setup: library config, enabled
+  plugins, every plugin's settings, and flow order.
+
+#### Restoring the configuration after a rebuild
+
+```bash
+# substitute the ${...} placeholders from .env, then import
+python3 - <<'EOF'
+import json, os, re, urllib.request
+cfg = open('unmanic/library-config.json').read()
+cfg = re.sub(r'\$\{(\w+)\}', lambda m: os.environ[m.group(1)], cfg)
+body = json.dumps(json.loads(cfg)).encode()
+req = urllib.request.Request('http://localhost:8888/unmanic/api/v2/settings/library/import',
+                             data=body, headers={'Content-Type': 'application/json'})
+print(urllib.request.urlopen(req).read())
+EOF
+```
+
+Export it again after any UI change:
+
+```bash
+docker exec unmanic curl -s -X POST -H 'Content-Type: application/json' \
+  -d '{"id":1}' http://localhost:8888/unmanic/api/v2/settings/library/export
+```
+
+Strip the API keys back to `${SONARR_API_KEY}` / `${RADARR_API_KEY}` /
+`${UNMANIC_JELLYFIN_API_KEY}` before committing — the raw export embeds them verbatim.
+
+#### Settings scope
+
+Unmanic stores plugin settings twice: `userdata/<plugin>/settings.json` (global) and
+`settings.<library_id>.json` (per-library, which wins when present). This deployment uses **globals
+only** — the per-library files were removed, so `Settings → Plugins` in the UI is the single place to
+configure everything. If you add a per-library override later, remember it silently takes precedence.
+
+Which plugins are *enabled* and their *flow order* remain per-library (`enabledplugins` and
+`librarypluginflow` tables) — Unmanic has no global equivalent.
+
+#### Encoder settings
+
+`video_transcoder` in `standard` mode: `libx265`, `preset medium`, **CRF 21**, 8-bit, container
+preserved, audio and subtitles stream-copied.
+
+`mode: standard` is load-bearing. In the default `basic` mode the preset and CRF fields are hidden and
+the plugin hardcodes `-crf 28`, which is visibly worse.
+
+8-bit rather than 10-bit is a deliberate client-compatibility choice: 10-bit would be slightly more
+efficient but pushes older clients into live transcoding.
+
+#### Sonarr custom-format caveat
+
+TRaSH scores the `x265 (HD)` custom format at **-10000** to discourage third-party HD x265 re-encodes.
+Left at that value, Sonarr re-evaluates Unmanic's own output as `x265 (HD)`, and because the Sonarr
+profiles have `upgrade.allowed: true`, it searches for an x264 replacement — silently undoing every
+transcode and re-downloading.
+
+`recyclarr/recyclarr.yml` therefore assigns that custom format `score: 0` on the `WEB-1080p`,
+`WEB-2160p`, and `1080p/4K` Sonarr profiles. The `Anime` profile never included it and
+`reset_unmatched_scores` leaves it at 0 there. Radarr keeps the penalty — all its profiles have
+`upgrade.allowed: false`, so nothing can be replaced.
+
+**If you ever re-add that custom format to a Sonarr profile at its TRaSH default, transcoded episodes
+will start being replaced.**
+
+### 8. Maintainerr Configuration
+
+Deletes **already-watched** movies and TV seasons once free space gets tight, at
+`https://maintainerr.${DOMAIN_NAME}` (behind Authelia — it has no auth of its own).
+
+Chosen over Janitorr and Jellysweep because both delete what nobody has *touched* recently, which
+targets the unwatched backlog first. Maintainerr reads Jellyfin's watch state natively, so no
+Jellystat/Tautulli is needed, and it gates on `diskspace_remaining_gb` from the *arr API.
+
+Config is UI-managed in `${DATADIR}/maintainerr/data/maintainerr.sqlite` (in
+`restic/config/backup-paths.txt`). Rule *conditions* can be exported as YAML from the rule editor, but
+the endpoint reports a `skipped` count, so treat that as a restore aid rather than the source of truth.
+
+`${DATADIR}/library` is mounted at `/data` to match **Sonarr and Radarr exactly** — leftover-folder
+cleanup resolves paths as the *arrs report them, so a different mount point silently finds nothing.
+
+#### Gotchas
+
+- **The *arr action must stop the re-download.** `newtarr` and `prefetcharr` will re-grab anything
+  merely deleted — the same fight documented in the Unmanic section above. Movies use `Delete`, which
+  removes the film from disk *and* from Radarr, so there is nothing left to re-grab. Seasons use
+  `Unmonitor and delete existing`, which unmonitors **only that season** and leaves the series
+  monitored, so future seasons still download. Note `Unmonitor and delete all files` is **silently
+  unsupported for season collections** — the Sonarr handler logs "not supported for type: season" and
+  does nothing, so do not pick it here.
+- **There is no dry-run; the collection is the preview.** Rules run every 8h, the handler every 12h.
+  Build rules with the action on `Do nothing` first and inspect membership before arming them.
+- **`/data/library` is not backed up** — only app config is, so the *arr recycle bin is the only undo.
+  Radarr uses `/data/.recycle/movies`, Sonarr `/data/.recycle/tv` (host `${DATADIR}/library/.recycle/*`),
+  both with a 7-day cleanup. Deliberately placed as a sibling of `media/` rather than inside it, so
+  Jellyfin never indexes it, and on the same filesystem so deletes are instant renames not copies.
+  **Note the trade-off:** a recycled file still occupies the disk, so space is not truly reclaimed until
+  the 7-day cleanup runs. That is the reason the window is 7 days and not 30.
+- **Wire up qBittorrent** (`Settings → Download Client`). Without it, a file still seeding won't free
+  space when deleted. With it, Maintainerr honours the client's seeding goal, falls back to
+  `download_client_fallback_ratio` (default 0.5) when no limit is set, and skips cross-seeded torrents.
+- **Exclusions work via a rule condition, not the settings toggle.** Every rule group leads with
+  `tags not contains dnd` (`Radarr.tags` for movies, `Sonarr.tags` for seasons), so tagging `dnd` in the
+  *arr protects an item across **all** tiers at once. Tagging a *series* protects every one of its
+  seasons.
+  The `Radarr/Sonarr tag exclusions` setting is **write-only** and does not filter anything on its own —
+  nothing in the rules engine reads it. It exists so that clicking `Excl` in the Maintainerr UI also
+  stamps `dnd` into the *arr. That is worth leaving on, because it makes UI exclusions feed the rule
+  condition above and become visible in Sonarr/Radarr.
+- **Prefer tags over the UI `Excl` button.** An exclusion created from a collection can be scoped to
+  that single rule group, which with six tiers would leave the other five still able to catch the item.
+  A `dnd` tag has no such footgun.
+
+Thresholds are tiered so cleanup stays dormant until space runs short. The **grace period shortens with
+each tier too** — otherwise every tier reacts at the same speed and the emergency tier is no more urgent
+than the relaxed one, just broader:
+
+| Tier | Free space | Deletes watched older than | Grace before action |
+| ---- | ---------- | -------------------------- | ------------------- |
+| 1    | < 1000 GiB | 90 days                    | 30 days             |
+| 2    | < 500 GiB  | 30 days                    | 14 days             |
+| 3    | < 250 GiB  | 7 days                     | 3 days              |
+
+Set `arrDiskPath` per rule (`/data/media/movies`, `/data/media/tv`) so it reads that root folder instead
+of aggregating across every path the *arr reports.
+
 ### Required Ports
 
 Ensure the following ports are open in your firewall:
