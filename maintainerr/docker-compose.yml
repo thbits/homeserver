@@ -1,0 +1,39 @@
+services:
+  maintainerr:
+    image: ghcr.io/maintainerr/maintainerr:3.21.1@sha256:811a580fdf479e8582d3c97047b1aa8930fc5523f63143498020864ad6a7cd80
+    container_name: maintainerr
+    user: "${PUID}:${PGID}"
+    environment:
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${DATADIR}/maintainerr/data:/opt/data
+      # Leftover-folder cleanup needs the library at the same path the *arrs
+      # report it at. Sonarr/Radarr mount ${DATADIR}/library as /data, so match
+      # that exactly or Maintainerr won't resolve the folders it's asked to tidy.
+      - ${DATADIR}/library:/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.maintainerr.rule=Host(`maintainerr.${DOMAIN_NAME}`)
+      - traefik.http.routers.maintainerr.entrypoints=websecure
+      - traefik.http.routers.maintainerr.tls=true
+      - traefik.http.routers.maintainerr.tls.certresolver=myclouddns
+      - traefik.http.services.maintainerr.loadbalancer.server.port=6246
+      - traefik.http.routers.maintainerr.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - homepage.group=Servarr
+      - homepage.name=Maintainerr
+      - homepage.icon=maintainerr.png
+      - homepage.href=http://maintainerr.${DOMAIN_NAME}/
+      - homepage.description=Deletes watched media when the disk fills up
+    healthcheck:
+      test: ['CMD', '/opt/app/healthcheck.sh']
+      interval: 30s
+      timeout: 5s
+      start_period: 40s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
