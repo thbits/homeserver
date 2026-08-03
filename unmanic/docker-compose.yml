@@ -1,0 +1,41 @@
+services:
+  unmanic:
+    image: josh5/unmanic:0.4.0.post23@sha256:3751881e8129e412c64453e6d11ff3fb1469121eeb271c73ad63f925a9f5c910
+    container_name: unmanic
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    group_add:
+      - "993" # render
+      - "44" # video
+    devices:
+      - '/dev/dri/:/dev/dri/'
+    volumes:
+      - ${DATADIR}/unmanic/config:/config
+      # Encode scratch space. Must live on the same filesystem as the library so the
+      # finished file is moved into place with a rename instead of a multi-GB copy.
+      - ${DATADIR}/unmanic/cache:/tmp/unmanic
+      - ${DATADIR}/library/media:/library
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.unmanic.rule=Host(`unmanic.${DOMAIN_NAME}`)
+      - traefik.http.routers.unmanic.entrypoints=websecure
+      - traefik.http.routers.unmanic.tls=true
+      - traefik.http.routers.unmanic.tls.certresolver=myclouddns
+      - traefik.http.services.unmanic.loadbalancer.server.port=8888
+      - traefik.http.routers.unmanic.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - homepage.group=Media
+      - homepage.name=Unmanic
+      - homepage.icon=unmanic.png
+      - homepage.href=http://unmanic.${DOMAIN_NAME}/
+      - homepage.description=Transcodes the library to HEVC
+      - homepage.widget.type=unmanic
+      - homepage.widget.url=http://unmanic:8888
+    restart: unless-stopped
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true

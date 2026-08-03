@@ -1,0 +1,318 @@
+{
+  "_note": "Restore: substitute the ${...} placeholders from .env, then POST to /unmanic/api/v2/settings/library/import",
+  "_placeholders_substituted": 3,
+  "library_config": {
+    "enable_inotify": false,
+    "enable_remote_only": false,
+    "enable_scanner": false,
+    "name": "Media",
+    "path": "/library",
+    "tags": []
+  },
+  "library_id": 1,
+  "plugins": {
+    "enabled_plugins": [
+      {
+        "has_config": false,
+        "plugin_id": "file_size_metrics",
+        "settings": {}
+      },
+      {
+        "has_config": false,
+        "plugin_id": "ignore_hardlinked_files",
+        "settings": {}
+      },
+      {
+        "has_config": true,
+        "plugin_id": "ignore_completed_tasks",
+        "settings": {
+          "allowed_extensions": "mkv,mp4,avi,m4v"
+        }
+      },
+      {
+        "has_config": true,
+        "plugin_id": "ignore_video_file_under_size",
+        "settings": {
+          "minimum_file_size": "2GB/h"
+        }
+      },
+      {
+        "has_config": true,
+        "plugin_id": "limit_library_search_by_video_dynamic_range",
+        "settings": {
+          "allowed_dynamic_range": "SDR",
+          "allowed_hdr_format": "HDR10",
+          "limit_hdr_format": false
+        }
+      },
+      {
+        "has_config": true,
+        "plugin_id": "limit_library_search_by_file_extension",
+        "settings": {
+          "add_all_matching_extensions": false,
+          "allowed_extensions": "mkv,mp4,avi,m4v"
+        }
+      },
+      {
+        "has_config": true,
+        "plugin_id": "notify_jellyfin",
+        "settings": {
+          "Jellyfin API Key": "${UNMANIC_JELLYFIN_API_KEY}",
+          "Jellyfin URL": "http://jellyfin:8096",
+          "Notify on Task Failure?": false
+        }
+      },
+      {
+        "has_config": true,
+        "plugin_id": "notify_radarr",
+        "settings": {
+          "api_key": "${RADARR_API_KEY}",
+          "create_task_1": false,
+          "create_task_10": false,
+          "create_task_2": false,
+          "create_task_3": false,
+          "create_task_4": false,
+          "create_task_5": false,
+          "create_task_6": false,
+          "create_task_7": false,
+          "create_task_8": false,
+          "create_task_9": false,
+          "enable_webhook": false,
+          "host_url": "http://radarr:7878",
+          "library_id_1": "",
+          "library_id_10": "",
+          "library_id_2": "",
+          "library_id_3": "",
+          "library_id_4": "",
+          "library_id_5": "",
+          "library_id_6": "",
+          "library_id_7": "",
+          "library_id_8": "",
+          "library_id_9": "",
+          "limit_import_on_file_size": true,
+          "link_subheader_1": "",
+          "link_subheader_10": "",
+          "link_subheader_2": "",
+          "link_subheader_3": "",
+          "link_subheader_4": "",
+          "link_subheader_5": "",
+          "link_subheader_6": "",
+          "link_subheader_7": "",
+          "link_subheader_8": "",
+          "link_subheader_9": "",
+          "minimum_file_size": "100MB",
+          "mode": "update_mode",
+          "rename_files": false,
+          "rule_query_1": "",
+          "rule_query_10": "",
+          "rule_query_2": "",
+          "rule_query_3": "",
+          "rule_query_4": "",
+          "rule_query_5": "",
+          "rule_query_6": "",
+          "rule_query_7": "",
+          "rule_query_8": "",
+          "rule_query_9": "",
+          "trigger_test_path_1": true,
+          "trigger_test_path_10": true,
+          "trigger_test_path_2": true,
+          "trigger_test_path_3": true,
+          "trigger_test_path_4": true,
+          "trigger_test_path_5": true,
+          "trigger_test_path_6": true,
+          "trigger_test_path_7": true,
+          "trigger_test_path_8": true,
+          "trigger_test_path_9": true,
+          "webhook_admonition_note": "",
+          "webhook_section_header": ""
+        }
+      },
+      {
+        "has_config": true,
+        "plugin_id": "notify_sonarr",
+        "settings": {
+          "api_key": "${SONARR_API_KEY}",
+          "create_task_1": false,
+          "create_task_10": false,
+          "create_task_2": false,
+          "create_task_3": false,
+          "create_task_4": false,
+          "create_task_5": false,
+          "create_task_6": false,
+          "create_task_7": false,
+          "create_task_8": false,
+          "create_task_9": false,
+          "enable_webhook": false,
+          "host_url": "http://sonarr:8989",
+          "library_id_1": "",
+          "library_id_10": "",
+          "library_id_2": "",
+          "library_id_3": "",
+          "library_id_4": "",
+          "library_id_5": "",
+          "library_id_6": "",
+          "library_id_7": "",
+          "library_id_8": "",
+          "library_id_9": "",
+          "limit_import_on_file_size": true,
+          "link_subheader_1": "",
+          "link_subheader_10": "",
+          "link_subheader_2": "",
+          "link_subheader_3": "",
+          "link_subheader_4": "",
+          "link_subheader_5": "",
+          "link_subheader_6": "",
+          "link_subheader_7": "",
+          "link_subheader_8": "",
+          "link_subheader_9": "",
+          "minimum_file_size": "100MB",
+          "mode": "update_mode",
+          "rename_files": false,
+          "rule_query_1": "",
+          "rule_query_10": "",
+          "rule_query_2": "",
+          "rule_query_3": "",
+          "rule_query_4": "",
+          "rule_query_5": "",
+          "rule_query_6": "",
+          "rule_query_7": "",
+          "rule_query_8": "",
+          "rule_query_9": "",
+          "trigger_test_path_1": true,
+          "trigger_test_path_10": true,
+          "trigger_test_path_2": true,
+          "trigger_test_path_3": true,
+          "trigger_test_path_4": true,
+          "trigger_test_path_5": true,
+          "trigger_test_path_6": true,
+          "trigger_test_path_7": true,
+          "trigger_test_path_8": true,
+          "trigger_test_path_9": true,
+          "webhook_admonition_note": "",
+          "webhook_section_header": ""
+        }
+      },
+      {
+        "has_config": true,
+        "plugin_id": "path_ignore",
+        "settings": {
+          "patterns": "/trailers/"
+        }
+      },
+      {
+        "has_config": true,
+        "plugin_id": "reject_files_larger_than_original",
+        "settings": {
+          "fail_task_if_file_detected_larger": false,
+          "if_end_result_file_is_still_larger_mark_as_ignore": true
+        }
+      },
+      {
+        "has_config": true,
+        "plugin_id": "video_transcoder",
+        "settings": {
+          "additional_params": "",
+          "advanced_options": "-strict -2\n-max_muxing_queue_size 2048\n",
+          "apply_custom_filters": false,
+          "apply_smart_filters": false,
+          "autocrop_black_bars": false,
+          "average_bitrate": "5",
+          "constant_quality_scale": "21",
+          "custom_options": "libx264\n-preset slow\n-tune film\n-global_quality 23\n-look_ahead 1\n",
+          "custom_software_filters": "",
+          "dest_container": "mkv",
+          "enable_qm": false,
+          "enable_smart_output_target": false,
+          "encoder_additional_params": "no_additional_params",
+          "encoder_ratecontrol_method": "CRF",
+          "force_transcode": false,
+          "keep_container": true,
+          "main_options": "",
+          "max_muxing_queue_size": 2048,
+          "mode": "standard",
+          "nvenc_aq_strength": 8,
+          "nvenc_constant_quantizer_scale": 23,
+          "nvenc_decoding_method": "cpu",
+          "nvenc_device": "none",
+          "nvenc_enable_spatial_aq": false,
+          "nvenc_enable_temporal_aq": false,
+          "nvenc_encoder_ratecontrol_lookahead": 0,
+          "nvenc_encoder_ratecontrol_method": "auto",
+          "nvenc_preset": "p4",
+          "nvenc_profile": "main",
+          "nvenc_safe_decode": false,
+          "nvenc_tune": "auto",
+          "overlays": 0,
+          "preset": "medium",
+          "profile": "auto",
+          "qm_min": "8",
+          "qsv_average_bitrate": "5",
+          "qsv_constant_quality_scale": "23",
+          "qsv_constant_quantizer_scale": "25",
+          "qsv_decoding_method": "cpu",
+          "qsv_encoder_ratecontrol_method": "LA_ICQ",
+          "qsv_preset": "slow",
+          "qsv_safe_decode": false,
+          "smart_output_target": "balanced",
+          "strip_attachment_streams": false,
+          "strip_data_streams": false,
+          "target_resolution": "source",
+          "tune": "auto",
+          "tune_stvav1": 1,
+          "vaapi_average_bitrate": "5",
+          "vaapi_constant_quality_scale": "23",
+          "vaapi_constant_quantizer_scale": "25",
+          "vaapi_decoding_method": "cpu",
+          "vaapi_device": "none",
+          "vaapi_encoder_ratecontrol_method": "ICQ",
+          "vaapi_safe_decode": false,
+          "variance_boost": 0,
+          "video_codec": "hevc",
+          "video_encoder": "libx265",
+          "video_pix_fmt": "auto"
+        }
+      },
+      {
+        "has_config": true,
+        "plugin_id": "vmaf_quality_audit",
+        "settings": {
+          "fail_on_analysis_error": false,
+          "ffmpeg_path": "/usr/lib/btbn-ffmpeg/bin/ffmpeg",
+          "ffprobe_path": "/usr/lib/btbn-ffmpeg/bin/ffprobe",
+          "file_sampling_count": 5,
+          "file_sampling_mode": "sample_chunks",
+          "frame_subsample": 1,
+          "max_chart_points": 800,
+          "threads": 0
+        }
+      }
+    ],
+    "plugin_flow": {
+      "library_management.file_test": [
+        "limit_library_search_by_file_extension",
+        "path_ignore",
+        "ignore_completed_tasks",
+        "ignore_hardlinked_files",
+        "limit_library_search_by_video_dynamic_range",
+        "ignore_video_file_under_size",
+        "reject_files_larger_than_original",
+        "video_transcoder"
+      ],
+      "postprocessor.file_move": [
+        "reject_files_larger_than_original"
+      ],
+      "postprocessor.task_result": [
+        "video_transcoder",
+        "file_size_metrics",
+        "notify_sonarr",
+        "notify_radarr",
+        "notify_jellyfin"
+      ],
+      "worker.process": [
+        "video_transcoder",
+        "reject_files_larger_than_original",
+        "vmaf_quality_audit"
+      ]
+    }
+  }
+}
