@@ -18,13 +18,6 @@
                   service_name: Radarr
                   #baseUrl: https://radarr.{{HOMEPAGE_VAR_DOMAIN_NAME}}
 
-- Servarr:
-    - Homeserver Repo:
-        icon: github.png
-        href: https://github.com/thbits/homeserver
-        description: Main repo on github
-        ping: https://github.com
-
 - Other:
     # - Grafana:
     #     icon: grafana.png
@@ -46,10 +39,11 @@
         href: https://notifiarr.com/
         description: Service monitoring and Discord alerts website
         ping: https://notifiarr.com/
-    - Hermes Agent:
-        icon: https://hermes-agent.nousresearch.com/docs/img/favicon.ico
-        href: http://192.168.50.111:9119/
-        description: Hermes Agent web dashboard
+    - Homeserver Repo:
+        icon: github.png
+        href: https://github.com/thbits/homeserver
+        description: Main repo on github
+        ping: https://github.com
 
 
 
