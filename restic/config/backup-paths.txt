@@ -36,6 +36,8 @@
 /data/recyclarr
 /data/restic
 /data/sonarr
+/data/maintainerr/data
+/data/unmanic/config
 /data/wg-easy
 /data/paperless-ngx
 /data/swiparr
