@@ -36,13 +36,15 @@ sonarr:
           - 85c61753df5da1fb2aab6f2a47426b09 # BR-DISK
           - 9c11cd3f07101cdba90a2d81cf0e56b4 # LQ
           - e2315f990da2e2cbfc9fa5b7a6fcfe48 # LQ (Release Title)
-          - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
           - fbcb31d8dabd2a319072b84fc0b7249c # Extras
           - 15a05bc7c1a36e2b57fd628f8977e2fc # AV1
+          - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
+          - 6f808933a71bd9666531610cb8c059cc # BR-DISK (BTN)
+          - 23297a736ca77c0fc8e70f8edd7ee56c # Upscaled
           # Misc
           - ec8fa7296b64e8cd390a1600981f3923 # Repack/Proper
-          - eb3d5cc0a2be0db205fb823640db6a3c # Repack v2
-          - 44e7c4de10ae50265753082e5dc76047 # Repack v3
+          - eb3d5cc0a2be0db205fb823640db6a3c # Repack2
+          - 44e7c4de10ae50265753082e5dc76047 # Repack3
           # Streaming Services
           - d660701077794679fd59e8bdf4ce3a29 # AMZN
           - f67c9ca88f463a48346062e8ad07713f # ATVP
@@ -78,13 +80,15 @@ sonarr:
           - 85c61753df5da1fb2aab6f2a47426b09 # BR-DISK
           - 9c11cd3f07101cdba90a2d81cf0e56b4 # LQ
           - e2315f990da2e2cbfc9fa5b7a6fcfe48 # LQ (Release Title)
-          - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
           - fbcb31d8dabd2a319072b84fc0b7249c # Extras
           - 15a05bc7c1a36e2b57fd628f8977e2fc # AV1
+          - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
+          - 6f808933a71bd9666531610cb8c059cc # BR-DISK (BTN)
+          - 23297a736ca77c0fc8e70f8edd7ee56c # Upscaled
           # Misc
           - ec8fa7296b64e8cd390a1600981f3923 # Repack/Proper
-          - eb3d5cc0a2be0db205fb823640db6a3c # Repack v2
-          - 44e7c4de10ae50265753082e5dc76047 # Repack v3
+          - eb3d5cc0a2be0db205fb823640db6a3c # Repack2
+          - 44e7c4de10ae50265753082e5dc76047 # Repack3
           # Streaming Services
           - d660701077794679fd59e8bdf4ce3a29 # AMZN
           - f67c9ca88f463a48346062e8ad07713f # ATVP
@@ -123,20 +127,20 @@ sonarr:
       # === Anime Custom Formats (from template: sonarr-v4-custom-formats-anime) ===
       - trash_ids:
           # Anime CF/Scoring
-          - 949c16fe0a8147f50ba82cc2df9411c9 # Anime BD Tier 01 (Top SeaDex Muxers)
-          - ed7f1e315e000aef424a58517fa48727 # Anime BD Tier 02 (SeaDex Muxers)
-          - 096e406c92baa713da4a72d88030b815 # Anime BD Tier 03 (SeaDex Muxers)
-          - 30feba9da3030c5ed1e0f7d610bcadc4 # Anime BD Tier 04 (SeaDex Muxers)
-          - 545a76b14ddc349b8b185a6344e28b04 # Anime BD Tier 05 (Remuxes)
-          - 25d2afecab632b1582eaf03b63055f72 # Anime BD Tier 06 (FanSubs)
-          - 0329044e3d9137b08502a9f84a7e58db # Anime BD Tier 07 (P2P/Scene)
-          - c81bbfb47fed3d5a3ad027d077f889de # Anime BD Tier 08 (Mini Encodes)
-          - e0014372773c8f0e1bef8824f00c7dc4 # Anime Web Tier 01 (Muxers)
-          - 19180499de5ef2b84b6ec59aae444696 # Anime Web Tier 02 (Top FanSubs)
-          - c27f2ae6a4e82373b0f1da094e2489ad # Anime Web Tier 03 (Official Subs)
-          - 4fd5528a3a8024e6b49f9c67053ea5f3 # Anime Web Tier 04 (Official Subs)
-          - 29c2a13d091144f63307e4a8ce963a39 # Anime Web Tier 05 (FanSubs)
-          - dc262f88d74c651b12e9d90b39f6c753 # Anime Web Tier 06 (FanSubs)
+          - 949c16fe0a8147f50ba82cc2df9411c9 # Anime BD Tier 01
+          - ed7f1e315e000aef424a58517fa48727 # Anime BD Tier 02
+          - 096e406c92baa713da4a72d88030b815 # Anime BD Tier 03
+          - 30feba9da3030c5ed1e0f7d610bcadc4 # Anime BD Tier 04
+          - 545a76b14ddc349b8b185a6344e28b04 # Anime BD Tier 05
+          - 25d2afecab632b1582eaf03b63055f72 # Anime BD Tier 06
+          - 0329044e3d9137b08502a9f84a7e58db # Anime BD Tier 07
+          - c81bbfb47fed3d5a3ad027d077f889de # Anime BD Tier 08
+          - e0014372773c8f0e1bef8824f00c7dc4 # Anime Web Tier 01
+          - 19180499de5ef2b84b6ec59aae444696 # Anime Web Tier 02
+          - c27f2ae6a4e82373b0f1da094e2489ad # Anime Web Tier 03
+          - 4fd5528a3a8024e6b49f9c67053ea5f3 # Anime Web Tier 04
+          - 29c2a13d091144f63307e4a8ce963a39 # Anime Web Tier 05
+          - dc262f88d74c651b12e9d90b39f6c753 # Anime Web Tier 06
           - e3515e519f3b1360cbfc17651944354c # Anime LQ Groups
           - b4a1b3d705159cdca36d71e57ca86871 # Anime Raws
           - 9c14d194486c4014d422adc64092d794 # Dubs Only
@@ -177,13 +181,15 @@ sonarr:
           - 85c61753df5da1fb2aab6f2a47426b09 # BR-DISK
           - 9c11cd3f07101cdba90a2d81cf0e56b4 # LQ
           - e2315f990da2e2cbfc9fa5b7a6fcfe48 # LQ (Release Title)
-          - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
           - fbcb31d8dabd2a319072b84fc0b7249c # Extras
           - 15a05bc7c1a36e2b57fd628f8977e2fc # AV1
+          - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
+          - 6f808933a71bd9666531610cb8c059cc # BR-DISK (BTN)
+          - 23297a736ca77c0fc8e70f8edd7ee56c # Upscaled
           # Misc
           - ec8fa7296b64e8cd390a1600981f3923 # Repack/Proper
-          - eb3d5cc0a2be0db205fb823640db6a3c # Repack v2
-          - 44e7c4de10ae50265753082e5dc76047 # Repack v3
+          - eb3d5cc0a2be0db205fb823640db6a3c # Repack2
+          - 44e7c4de10ae50265753082e5dc76047 # Repack3
           # Streaming Services
           - d660701077794679fd59e8bdf4ce3a29 # AMZN
           - f67c9ca88f463a48346062e8ad07713f # ATVP
@@ -212,16 +218,50 @@ sonarr:
         assign_scores_to:
           - name: 1080p/4K
 
-    # Quality Profiles - Explicit control with auto-upgrade DISABLED
+      # === x265 (HD) PREFERRED — we transcode to HEVC ourselves via Unmanic ===
+      # TRaSH scores this -10000 to avoid third-party HD x265 re-encodes, which assumes
+      # you keep releases as-downloaded. We don't: Unmanic re-encodes the whole library
+      # to HEVC (libx265, CRF 21, CPU). So fetching x264 and transcoding it costs two
+      # generations of loss plus a slow encode, where grabbing HEVC directly costs one
+      # and none — force_transcode is off, so Unmanic skips files already HEVC.
+      #
+      # +100 puts HEVC on par with a streaming tag (+75) or a tier hop (+50..100), so it
+      # only breaks ties: WEB tiers (1600-1700) still decide quality, and we'd never take
+      # an untiered x265 re-encode over a Tier 01 x264 release. It also can't churn the
+      # existing library, since +100 is below min_upgrade_format_score: 200 — this only
+      # affects new grabs. Bonus: our own HEVC files score +100, so an x264 replacement
+      # must beat them by 200 to win.
+      #
+      # Resolution-scoped to 720p/1080p; at 2160p HEVC is already the norm and this CF
+      # does not match. The Anime profile is not listed: it never included this CF, and
+      # reset_unmatched_scores already leaves it at 0 there.
+      - trash_ids:
+          - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
+        assign_scores_to:
+          - name: WEB-1080p
+            score: 100
+          - name: WEB-2160p
+            score: 100
+          - name: 1080p/4K
+            score: 100
+
+    # Quality Profiles - quality upgrades enabled, but CF-score upgrades gated to
+    # large improvements only via min_upgrade_format_score (Anime stays fully static).
     quality_profiles:
       - name: WEB-1080p
         reset_unmatched_scores:
           enabled: true
         upgrade:
-          allowed: true  # DISABLED: Won't auto-upgrade once a release meets requirements
+          allowed: true  # Quality upgrades (720p -> 1080p, WEB -> Bluray) stay enabled
           until_quality: Bluray-1080p
           until_score: 10000
         min_format_score: 0
+        # Only re-download for a LARGE scoring improvement. Deltas in this profile:
+        # repack +5..7, tier hop +50..100, streaming tag +75, HDR +500,
+        # unknown group -> tiered group +1600. At 200 only the last two pass, so we
+        # don't churn on marginal tier swaps (and an x264 release can't displace an
+        # Unmanic HEVC file). TRaSH ships 1; quality upgrades are unaffected by this.
+        min_upgrade_format_score: 200
         quality_sort: top
         qualities:
           - name: Bluray-1080p
@@ -241,10 +281,13 @@ sonarr:
         reset_unmatched_scores:
           enabled: true
         upgrade:
-          allowed: true  # DISABLED: Won't auto-upgrade once a release meets requirements
+          allowed: true  # Quality upgrades stay enabled
           until_quality: Bluray-2160p
           until_score: 10000
         min_format_score: 0
+        # See WEB-1080p above: only large scoring improvements (HDR +500,
+        # unknown group -> tiered group +1600) trigger a re-download.
+        min_upgrade_format_score: 200
         quality_sort: top
         qualities:
           - name: Bluray-2160p
@@ -281,10 +324,13 @@ sonarr:
         reset_unmatched_scores:
           enabled: true
         upgrade:
-          allowed: true  # DISABLED: Accepts either 1080p or 4K without upgrading
+          allowed: true  # 1080p -> 4K quality upgrades stay enabled
           until_quality: WEB 2160p
           until_score: 10000
         min_format_score: 0
+        # See WEB-1080p above: only large scoring improvements (HDR +500,
+        # unknown group -> tiered group +1600) trigger a re-download.
+        min_upgrade_format_score: 200
         quality_sort: top
         qualities:
           - name: WEB 2160p
@@ -346,17 +392,17 @@ radarr:
           - e6886871085226c3da1830830146846c # Generated Dynamic HDR
           - 90a6f9a284dff5103f6346090e6280c8 # LQ
           - e204b80c87be9497a8a6eaff48f72905 # LQ (Release Title)
-          - dc98083864ea246d05a42df0d05f81cc # x265 (HD)
           - b8cd450cbfa689c0259a01d9e29ba3d6 # 3D
           - bfd8eb01832d646a0a89c4deb46f8564 # Upscaled
           - 0a3f082873eb454bde444150b70253cc # Extras
           - 712d74cd88bceb883ee32f773656b1f5 # Sing-Along Versions
           - cae4ca30163749b891686f95532519bd # AV1
+          - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
+          - cc444569854e9de0b084ab2b8b1532b2 # Black and White Editions
           # Streaming Services
           - cc5e51a9e85a6296ceefe097a77f12f4 # BCORE
           - 16622a6911d1ab5d5b8b713d5b0036d4 # CRiT
           - 2a6039655313bf5dab1e43523b62c374 # MA
-          - d6e9318c875905d6cfb5bee961afcea9 # Original Langauge
         assign_scores_to:
           - name: HD Bluray + WEB
       - trash_ids:
@@ -373,7 +419,7 @@ radarr:
           - c9fd353f8f5f1baf56dc601c4cb29920 # PCOK
           - e36a0ba1bc902b26ee40818a1d59b8bd # PMTP
           - c2863d2a50c9acad1fb50e53ece60817 # STAN
-          - d6e9318c875905d6cfb5bee961afcea9 # Original Langauge
+          - d6e9318c875905d6cfb5bee961afcea9 # Language: Not Original
         assign_scores_to:
           - name: HD Bluray + WEB
 
@@ -397,12 +443,13 @@ radarr:
           - e6886871085226c3da1830830146846c # Generated Dynamic HDR
           - 90a6f9a284dff5103f6346090e6280c8 # LQ
           - e204b80c87be9497a8a6eaff48f72905 # LQ (Release Title)
-          - dc98083864ea246d05a42df0d05f81cc # x265 (HD)
           - b8cd450cbfa689c0259a01d9e29ba3d6 # 3D
           - bfd8eb01832d646a0a89c4deb46f8564 # Upscaled
           - 0a3f082873eb454bde444150b70253cc # Extras
           - 712d74cd88bceb883ee32f773656b1f5 # Sing-Along Versions
           - cae4ca30163749b891686f95532519bd # AV1
+          - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
+          - cc444569854e9de0b084ab2b8b1532b2 # Black and White Editions
           # Streaming Services
           - cc5e51a9e85a6296ceefe097a77f12f4 # BCORE
           - 16622a6911d1ab5d5b8b713d5b0036d4 # CRiT
@@ -423,27 +470,27 @@ radarr:
           - c9fd353f8f5f1baf56dc601c4cb29920 # PCOK
           - e36a0ba1bc902b26ee40818a1d59b8bd # PMTP
           - c2863d2a50c9acad1fb50e53ece60817 # STAN
-          - d6e9318c875905d6cfb5bee961afcea9 # Original Langauge
+          - d6e9318c875905d6cfb5bee961afcea9 # Language: Not Original
         assign_scores_to:
           - name: UHD Bluray + WEB
 
       # === Anime Custom Formats (from template: radarr-custom-formats-anime) ===
       - trash_ids:
           # Anime CF/Scoring
-          - fb3ccc5d5cc8f77c9055d4cb4561dded # Anime BD Tier 01 (Top SeaDex Muxers)
-          - 66926c8fa9312bc74ab71bf69aae4f4a # Anime BD Tier 02 (SeaDex Muxers)
-          - fa857662bad28d5ff21a6e611869a0ff # Anime BD Tier 03 (SeaDex Muxers)
-          - f262f1299d99b1a2263375e8fa2ddbb3 # Anime BD Tier 04 (SeaDex Muxers)
-          - ca864ed93c7b431150cc6748dc34875d # Anime BD Tier 05 (Remuxes)
-          - 9dce189b960fddf47891b7484ee886ca # Anime BD Tier 06 (FanSubs)
-          - 1ef101b3a82646b40e0cab7fc92cd896 # Anime BD Tier 07 (P2P/Scene)
-          - 6115ccd6640b978234cc47f2c1f2cadc # Anime BD Tier 08 (Mini Encodes)
-          - 8167cffba4febfb9a6988ef24f274e7e # Anime Web Tier 01 (Muxers)
-          - 8526c54e36b4962d340fce52ef030e76 # Anime Web Tier 02 (Top FanSubs)
-          - de41e72708d2c856fa261094c85e965d # Anime Web Tier 03 (Official Subs)
-          - 9edaeee9ea3bcd585da9b7c0ac3fc54f # Anime Web Tier 04 (Official Subs)
-          - 22d953bbe897857b517928f3652b8dd3 # Anime Web Tier 05 (FanSubs)
-          - a786fbc0eae05afe3bb51aee3c83a9d4 # Anime Web Tier 06 (FanSubs)
+          - fb3ccc5d5cc8f77c9055d4cb4561dded # Anime BD Tier 01
+          - 66926c8fa9312bc74ab71bf69aae4f4a # Anime BD Tier 02
+          - fa857662bad28d5ff21a6e611869a0ff # Anime BD Tier 03
+          - f262f1299d99b1a2263375e8fa2ddbb3 # Anime BD Tier 04
+          - ca864ed93c7b431150cc6748dc34875d # Anime BD Tier 05
+          - 9dce189b960fddf47891b7484ee886ca # Anime BD Tier 06
+          - 1ef101b3a82646b40e0cab7fc92cd896 # Anime BD Tier 07
+          - 6115ccd6640b978234cc47f2c1f2cadc # Anime BD Tier 08
+          - 8167cffba4febfb9a6988ef24f274e7e # Anime Web Tier 01
+          - 8526c54e36b4962d340fce52ef030e76 # Anime Web Tier 02
+          - de41e72708d2c856fa261094c85e965d # Anime Web Tier 03
+          - 9edaeee9ea3bcd585da9b7c0ac3fc54f # Anime Web Tier 04
+          - 22d953bbe897857b517928f3652b8dd3 # Anime Web Tier 05
+          - a786fbc0eae05afe3bb51aee3c83a9d4 # Anime Web Tier 06
           - b0fdc5897f68c9a68c70c25169f77447 # Anime LQ Groups
           - c259005cbaeb5ab44c06eddb4751e70c # v0
           - 5f400539421b8fcf71d51e6384434573 # v1
@@ -463,7 +510,7 @@ radarr:
           - c20f169ef63c5f40c2def54abaf4438e # WEB Tier 01
           - 403816d65392c79236dcb6dd591aeda4 # WEB Tier 02
           - af94e0fe497124d1f9ce732069ec8c3b # WEB Tier 03
-          - d6e9318c875905d6cfb5bee961afcea9 # Original Langauge
+          - d6e9318c875905d6cfb5bee961afcea9 # Language: Not Original
         assign_scores_to:
           - name: Anime
 
@@ -490,17 +537,17 @@ radarr:
           - e6886871085226c3da1830830146846c # Generated Dynamic HDR
           - 90a6f9a284dff5103f6346090e6280c8 # LQ
           - e204b80c87be9497a8a6eaff48f72905 # LQ (Release Title)
-          - dc98083864ea246d05a42df0d05f81cc # x265 (HD)
           - b8cd450cbfa689c0259a01d9e29ba3d6 # 3D
           - bfd8eb01832d646a0a89c4deb46f8564 # Upscaled
           - 0a3f082873eb454bde444150b70253cc # Extras
           - 712d74cd88bceb883ee32f773656b1f5 # Sing-Along Versions
           - cae4ca30163749b891686f95532519bd # AV1
+          - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
+          - cc444569854e9de0b084ab2b8b1532b2 # Black and White Editions
           # Streaming Services
           - cc5e51a9e85a6296ceefe097a77f12f4 # BCORE
           - 16622a6911d1ab5d5b8b713d5b0036d4 # CRiT
           - 2a6039655313bf5dab1e43523b62c374 # MA
-          - d6e9318c875905d6cfb5bee961afcea9 # Original Langauge
         assign_scores_to:
           - name: 1080p/4K
       - trash_ids:
@@ -517,9 +564,32 @@ radarr:
           - c9fd353f8f5f1baf56dc601c4cb29920 # PCOK
           - e36a0ba1bc902b26ee40818a1d59b8bd # PMTP
           - c2863d2a50c9acad1fb50e53ece60817 # STAN
-          - d6e9318c875905d6cfb5bee961afcea9 # Original Langauge
+          - d6e9318c875905d6cfb5bee961afcea9 # Language: Not Original
         assign_scores_to:
           - name: 1080p/4K
+
+      # === x265 (HD) PREFERRED — we transcode to HEVC ourselves via Unmanic ===
+      # Same reasoning as the Sonarr block above: Unmanic covers movies too (one library
+      # at /library, video_codec: hevc) and notify_radarr makes Radarr re-score the
+      # result. TRaSH's -10000 both treated our own output as a downgrade and, under
+      # min_format_score: 0, blocked grabbing any 1080p HEVC release outright. +100
+      # instead prefers HEVC so Unmanic can skip the encode entirely.
+      #
+      # Do NOT add x265 (no HDR/DV) (839bea857ed2c0a8e084f3cbdbd65ecb), which the v8
+      # templates select for UHD: -10000 on the same HEVC regex, scoped to SDR, so it
+      # would re-break every SDR file Unmanic produces.
+      #
+      # Anime is not listed: it never included this CF, and reset_unmatched_scores
+      # already leaves it at 0 there.
+      - trash_ids:
+          - dc98083864ea246d05a42df0d05f81cc # x265 (HD)
+        assign_scores_to:
+          - name: HD Bluray + WEB
+            score: 100
+          - name: UHD Bluray + WEB
+            score: 100
+          - name: 1080p/4K
+            score: 100
 
     # Quality Profiles - Explicit control with auto-upgrade DISABLED
     quality_profiles:
