@@ -1,6 +1,6 @@
 services:
   syncthing:
-    image: lscr.io/linuxserver/syncthing:latest@sha256:ae909bee7c41f516be03fd7de72317a44f4a043bcba76884de941b99407b6957
+    image: lscr.io/linuxserver/syncthing:latest@sha256:07da4c778027cb13d4a2b9bb8b8d7432ac3a0f0540bb7248b016be3a1cc69788
     container_name: syncthing
     hostname: homeserver-syncthing
     environment:
