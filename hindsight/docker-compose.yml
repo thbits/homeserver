@@ -1,0 +1,63 @@
+services:
+  hindsight-db:
+    container_name: hindsight-db
+    image: pgvector/pgvector:0.8.2-pg17@sha256:e04af45eb526378554a24ed05b37d9ea56fd623feca9adf264d4f47d875c9a93
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=hindsight
+      - POSTGRES_PASSWORD=${HINDSIGHT_DB_PASSWORD}
+      - POSTGRES_DB=hindsight
+    volumes:
+      - ${DATADIR}/hindsight/pgdata:/var/lib/postgresql/data
+    networks:
+      - internal
+  hindsight:
+    container_name: hindsight
+    image: ghcr.io/vectorize-io/hindsight:0.9.2-slim@sha256:97ab9978ddf1394fc6a163f4c779fa9c7e5123770c881844bd2e0e9a60b0d18a
+    restart: unless-stopped
+    depends_on:
+      - hindsight-db
+    environment:
+      # LLM (fact extraction, entity resolution, reflect) via OpenRouter
+      - HINDSIGHT_API_LLM_PROVIDER=openai
+      - HINDSIGHT_API_LLM_API_KEY=${HINDSIGHT_OPENROUTER_API_KEY}
+      - HINDSIGHT_API_LLM_MODEL=qwen/qwen3.7-flash
+      - HINDSIGHT_API_LLM_BASE_URL=https://openrouter.ai/api/v1
+      # Embeddings (slim image requires an external provider) via OpenRouter
+      - HINDSIGHT_API_EMBEDDINGS_PROVIDER=openai
+      - HINDSIGHT_API_EMBEDDINGS_OPENAI_API_KEY=${HINDSIGHT_OPENROUTER_API_KEY}
+      - HINDSIGHT_API_EMBEDDINGS_OPENAI_BASE_URL=https://openrouter.ai/api/v1
+      - HINDSIGHT_API_EMBEDDINGS_OPENAI_MODEL=perplexity/pplx-embed-v1-0.6b
+      # Reranker (algorithmic, no cost)
+      - HINDSIGHT_API_RERANKER_PROVIDER=rrf
+      # Database
+      - HINDSIGHT_API_DATABASE_URL=postgresql://hindsight:${HINDSIGHT_DB_PASSWORD}@hindsight-db:5432/hindsight
+      - HINDSIGHT_API_WORKER_ID=hindsight-prod
+      # API Authentication (Bearer token for all API calls)
+      - HINDSIGHT_API_TENANT_EXTENSION=hindsight_api.extensions.builtin.tenant:ApiKeyTenantExtension
+      - HINDSIGHT_API_TENANT_API_KEY=${HINDSIGHT_ACCESS_KEY}
+      # Control Plane auth (login for Web UI)
+      - HINDSIGHT_CP_ACCESS_KEY=${HINDSIGHT_ACCESS_KEY}
+      # Control Plane -> API auth
+      - HINDSIGHT_CP_DATAPLANE_API_KEY=${HINDSIGHT_ACCESS_KEY}
+    ports:
+      - "127.0.0.1:8888:8888"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.hindsight.rule=Host(`hindsight.${DOMAIN_NAME}`)
+      - traefik.http.routers.hindsight.entrypoints=websecure
+      - traefik.http.routers.hindsight.tls=true
+      - traefik.http.routers.hindsight.tls.certresolver=myclouddns
+      - traefik.http.services.hindsight.loadbalancer.server.port=9999
+      - traefik.http.routers.hindsight.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
+      - homepage.group=Other
+      - homepage.name=Hindsight
+      - homepage.icon=https://hindsight.vectorize.io/img/favicon.png
+      - homepage.href=https://hindsight.${DOMAIN_NAME}/
+      - homepage.description=Agent Memory System
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true

@@ -110,6 +110,11 @@ RESTIC_PASSWORD=<generate-with-openssl-rand-base64-32>
 # Paperless-ngx Configuration
 PAPERLESS_SECRET_KEY=<generate-with-openssl-rand-base64-32>
 
+# Hindsight Configuration
+HINDSIGHT_DB_PASSWORD=<generate-with-openssl-rand-hex-16>
+HINDSIGHT_OPENROUTER_API_KEY=<your-openrouter-api-key>
+HINDSIGHT_ACCESS_KEY=<generate-with-openssl-rand-hex-24>
+
 # SparkyFitness Configuration
 SPARKY_FITNESS_DB_NAME=sparkyfitness_db
 SPARKY_FITNESS_DB_USER=sparky
@@ -193,6 +198,9 @@ Set these as GitHub Actions variables/secrets (Settings → Secrets and variable
 | `JOAL_SECRET_TOKEN` | JOAL | Random secret string for UI authentication |
 | `JOAL_SECRET_OBFUSCATION_PATH` | JOAL | Random path string to obfuscate UI URL (e.g., `my-secret-path-123`) |
 | `PAPERLESS_SECRET_KEY` | Paperless-ngx | Generate with: `openssl rand -base64 32` |
+| `HINDSIGHT_DB_PASSWORD` | Hindsight | PostgreSQL password - Generate with: `openssl rand -hex 16` (hex only: it's embedded in a connection URL) |
+| `HINDSIGHT_OPENROUTER_API_KEY` | Hindsight | OpenRouter API key used for LLM + embeddings (use a dedicated key, not shared) |
+| `HINDSIGHT_ACCESS_KEY` | Hindsight | API bearer token + Control Plane UI login - Generate with: `openssl rand -hex 24` |
 | `SPARKY_FITNESS_DB_NAME` | SparkyFitness | PostgreSQL database name (e.g., sparkyfitness_db) |
 | `SPARKY_FITNESS_DB_USER` | SparkyFitness | PostgreSQL database user (e.g., sparky) |
 | `SPARKY_FITNESS_DB_PASSWORD` | SparkyFitness | PostgreSQL database password - Generate with: `openssl rand -base64 32` |
