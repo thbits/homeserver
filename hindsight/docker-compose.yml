@@ -1,7 +1,7 @@
 services:
   hindsight-db:
     container_name: hindsight-db
-    image: pgvector/pgvector:0.8.2-pg17@sha256:e04af45eb526378554a24ed05b37d9ea56fd623feca9adf264d4f47d875c9a93
+    image: pgvector/pgvector:0.8.6-pg17@sha256:dca0d688bbb31d3f851502ffcb9c7791387b4fcc544ae434dab41761e5ece317
     restart: unless-stopped
     environment:
       - POSTGRES_USER=hindsight
