@@ -75,4 +75,8 @@
     },
   ],
   ignoreTests: true,
+  // Create branches only after minimumReleaseAge has passed, so the release-age
+  // 'pending' status check never blocks PR creation (it can get stuck forever
+  // when branches have no CI checks — see renovatebot discussions #18793/#21720).
+  internalChecksFilter: 'strict',
 }
