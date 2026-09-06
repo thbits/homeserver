@@ -1,6 +1,6 @@
 services:
   n8n:
-    image: docker.io/n8nio/n8n:2.37.4@sha256:3ef785400f1a03361584e5533a2e3eb72de56311fd4dc996ac4031a7fdede8bc
+    image: docker.io/n8nio/n8n:2.37.10@sha256:307d6065be25619aa24cfc63a7c2f04ca56d084a08c05c8e9f189a89f353b1ec
     container_name: n8n
     user: "1000:1000"
     restart: unless-stopped
