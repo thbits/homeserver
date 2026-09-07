@@ -24,10 +24,10 @@
                   service_name: Radarr
 
 - Network:
-    - Crowdsec:
+    - CrowdSec:
         icon: crowdsec.png
         href: 'https://crowdsec.{{HOMEPAGE_VAR_DOMAIN_NAME}}/'
-        description: Security engine
+        description: Security monitoring and threat protection
         widget:
             type: crowdsec
             url: http://crowdsec:8080

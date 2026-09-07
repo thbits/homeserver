@@ -59,11 +59,6 @@ services:
       - traefik.http.middlewares.crowdsec-dashboard-sablier.plugin.sablier.dynamic.theme=ghost
       - traefik.docker.allownonrunning=true
       # Homepage configuration
-      - homepage.group=Other
-      - homepage.name=CrowdSec
-      - homepage.icon=crowdsec.png
-      - homepage.href=http://crowdsec.${DOMAIN_NAME}/
-      - homepage.description=Security monitoring and threat protection
     networks:
       - internal
 
