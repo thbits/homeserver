@@ -25,6 +25,7 @@ services:
       - HOMEPAGE_VAR_QBIT_PASS=${QBIT_PASS}
       - HOMEPAGE_VAR_PIHOLE_API_KEY=${PIHOLE_API_KEY}
       - HOMEPAGE_VAR_CROWDSEC_LAPI_PASSWORD=${CROWDSEC_LAPI_PASSWORD}
+      - HOMEPAGE_VAR_MAINTAINERR_API_KEY=${MAINTAINERR_API_KEY}
     volumes:
       - ${CONFIGDIR}/homepage/config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro # (optional) For docker integrations

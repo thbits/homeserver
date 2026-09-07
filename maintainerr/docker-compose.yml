@@ -24,6 +24,9 @@ services:
       - homepage.icon=maintainerr.png
       - homepage.href=http://maintainerr.${DOMAIN_NAME}/
       - homepage.description=Deletes watched media when the disk fills up
+      - homepage.widget.type=maintainerr
+      - homepage.widget.url=http://maintainerr:6246
+      - homepage.widget.key=${MAINTAINERR_API_KEY}
     healthcheck:
       test: ['CMD', '/opt/app/healthcheck.sh']
       interval: 30s
