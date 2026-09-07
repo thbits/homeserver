@@ -1,6 +1,13 @@
 ---
 # For configuration options and examples, please see:
 # https://gethomepage.dev/en/configs/services
+#
+# NOTE: most service cards + widgets come from Docker container labels
+# (homepage.* labels on each compose service). Only services that CANNOT
+# be label-driven are defined here:
+#   - the Calendar widget (needs integrations referencing label services)
+#   - Crowdsec (no homepage.* labels on its container)
+#   - external links (Notifiarr.com, Homeserver Repo)
 
 - Calendar:
     - ‎:
@@ -12,28 +19,22 @@
                 - type: sonarr
                   service_group: Servarr
                   service_name: Sonarr
-                  #baseUrl: https://sonarr.{{HOMEPAGE_VAR_DOMAIN_NAME}}
                 - type: radarr
                   service_group: Servarr
                   service_name: Radarr
-                  #baseUrl: https://radarr.{{HOMEPAGE_VAR_DOMAIN_NAME}}
+
+- Network:
+    - Crowdsec:
+        icon: crowdsec.png
+        href: 'https://crowdsec.{{HOMEPAGE_VAR_DOMAIN_NAME}}/'
+        description: Security engine
+        widget:
+            type: crowdsec
+            url: http://crowdsec:8080
+            username: localhost
+            password: '{{HOMEPAGE_VAR_CROWDSEC_LAPI_PASSWORD}}'
 
 - Other:
-    # - Grafana:
-    #     icon: grafana.png
-    #     href: http://pirateduck.local:3000/d/EHN2RGc4k/docker-containers
-    #     description: Data visualization
-    #     container: grafana
-    # - Prometheus:
-    #     icon: prometheus.png
-    #     href: http://pirateduck.local:9090/
-    #     description: Monitoring and data collection
-    #     container: prometheus
-    # - Notifiarr:
-    #     icon: notifiarr.png
-    #     href: http://pirateduck.local:5454/
-    #     description: Service monitoring and Discord alerts node
-    #     container: notifiarr
     - Notifiarr.com:
         icon: notifiarr.png
         href: https://notifiarr.com/
@@ -44,15 +45,3 @@
         href: https://github.com/thbits/homeserver
         description: Main repo on github
         ping: https://github.com
-
-
-
-# - My Second Group:
-#     - My Second Service:
-#         href: http://localhost/
-#         description: Homepage is the best
-
-# - My Third Group:
-#     - My Third Service:
-#         href: http://localhost/
-#         description: Homepage is 😎
