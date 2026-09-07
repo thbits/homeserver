@@ -31,7 +31,7 @@ services:
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.middlewares=geoblock@file,crowdsec-bouncer@docker,authelia-forwardauth@docker
       # Homepage
-      - homepage.group=Other
+      - homepage.group=Network
       - homepage.name=Traefik
       - homepage.icon=traefik.png
       - homepage.href=http://traefik.${DOMAIN_NAME}/
