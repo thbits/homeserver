@@ -1,6 +1,6 @@
 services:
   authelia:
-    image: authelia/authelia:4.39.22@sha256:936134132eaf01bfa2faf85055afbc1e0cc1cc5ca4547e9c06408fd0dd784646
+    image: authelia/authelia:4.39.26@sha256:16b804fbf6704b456ffb6e474c8e9d2406f9544ca0fecfeca7b4dcbed647deb4
     container_name: authelia
     user: "1000:1000"
     restart: unless-stopped
