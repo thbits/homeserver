@@ -13,7 +13,7 @@ services:
       - internal
   hindsight:
     container_name: hindsight
-    image: ghcr.io/vectorize-io/hindsight:0.9.2-slim@sha256:97ab9978ddf1394fc6a163f4c779fa9c7e5123770c881844bd2e0e9a60b0d18a
+    image: ghcr.io/vectorize-io/hindsight:0.10.3-slim@sha256:f3c383a53529066467207b830d63e47e489d3db5885d79c858b5c7baad4f8636
     restart: unless-stopped
     depends_on:
       - hindsight-db
