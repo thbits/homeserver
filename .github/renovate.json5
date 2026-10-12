@@ -16,6 +16,13 @@
   ],
   packageRules: [
     {
+      description: 'linuxserver qbittorrent has a stale 20.04.1 tag (old base-image versioning); stay on the real 5.x line.',
+      matchPackageNames: [
+        'lscr.io/linuxserver/qbittorrent',
+      ],
+      allowedVersions: '<6',
+    },
+    {
       description: 'Use docker versioning for all Docker Compose images: it handles the v-prefix, zero-padded calver months (pihole 2026.04.0), and treats variant suffixes like trawl -baseline as incompatible.',
       matchManagers: [
         'docker-compose',
@@ -77,7 +84,10 @@
   ],
   ignoreTests: true,
   // Create branches only after minimumReleaseAge has passed, so the release-age
-  // 'pending' status check never blocks PR creation (it can get stuck forever
-  // when branches have no CI checks — see renovatebot discussions #18793/#21720).
+  // 'pending' status check never blocks PR creation.
   internalChecksFilter: 'strict',
+  // Only Docker Hub exposes release timestamps. Since Renovate 42 the default
+  // (timestamp-required) holds every ghcr.io/lscr.io update forever under
+  // "Pending Status Checks". Treat a missing timestamp as old enough instead.
+  minimumReleaseAgeBehaviour: 'timestamp-optional',
 }
