@@ -1,6 +1,6 @@
 services:
   maintainerr:
-    image: ghcr.io/maintainerr/maintainerr:3.21.1@sha256:811a580fdf479e8582d3c97047b1aa8930fc5523f63143498020864ad6a7cd80
+    image: ghcr.io/maintainerr/maintainerr:3.30.1@sha256:8251a1f0ba5d71acc878846a727fba566ec87cbfbf6a914fb881a5953af53d46
     container_name: maintainerr
     user: "${PUID}:${PGID}"
     environment:
