@@ -11,7 +11,7 @@ services:
 
   trawl:
     container_name: trawl
-    image: ghcr.io/germondai/trawl:1.9.3@sha256:c46f74dfde3df278ff3dc5357f78df1109dfddd9aef754b4dcba1ac98f6fc6ae
+    image: ghcr.io/germondai/trawl:1.10.1@sha256:043557ba10db0cff79f82ebcfb7e46ca6d83b57324b9f438973fd70d06daa1de
     environment:
       - TZ=${TIMEZONE}
       - REDIS_URL=redis://trawl-redis:6379
