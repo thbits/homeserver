@@ -1,7 +1,7 @@
 services:
   swiparr:
     container_name: swiparr
-    image: ghcr.io/m3sserstudi0s/swiparr:v1.5.1@sha256:3a52e2e4e6ec3885af3032d99d66dd8345bd1de3b7d6b1f876ebdc102209e652
+    image: ghcr.io/m3sserstudi0s/swiparr:1.6.0@sha256:ad4881a90fb6dff8296b248b6af6db30855c0d9147320f239e64c9ec76a188ce
     environment:
       - TZ=${TIMEZONE}
       - JELLYFIN_URL=http://jellyfin:8096
